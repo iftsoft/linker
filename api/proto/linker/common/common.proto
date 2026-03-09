@@ -1,0 +1,24 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/proto/linker/common"; // Optional: Specifies the Go package name for generated code
+
+package sst.service; // Defines the package name for the service and messages
+
+// Defines the message structure for a user registration request
+message Request {
+  int64 id = 1;
+  string firstname = 2;
+  string lastname = 3;
+}
+
+// Defines the message structure for the registration response
+message Response {
+  string message = 1;
+}
+
+// Defines the gRPC service with an RPC method
+service RegisterService {
+  // A simple RPC method that takes a Request and returns a Response
+  rpc RegisterUser(Request) returns (Response) {}
+}
+
