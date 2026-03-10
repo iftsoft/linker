@@ -1,0 +1,11 @@
+# buf.gen.yaml
+version: v2
+plugins:
+  # Plugin for basic Protobuf messages
+  - remote: buf.build/protocolbuffers/go
+    out: gen/go
+    opt: paths=source_relative
+  # Optional: Plugin for gRPC service definitions
+  - remote: buf.build/grpc/go
+    out: gen/go
+    opt: paths=source_relative
