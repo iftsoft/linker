@@ -21,30 +21,30 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Defines the message structure for a user registration request
-type RegisterUserRequest struct {
+// Defines the message structure for a device query
+type DeviceQuery struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Firstname     string                 `protobuf:"bytes,2,opt,name=firstname,proto3" json:"firstname,omitempty"`
-	Lastname      string                 `protobuf:"bytes,3,opt,name=lastname,proto3" json:"lastname,omitempty"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	Timeout       int64                  `protobuf:"varint,2,opt,name=timeout,proto3" json:"timeout,omitempty"`
+	Offline       bool                   `protobuf:"varint,3,opt,name=offline,proto3" json:"offline,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegisterUserRequest) Reset() {
-	*x = RegisterUserRequest{}
+func (x *DeviceQuery) Reset() {
+	*x = DeviceQuery{}
 	mi := &file_linker_common_v1_common_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegisterUserRequest) String() string {
+func (x *DeviceQuery) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegisterUserRequest) ProtoMessage() {}
+func (*DeviceQuery) ProtoMessage() {}
 
-func (x *RegisterUserRequest) ProtoReflect() protoreflect.Message {
+func (x *DeviceQuery) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_common_v1_common_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -56,54 +56,59 @@ func (x *RegisterUserRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegisterUserRequest.ProtoReflect.Descriptor instead.
-func (*RegisterUserRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeviceQuery.ProtoReflect.Descriptor instead.
+func (*DeviceQuery) Descriptor() ([]byte, []int) {
 	return file_linker_common_v1_common_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RegisterUserRequest) GetId() int64 {
+func (x *DeviceQuery) GetDevice() string {
 	if x != nil {
-		return x.Id
+		return x.Device
+	}
+	return ""
+}
+
+func (x *DeviceQuery) GetTimeout() int64 {
+	if x != nil {
+		return x.Timeout
 	}
 	return 0
 }
 
-func (x *RegisterUserRequest) GetFirstname() string {
+func (x *DeviceQuery) GetOffline() bool {
 	if x != nil {
-		return x.Firstname
+		return x.Offline
 	}
-	return ""
+	return false
 }
 
-func (x *RegisterUserRequest) GetLastname() string {
-	if x != nil {
-		return x.Lastname
-	}
-	return ""
-}
-
-// Defines the message structure for the registration response
-type RegisterUserResponse struct {
+// Defines the message structure for a command reply
+type DeviceReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	Command       string                 `protobuf:"bytes,2,opt,name=command,proto3" json:"command,omitempty"`
+	Action        uint32                 `protobuf:"varint,3,opt,name=action,proto3" json:"action,omitempty"`
+	State         uint32                 `protobuf:"varint,4,opt,name=state,proto3" json:"state,omitempty"`
+	ErrCode       uint32                 `protobuf:"varint,5,opt,name=err_code,json=errCode,proto3" json:"err_code,omitempty"`
+	ErrText       string                 `protobuf:"bytes,6,opt,name=err_text,json=errText,proto3" json:"err_text,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegisterUserResponse) Reset() {
-	*x = RegisterUserResponse{}
+func (x *DeviceReply) Reset() {
+	*x = DeviceReply{}
 	mi := &file_linker_common_v1_common_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegisterUserResponse) String() string {
+func (x *DeviceReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegisterUserResponse) ProtoMessage() {}
+func (*DeviceReply) ProtoMessage() {}
 
-func (x *RegisterUserResponse) ProtoReflect() protoreflect.Message {
+func (x *DeviceReply) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_common_v1_common_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -115,14 +120,240 @@ func (x *RegisterUserResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegisterUserResponse.ProtoReflect.Descriptor instead.
-func (*RegisterUserResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeviceReply.ProtoReflect.Descriptor instead.
+func (*DeviceReply) Descriptor() ([]byte, []int) {
 	return file_linker_common_v1_common_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *RegisterUserResponse) GetMessage() string {
+func (x *DeviceReply) GetDevice() string {
 	if x != nil {
-		return x.Message
+		return x.Device
+	}
+	return ""
+}
+
+func (x *DeviceReply) GetCommand() string {
+	if x != nil {
+		return x.Command
+	}
+	return ""
+}
+
+func (x *DeviceReply) GetAction() uint32 {
+	if x != nil {
+		return x.Action
+	}
+	return 0
+}
+
+func (x *DeviceReply) GetState() uint32 {
+	if x != nil {
+		return x.State
+	}
+	return 0
+}
+
+func (x *DeviceReply) GetErrCode() uint32 {
+	if x != nil {
+		return x.ErrCode
+	}
+	return 0
+}
+
+func (x *DeviceReply) GetErrText() string {
+	if x != nil {
+		return x.ErrText
+	}
+	return ""
+}
+
+// DeviceState the message structure for a state change
+type DeviceState struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	Action        uint32                 `protobuf:"varint,2,opt,name=action,proto3" json:"action,omitempty"`
+	NewState      uint32                 `protobuf:"varint,3,opt,name=new_state,json=newState,proto3" json:"new_state,omitempty"`
+	OldState      uint32                 `protobuf:"varint,4,opt,name=old_state,json=oldState,proto3" json:"old_state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeviceState) Reset() {
+	*x = DeviceState{}
+	mi := &file_linker_common_v1_common_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeviceState) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeviceState) ProtoMessage() {}
+
+func (x *DeviceState) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_common_v1_common_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeviceState.ProtoReflect.Descriptor instead.
+func (*DeviceState) Descriptor() ([]byte, []int) {
+	return file_linker_common_v1_common_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *DeviceState) GetDevice() string {
+	if x != nil {
+		return x.Device
+	}
+	return ""
+}
+
+func (x *DeviceState) GetAction() uint32 {
+	if x != nil {
+		return x.Action
+	}
+	return 0
+}
+
+func (x *DeviceState) GetNewState() uint32 {
+	if x != nil {
+		return x.NewState
+	}
+	return 0
+}
+
+func (x *DeviceState) GetOldState() uint32 {
+	if x != nil {
+		return x.OldState
+	}
+	return 0
+}
+
+// DeviceState the message structure for a state change
+type DevicePrompt struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	Action        uint32                 `protobuf:"varint,2,opt,name=action,proto3" json:"action,omitempty"`
+	Prompt        string                 `protobuf:"bytes,3,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DevicePrompt) Reset() {
+	*x = DevicePrompt{}
+	mi := &file_linker_common_v1_common_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DevicePrompt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DevicePrompt) ProtoMessage() {}
+
+func (x *DevicePrompt) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_common_v1_common_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DevicePrompt.ProtoReflect.Descriptor instead.
+func (*DevicePrompt) Descriptor() ([]byte, []int) {
+	return file_linker_common_v1_common_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *DevicePrompt) GetDevice() string {
+	if x != nil {
+		return x.Device
+	}
+	return ""
+}
+
+func (x *DevicePrompt) GetAction() uint32 {
+	if x != nil {
+		return x.Action
+	}
+	return 0
+}
+
+func (x *DevicePrompt) GetPrompt() string {
+	if x != nil {
+		return x.Prompt
+	}
+	return ""
+}
+
+// DeviceState the message structure for a state change
+type DeviceInform struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	Action        uint32                 `protobuf:"varint,2,opt,name=action,proto3" json:"action,omitempty"`
+	Inform        string                 `protobuf:"bytes,3,opt,name=inform,proto3" json:"inform,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeviceInform) Reset() {
+	*x = DeviceInform{}
+	mi := &file_linker_common_v1_common_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeviceInform) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeviceInform) ProtoMessage() {}
+
+func (x *DeviceInform) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_common_v1_common_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeviceInform.ProtoReflect.Descriptor instead.
+func (*DeviceInform) Descriptor() ([]byte, []int) {
+	return file_linker_common_v1_common_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DeviceInform) GetDevice() string {
+	if x != nil {
+		return x.Device
+	}
+	return ""
+}
+
+func (x *DeviceInform) GetAction() uint32 {
+	if x != nil {
+		return x.Action
+	}
+	return 0
+}
+
+func (x *DeviceInform) GetInform() string {
+	if x != nil {
+		return x.Inform
 	}
 	return ""
 }
@@ -131,15 +362,31 @@ var File_linker_common_v1_common_proto protoreflect.FileDescriptor
 
 const file_linker_common_v1_common_proto_rawDesc = "" +
 	"\n" +
-	"\x1dlinker/common/v1/common.proto\x12\x10linker.common.v1\"_\n" +
-	"\x13RegisterUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1c\n" +
-	"\tfirstname\x18\x02 \x01(\tR\tfirstname\x12\x1a\n" +
-	"\blastname\x18\x03 \x01(\tR\blastname\"0\n" +
-	"\x14RegisterUserResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2r\n" +
-	"\x0fRegisterService\x12_\n" +
-	"\fRegisterUser\x12%.linker.common.v1.RegisterUserRequest\x1a&.linker.common.v1.RegisterUserResponse\"\x00B\x1bZ\x19./gen/go/linker/common/v1b\x06proto3"
+	"\x1dlinker/common/v1/common.proto\x12\x10linker.common.v1\"Y\n" +
+	"\vDeviceQuery\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
+	"\atimeout\x18\x02 \x01(\x03R\atimeout\x12\x18\n" +
+	"\aoffline\x18\x03 \x01(\bR\aoffline\"\xa3\x01\n" +
+	"\vDeviceReply\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
+	"\acommand\x18\x02 \x01(\tR\acommand\x12\x16\n" +
+	"\x06action\x18\x03 \x01(\rR\x06action\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\rR\x05state\x12\x19\n" +
+	"\berr_code\x18\x05 \x01(\rR\aerrCode\x12\x19\n" +
+	"\berr_text\x18\x06 \x01(\tR\aerrText\"w\n" +
+	"\vDeviceState\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x16\n" +
+	"\x06action\x18\x02 \x01(\rR\x06action\x12\x1b\n" +
+	"\tnew_state\x18\x03 \x01(\rR\bnewState\x12\x1b\n" +
+	"\told_state\x18\x04 \x01(\rR\boldState\"V\n" +
+	"\fDevicePrompt\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x16\n" +
+	"\x06action\x18\x02 \x01(\rR\x06action\x12\x16\n" +
+	"\x06prompt\x18\x03 \x01(\tR\x06prompt\"V\n" +
+	"\fDeviceInform\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x16\n" +
+	"\x06action\x18\x02 \x01(\rR\x06action\x12\x16\n" +
+	"\x06inform\x18\x03 \x01(\tR\x06informB\x1bZ\x19./gen/go/linker/common/v1b\x06proto3"
 
 var (
 	file_linker_common_v1_common_proto_rawDescOnce sync.Once
@@ -153,16 +400,17 @@ func file_linker_common_v1_common_proto_rawDescGZIP() []byte {
 	return file_linker_common_v1_common_proto_rawDescData
 }
 
-var file_linker_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_linker_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_linker_common_v1_common_proto_goTypes = []any{
-	(*RegisterUserRequest)(nil),  // 0: linker.common.v1.RegisterUserRequest
-	(*RegisterUserResponse)(nil), // 1: linker.common.v1.RegisterUserResponse
+	(*DeviceQuery)(nil),  // 0: linker.common.v1.DeviceQuery
+	(*DeviceReply)(nil),  // 1: linker.common.v1.DeviceReply
+	(*DeviceState)(nil),  // 2: linker.common.v1.DeviceState
+	(*DevicePrompt)(nil), // 3: linker.common.v1.DevicePrompt
+	(*DeviceInform)(nil), // 4: linker.common.v1.DeviceInform
 }
 var file_linker_common_v1_common_proto_depIdxs = []int32{
-	0, // 0: linker.common.v1.RegisterService.RegisterUser:input_type -> linker.common.v1.RegisterUserRequest
-	1, // 1: linker.common.v1.RegisterService.RegisterUser:output_type -> linker.common.v1.RegisterUserResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -179,9 +427,9 @@ func file_linker_common_v1_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_common_v1_common_proto_rawDesc), len(file_linker_common_v1_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_linker_common_v1_common_proto_goTypes,
 		DependencyIndexes: file_linker_common_v1_common_proto_depIdxs,

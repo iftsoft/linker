@@ -4,9 +4,9 @@ import (
 	"strings"
 )
 
-type EnumDevState uint16
-type EnumDevAction uint16
-type EnumDevPrompt uint16
+type EnumDevState uint32
+type EnumDevAction uint32
+type EnumDevPrompt uint32
 type DevTypeMask uint64
 
 // Device types

@@ -17,7 +17,9 @@ const (
 )
 
 type DeviceQuery struct {
-	Timeout int32
+	Device  string `json:"device"`
+	Timeout int64  `json:"timeout"`
+	Offline bool   `json:"offline"`
 }
 
 func (dev *DeviceQuery) String() string {
@@ -29,33 +31,21 @@ func (dev *DeviceQuery) String() string {
 	return str
 }
 
-type DeviceError struct {
-	Action   EnumDevAction `json:"action"`
-	DevState EnumDevState  `json:"dev_state"`
-	ErrCode  EnumDevError  `json:"err_code"`
-	ErrText  string        `json:"err_text"`
-}
-
-func (dev *DeviceError) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Action = %s, DevState = %s, ErrCode = %s, ErrText = %s",
-		dev.Action, dev.DevState, dev.ErrCode, dev.ErrText)
-	return str
-}
-
 type DeviceReply struct {
-	Command string `json:"command"`
-	DeviceError
+	Device  string        `json:"device"`
+	Command string        `json:"command"`
+	Action  EnumDevAction `json:"action"`
+	State   EnumDevState  `json:"state"`
+	ErrCode EnumDevError  `json:"err_code"`
+	ErrText string        `json:"err_text"`
 }
 
 func (dev *DeviceReply) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Command = %s, %s",
-		dev.Command, dev.DeviceError.String())
+	str := fmt.Sprintf("Action = %s, State = %s, ErrCode = %s, ErrText = %s",
+		dev.Action, dev.State, dev.ErrCode, dev.ErrText)
 	return str
 }
 
@@ -104,7 +94,7 @@ func (dev *DeviceInform) String() string {
 
 type DeviceCallback interface {
 	DeviceReply(name string, reply *DeviceReply) error
-	ExecuteError(name string, value *DeviceError) error
+	ExecuteError(name string, value *DeviceReply) error
 	StateChanged(name string, value *DeviceState) error
 	ActionPrompt(name string, value *DevicePrompt) error
 	ReaderReturn(name string, value *DeviceInform) error

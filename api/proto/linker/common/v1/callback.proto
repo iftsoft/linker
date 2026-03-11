@@ -1,0 +1,62 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/common/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.common.v1; // Defines the package name for the service and messages
+
+import "linker/common/v1/common.proto";
+
+// Defines the gRPC service with an RPC method
+service DeviceCallbackService {
+  // Notification about device reply
+  rpc DeviceReply(DeviceReplyRequest) returns (DeviceReplyResponse) {}
+  // Notification about execute error
+  rpc ExecuteError(ExecuteErrorRequest) returns (ExecuteErrorResponse) {}
+  // Notification about device state changing
+  rpc StateChanged(StateChangedRequest) returns (StateChangedResponse) {}
+  // Notification about action prompt for user
+  rpc ActionPrompt(ActionPromptRequest) returns (ActionPromptResponse) {}
+  // Notification about device reading result
+  rpc ReaderReturn(ReaderReturnRequest) returns (ReaderReturnResponse) {}
+}
+
+// Defines the message structure for a device reply request
+message DeviceReplyRequest {
+  DeviceReply data = 1;
+}
+
+// Defines the message structure for the device reply response
+message DeviceReplyResponse {}
+
+// Defines the message structure for an execute error request
+message ExecuteErrorRequest {
+  DeviceReply data = 1;
+}
+
+// Defines the message structure for an execute error response
+message ExecuteErrorResponse {}
+
+// Defines the message structure for a status change request
+message StateChangedRequest {
+  DeviceState data = 1;
+}
+
+// Defines the message structure for a status change response
+message StateChangedResponse {}
+
+// Defines the message structure for an action prompt request
+message ActionPromptRequest {
+  DevicePrompt data = 1;
+}
+
+// Defines the message structure for an action prompt response
+message ActionPromptResponse {}
+
+// Defines the message structure for a reading result request
+message ReaderReturnRequest {
+  DeviceInform data = 1;
+}
+
+// Defines the message structure for a reading result response
+message ReaderReturnResponse {}
+

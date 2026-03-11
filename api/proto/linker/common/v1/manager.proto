@@ -1,0 +1,48 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/common/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.common.v1; // Defines the package name for the service and messages
+
+import "linker/common/v1/common.proto";
+
+// Defines the gRPC service with an RPC method
+service DeviceManagerService {
+  // Cancel current operation on device
+  rpc Cancel(CancelRequest) returns (CancelResponse) {}
+  // Reset device to initial state
+  rpc Reset(ResetRequest) returns (ResetResponse) {}
+  // Get status of device
+  rpc Status(StatusRequest) returns (StatusResponse) {}
+}
+
+// Defines the message structure for a cancel request
+message CancelRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the cancel response
+message CancelResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a reset request
+message ResetRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the reset response
+message ResetResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a status request
+message StatusRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message StatusResponse {
+  DeviceReply reply = 1;
+}
+
