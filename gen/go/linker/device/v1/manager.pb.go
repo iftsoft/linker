@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        (unknown)
-// source: linker/common/v1/manager.proto
+// source: linker/device/v1/manager.proto
 
 package v1
 
@@ -31,7 +31,7 @@ type CancelRequest struct {
 
 func (x *CancelRequest) Reset() {
 	*x = CancelRequest{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[0]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *CancelRequest) String() string {
 func (*CancelRequest) ProtoMessage() {}
 
 func (x *CancelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[0]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *CancelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelRequest.ProtoReflect.Descriptor instead.
 func (*CancelRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{0}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *CancelRequest) GetQuery() *DeviceQuery {
@@ -76,7 +76,7 @@ type CancelResponse struct {
 
 func (x *CancelResponse) Reset() {
 	*x = CancelResponse{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[1]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +88,7 @@ func (x *CancelResponse) String() string {
 func (*CancelResponse) ProtoMessage() {}
 
 func (x *CancelResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[1]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +101,7 @@ func (x *CancelResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CancelResponse.ProtoReflect.Descriptor instead.
 func (*CancelResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{1}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CancelResponse) GetReply() *DeviceReply {
@@ -121,7 +121,7 @@ type ResetRequest struct {
 
 func (x *ResetRequest) Reset() {
 	*x = ResetRequest{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[2]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -133,7 +133,7 @@ func (x *ResetRequest) String() string {
 func (*ResetRequest) ProtoMessage() {}
 
 func (x *ResetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[2]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -146,7 +146,7 @@ func (x *ResetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetRequest.ProtoReflect.Descriptor instead.
 func (*ResetRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{2}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ResetRequest) GetQuery() *DeviceQuery {
@@ -166,7 +166,7 @@ type ResetResponse struct {
 
 func (x *ResetResponse) Reset() {
 	*x = ResetResponse{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[3]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -178,7 +178,7 @@ func (x *ResetResponse) String() string {
 func (*ResetResponse) ProtoMessage() {}
 
 func (x *ResetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[3]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -191,7 +191,7 @@ func (x *ResetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetResponse.ProtoReflect.Descriptor instead.
 func (*ResetResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{3}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ResetResponse) GetReply() *DeviceReply {
@@ -211,7 +211,7 @@ type StatusRequest struct {
 
 func (x *StatusRequest) Reset() {
 	*x = StatusRequest{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[4]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -223,7 +223,7 @@ func (x *StatusRequest) String() string {
 func (*StatusRequest) ProtoMessage() {}
 
 func (x *StatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[4]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -236,7 +236,7 @@ func (x *StatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusRequest.ProtoReflect.Descriptor instead.
 func (*StatusRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{4}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *StatusRequest) GetQuery() *DeviceQuery {
@@ -256,7 +256,7 @@ type StatusResponse struct {
 
 func (x *StatusResponse) Reset() {
 	*x = StatusResponse{}
-	mi := &file_linker_common_v1_manager_proto_msgTypes[5]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -268,7 +268,7 @@ func (x *StatusResponse) String() string {
 func (*StatusResponse) ProtoMessage() {}
 
 func (x *StatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_manager_proto_msgTypes[5]
+	mi := &file_linker_device_v1_manager_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -281,7 +281,7 @@ func (x *StatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusResponse.ProtoReflect.Descriptor instead.
 func (*StatusResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_manager_proto_rawDescGZIP(), []int{5}
+	return file_linker_device_v1_manager_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *StatusResponse) GetReply() *DeviceReply {
@@ -291,64 +291,64 @@ func (x *StatusResponse) GetReply() *DeviceReply {
 	return nil
 }
 
-var File_linker_common_v1_manager_proto protoreflect.FileDescriptor
+var File_linker_device_v1_manager_proto protoreflect.FileDescriptor
 
-const file_linker_common_v1_manager_proto_rawDesc = "" +
+const file_linker_device_v1_manager_proto_rawDesc = "" +
 	"\n" +
-	"\x1elinker/common/v1/manager.proto\x12\x10linker.common.v1\x1a\x1dlinker/common/v1/common.proto\"D\n" +
+	"\x1elinker/device/v1/manager.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/device.proto\"D\n" +
 	"\rCancelRequest\x123\n" +
-	"\x05query\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceQueryR\x05query\"E\n" +
+	"\x05query\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceQueryR\x05query\"E\n" +
 	"\x0eCancelResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceReplyR\x05reply\"C\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\"C\n" +
 	"\fResetRequest\x123\n" +
-	"\x05query\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceQueryR\x05query\"D\n" +
+	"\x05query\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceQueryR\x05query\"D\n" +
 	"\rResetResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceReplyR\x05reply\"D\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\"D\n" +
 	"\rStatusRequest\x123\n" +
-	"\x05query\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceQueryR\x05query\"E\n" +
+	"\x05query\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceQueryR\x05query\"E\n" +
 	"\x0eStatusResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceReplyR\x05reply2\x80\x02\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply2\x80\x02\n" +
 	"\x14DeviceManagerService\x12M\n" +
-	"\x06Cancel\x12\x1f.linker.common.v1.CancelRequest\x1a .linker.common.v1.CancelResponse\"\x00\x12J\n" +
-	"\x05Reset\x12\x1e.linker.common.v1.ResetRequest\x1a\x1f.linker.common.v1.ResetResponse\"\x00\x12M\n" +
-	"\x06Status\x12\x1f.linker.common.v1.StatusRequest\x1a .linker.common.v1.StatusResponse\"\x00B\x1bZ\x19./gen/go/linker/common/v1b\x06proto3"
+	"\x06Cancel\x12\x1f.linker.device.v1.CancelRequest\x1a .linker.device.v1.CancelResponse\"\x00\x12J\n" +
+	"\x05Reset\x12\x1e.linker.device.v1.ResetRequest\x1a\x1f.linker.device.v1.ResetResponse\"\x00\x12M\n" +
+	"\x06Status\x12\x1f.linker.device.v1.StatusRequest\x1a .linker.device.v1.StatusResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
-	file_linker_common_v1_manager_proto_rawDescOnce sync.Once
-	file_linker_common_v1_manager_proto_rawDescData []byte
+	file_linker_device_v1_manager_proto_rawDescOnce sync.Once
+	file_linker_device_v1_manager_proto_rawDescData []byte
 )
 
-func file_linker_common_v1_manager_proto_rawDescGZIP() []byte {
-	file_linker_common_v1_manager_proto_rawDescOnce.Do(func() {
-		file_linker_common_v1_manager_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_linker_common_v1_manager_proto_rawDesc), len(file_linker_common_v1_manager_proto_rawDesc)))
+func file_linker_device_v1_manager_proto_rawDescGZIP() []byte {
+	file_linker_device_v1_manager_proto_rawDescOnce.Do(func() {
+		file_linker_device_v1_manager_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_linker_device_v1_manager_proto_rawDesc), len(file_linker_device_v1_manager_proto_rawDesc)))
 	})
-	return file_linker_common_v1_manager_proto_rawDescData
+	return file_linker_device_v1_manager_proto_rawDescData
 }
 
-var file_linker_common_v1_manager_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_linker_common_v1_manager_proto_goTypes = []any{
-	(*CancelRequest)(nil),  // 0: linker.common.v1.CancelRequest
-	(*CancelResponse)(nil), // 1: linker.common.v1.CancelResponse
-	(*ResetRequest)(nil),   // 2: linker.common.v1.ResetRequest
-	(*ResetResponse)(nil),  // 3: linker.common.v1.ResetResponse
-	(*StatusRequest)(nil),  // 4: linker.common.v1.StatusRequest
-	(*StatusResponse)(nil), // 5: linker.common.v1.StatusResponse
-	(*DeviceQuery)(nil),    // 6: linker.common.v1.DeviceQuery
-	(*DeviceReply)(nil),    // 7: linker.common.v1.DeviceReply
+var file_linker_device_v1_manager_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_linker_device_v1_manager_proto_goTypes = []any{
+	(*CancelRequest)(nil),  // 0: linker.device.v1.CancelRequest
+	(*CancelResponse)(nil), // 1: linker.device.v1.CancelResponse
+	(*ResetRequest)(nil),   // 2: linker.device.v1.ResetRequest
+	(*ResetResponse)(nil),  // 3: linker.device.v1.ResetResponse
+	(*StatusRequest)(nil),  // 4: linker.device.v1.StatusRequest
+	(*StatusResponse)(nil), // 5: linker.device.v1.StatusResponse
+	(*DeviceQuery)(nil),    // 6: linker.device.v1.DeviceQuery
+	(*DeviceReply)(nil),    // 7: linker.device.v1.DeviceReply
 }
-var file_linker_common_v1_manager_proto_depIdxs = []int32{
-	6, // 0: linker.common.v1.CancelRequest.query:type_name -> linker.common.v1.DeviceQuery
-	7, // 1: linker.common.v1.CancelResponse.reply:type_name -> linker.common.v1.DeviceReply
-	6, // 2: linker.common.v1.ResetRequest.query:type_name -> linker.common.v1.DeviceQuery
-	7, // 3: linker.common.v1.ResetResponse.reply:type_name -> linker.common.v1.DeviceReply
-	6, // 4: linker.common.v1.StatusRequest.query:type_name -> linker.common.v1.DeviceQuery
-	7, // 5: linker.common.v1.StatusResponse.reply:type_name -> linker.common.v1.DeviceReply
-	0, // 6: linker.common.v1.DeviceManagerService.Cancel:input_type -> linker.common.v1.CancelRequest
-	2, // 7: linker.common.v1.DeviceManagerService.Reset:input_type -> linker.common.v1.ResetRequest
-	4, // 8: linker.common.v1.DeviceManagerService.Status:input_type -> linker.common.v1.StatusRequest
-	1, // 9: linker.common.v1.DeviceManagerService.Cancel:output_type -> linker.common.v1.CancelResponse
-	3, // 10: linker.common.v1.DeviceManagerService.Reset:output_type -> linker.common.v1.ResetResponse
-	5, // 11: linker.common.v1.DeviceManagerService.Status:output_type -> linker.common.v1.StatusResponse
+var file_linker_device_v1_manager_proto_depIdxs = []int32{
+	6, // 0: linker.device.v1.CancelRequest.query:type_name -> linker.device.v1.DeviceQuery
+	7, // 1: linker.device.v1.CancelResponse.reply:type_name -> linker.device.v1.DeviceReply
+	6, // 2: linker.device.v1.ResetRequest.query:type_name -> linker.device.v1.DeviceQuery
+	7, // 3: linker.device.v1.ResetResponse.reply:type_name -> linker.device.v1.DeviceReply
+	6, // 4: linker.device.v1.StatusRequest.query:type_name -> linker.device.v1.DeviceQuery
+	7, // 5: linker.device.v1.StatusResponse.reply:type_name -> linker.device.v1.DeviceReply
+	0, // 6: linker.device.v1.DeviceManagerService.Cancel:input_type -> linker.device.v1.CancelRequest
+	2, // 7: linker.device.v1.DeviceManagerService.Reset:input_type -> linker.device.v1.ResetRequest
+	4, // 8: linker.device.v1.DeviceManagerService.Status:input_type -> linker.device.v1.StatusRequest
+	1, // 9: linker.device.v1.DeviceManagerService.Cancel:output_type -> linker.device.v1.CancelResponse
+	3, // 10: linker.device.v1.DeviceManagerService.Reset:output_type -> linker.device.v1.ResetResponse
+	5, // 11: linker.device.v1.DeviceManagerService.Status:output_type -> linker.device.v1.StatusResponse
 	9, // [9:12] is the sub-list for method output_type
 	6, // [6:9] is the sub-list for method input_type
 	6, // [6:6] is the sub-list for extension type_name
@@ -356,27 +356,27 @@ var file_linker_common_v1_manager_proto_depIdxs = []int32{
 	0, // [0:6] is the sub-list for field type_name
 }
 
-func init() { file_linker_common_v1_manager_proto_init() }
-func file_linker_common_v1_manager_proto_init() {
-	if File_linker_common_v1_manager_proto != nil {
+func init() { file_linker_device_v1_manager_proto_init() }
+func file_linker_device_v1_manager_proto_init() {
+	if File_linker_device_v1_manager_proto != nil {
 		return
 	}
-	file_linker_common_v1_common_proto_init()
+	file_linker_device_v1_device_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_common_v1_manager_proto_rawDesc), len(file_linker_common_v1_manager_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_device_v1_manager_proto_rawDesc), len(file_linker_device_v1_manager_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_linker_common_v1_manager_proto_goTypes,
-		DependencyIndexes: file_linker_common_v1_manager_proto_depIdxs,
-		MessageInfos:      file_linker_common_v1_manager_proto_msgTypes,
+		GoTypes:           file_linker_device_v1_manager_proto_goTypes,
+		DependencyIndexes: file_linker_device_v1_manager_proto_depIdxs,
+		MessageInfos:      file_linker_device_v1_manager_proto_msgTypes,
 	}.Build()
-	File_linker_common_v1_manager_proto = out.File
-	file_linker_common_v1_manager_proto_goTypes = nil
-	file_linker_common_v1_manager_proto_depIdxs = nil
+	File_linker_device_v1_manager_proto = out.File
+	file_linker_device_v1_manager_proto_goTypes = nil
+	file_linker_device_v1_manager_proto_depIdxs = nil
 }

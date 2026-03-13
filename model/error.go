@@ -2,11 +2,11 @@ package common
 
 import "errors"
 
-type EnumDevError uint16
+type DevError uint16
 
 // Device error codes
 const (
-	DevErrorSuccess EnumDevError = iota
+	DevErrorSuccess DevError = iota
 	DevErrorGeneral
 	DevErrorOutOfMemory
 	DevErrorNullPointer
@@ -46,7 +46,7 @@ const (
 )
 
 // String returns a string explaining of the device error
-func (e EnumDevError) String() string {
+func (e DevError) String() string {
 	switch e {
 	case DevErrorSuccess:
 		return "Success"
@@ -129,11 +129,11 @@ func (e EnumDevError) String() string {
 
 // Error is an implementation of error interface for device reply
 type Error struct {
-	code   EnumDevError
+	code   DevError
 	reason error
 }
 
-func ExtendError(code EnumDevError, err error) error {
+func ExtendError(code DevError, err error) error {
 	if err == nil {
 		return nil
 	}
@@ -144,7 +144,7 @@ func ExtendError(code EnumDevError, err error) error {
 	return out
 }
 
-func NewError(code EnumDevError, text string) error {
+func NewError(code DevError, text string) error {
 	out := &Error{
 		code:   code,
 		reason: nil,
@@ -156,7 +156,7 @@ func NewError(code EnumDevError, text string) error {
 }
 
 // Code returns the code of device error
-func (e *Error) Code() EnumDevError {
+func (e *Error) Code() DevError {
 	if e == nil {
 		return DevErrorSuccess
 	}
@@ -175,7 +175,7 @@ func (e *Error) Error() string {
 }
 
 // CheckError returns code and description of error interface
-func CheckError(err error) (EnumDevError, string) {
+func CheckError(err error) (DevError, string) {
 	if err == nil {
 		return DevErrorSuccess, DevErrorSuccess.String()
 	}

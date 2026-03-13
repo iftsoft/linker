@@ -1,8 +1,8 @@
 syntax = "proto3"; // Specifies the protobuf syntax version
 
-option go_package = "./gen/go/linker/common/v1"; // Optional: Specifies the Go package name for generated code
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
 
-package linker.common.v1; // Defines the package name for the service and messages
+package linker.device.v1; // Defines the package name for the service and messages
 
 // Defines the message structure for a device query
 message DeviceQuery {
@@ -33,7 +33,7 @@ message DeviceState {
 message DevicePrompt {
   string device = 1;
   uint32 action = 2;
-  string prompt = 3;
+  uint32 prompt = 3;
 }
 
 // DeviceState the message structure for a state change

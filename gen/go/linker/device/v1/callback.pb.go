@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        (unknown)
-// source: linker/common/v1/callback.proto
+// source: linker/device/v1/callback.proto
 
 package v1
 
@@ -31,7 +31,7 @@ type DeviceReplyRequest struct {
 
 func (x *DeviceReplyRequest) Reset() {
 	*x = DeviceReplyRequest{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[0]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *DeviceReplyRequest) String() string {
 func (*DeviceReplyRequest) ProtoMessage() {}
 
 func (x *DeviceReplyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[0]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *DeviceReplyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeviceReplyRequest.ProtoReflect.Descriptor instead.
 func (*DeviceReplyRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{0}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *DeviceReplyRequest) GetData() *DeviceReply {
@@ -75,7 +75,7 @@ type DeviceReplyResponse struct {
 
 func (x *DeviceReplyResponse) Reset() {
 	*x = DeviceReplyResponse{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[1]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -87,7 +87,7 @@ func (x *DeviceReplyResponse) String() string {
 func (*DeviceReplyResponse) ProtoMessage() {}
 
 func (x *DeviceReplyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[1]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -100,7 +100,7 @@ func (x *DeviceReplyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeviceReplyResponse.ProtoReflect.Descriptor instead.
 func (*DeviceReplyResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{1}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{1}
 }
 
 // Defines the message structure for an execute error request
@@ -113,7 +113,7 @@ type ExecuteErrorRequest struct {
 
 func (x *ExecuteErrorRequest) Reset() {
 	*x = ExecuteErrorRequest{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[2]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -125,7 +125,7 @@ func (x *ExecuteErrorRequest) String() string {
 func (*ExecuteErrorRequest) ProtoMessage() {}
 
 func (x *ExecuteErrorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[2]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -138,7 +138,7 @@ func (x *ExecuteErrorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteErrorRequest.ProtoReflect.Descriptor instead.
 func (*ExecuteErrorRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{2}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ExecuteErrorRequest) GetData() *DeviceReply {
@@ -157,7 +157,7 @@ type ExecuteErrorResponse struct {
 
 func (x *ExecuteErrorResponse) Reset() {
 	*x = ExecuteErrorResponse{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[3]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -169,7 +169,7 @@ func (x *ExecuteErrorResponse) String() string {
 func (*ExecuteErrorResponse) ProtoMessage() {}
 
 func (x *ExecuteErrorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[3]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -182,7 +182,7 @@ func (x *ExecuteErrorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteErrorResponse.ProtoReflect.Descriptor instead.
 func (*ExecuteErrorResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{3}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{3}
 }
 
 // Defines the message structure for a status change request
@@ -195,7 +195,7 @@ type StateChangedRequest struct {
 
 func (x *StateChangedRequest) Reset() {
 	*x = StateChangedRequest{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[4]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -207,7 +207,7 @@ func (x *StateChangedRequest) String() string {
 func (*StateChangedRequest) ProtoMessage() {}
 
 func (x *StateChangedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[4]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -220,7 +220,7 @@ func (x *StateChangedRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateChangedRequest.ProtoReflect.Descriptor instead.
 func (*StateChangedRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{4}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *StateChangedRequest) GetData() *DeviceState {
@@ -239,7 +239,7 @@ type StateChangedResponse struct {
 
 func (x *StateChangedResponse) Reset() {
 	*x = StateChangedResponse{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[5]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -251,7 +251,7 @@ func (x *StateChangedResponse) String() string {
 func (*StateChangedResponse) ProtoMessage() {}
 
 func (x *StateChangedResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[5]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +264,7 @@ func (x *StateChangedResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateChangedResponse.ProtoReflect.Descriptor instead.
 func (*StateChangedResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{5}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{5}
 }
 
 // Defines the message structure for an action prompt request
@@ -277,7 +277,7 @@ type ActionPromptRequest struct {
 
 func (x *ActionPromptRequest) Reset() {
 	*x = ActionPromptRequest{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[6]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -289,7 +289,7 @@ func (x *ActionPromptRequest) String() string {
 func (*ActionPromptRequest) ProtoMessage() {}
 
 func (x *ActionPromptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[6]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -302,7 +302,7 @@ func (x *ActionPromptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionPromptRequest.ProtoReflect.Descriptor instead.
 func (*ActionPromptRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{6}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ActionPromptRequest) GetData() *DevicePrompt {
@@ -321,7 +321,7 @@ type ActionPromptResponse struct {
 
 func (x *ActionPromptResponse) Reset() {
 	*x = ActionPromptResponse{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[7]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -333,7 +333,7 @@ func (x *ActionPromptResponse) String() string {
 func (*ActionPromptResponse) ProtoMessage() {}
 
 func (x *ActionPromptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[7]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -346,7 +346,7 @@ func (x *ActionPromptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionPromptResponse.ProtoReflect.Descriptor instead.
 func (*ActionPromptResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{7}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{7}
 }
 
 // Defines the message structure for a reading result request
@@ -359,7 +359,7 @@ type ReaderReturnRequest struct {
 
 func (x *ReaderReturnRequest) Reset() {
 	*x = ReaderReturnRequest{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[8]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -371,7 +371,7 @@ func (x *ReaderReturnRequest) String() string {
 func (*ReaderReturnRequest) ProtoMessage() {}
 
 func (x *ReaderReturnRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[8]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -384,7 +384,7 @@ func (x *ReaderReturnRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReaderReturnRequest.ProtoReflect.Descriptor instead.
 func (*ReaderReturnRequest) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{8}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ReaderReturnRequest) GetData() *DeviceInform {
@@ -403,7 +403,7 @@ type ReaderReturnResponse struct {
 
 func (x *ReaderReturnResponse) Reset() {
 	*x = ReaderReturnResponse{}
-	mi := &file_linker_common_v1_callback_proto_msgTypes[9]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -415,7 +415,7 @@ func (x *ReaderReturnResponse) String() string {
 func (*ReaderReturnResponse) ProtoMessage() {}
 
 func (x *ReaderReturnResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_common_v1_callback_proto_msgTypes[9]
+	mi := &file_linker_device_v1_callback_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -428,81 +428,81 @@ func (x *ReaderReturnResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReaderReturnResponse.ProtoReflect.Descriptor instead.
 func (*ReaderReturnResponse) Descriptor() ([]byte, []int) {
-	return file_linker_common_v1_callback_proto_rawDescGZIP(), []int{9}
+	return file_linker_device_v1_callback_proto_rawDescGZIP(), []int{9}
 }
 
-var File_linker_common_v1_callback_proto protoreflect.FileDescriptor
+var File_linker_device_v1_callback_proto protoreflect.FileDescriptor
 
-const file_linker_common_v1_callback_proto_rawDesc = "" +
+const file_linker_device_v1_callback_proto_rawDesc = "" +
 	"\n" +
-	"\x1flinker/common/v1/callback.proto\x12\x10linker.common.v1\x1a\x1dlinker/common/v1/common.proto\"G\n" +
+	"\x1flinker/device/v1/callback.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/device.proto\"G\n" +
 	"\x12DeviceReplyRequest\x121\n" +
-	"\x04data\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceReplyR\x04data\"\x15\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x04data\"\x15\n" +
 	"\x13DeviceReplyResponse\"H\n" +
 	"\x13ExecuteErrorRequest\x121\n" +
-	"\x04data\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceReplyR\x04data\"\x16\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x04data\"\x16\n" +
 	"\x14ExecuteErrorResponse\"H\n" +
 	"\x13StateChangedRequest\x121\n" +
-	"\x04data\x18\x01 \x01(\v2\x1d.linker.common.v1.DeviceStateR\x04data\"\x16\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceStateR\x04data\"\x16\n" +
 	"\x14StateChangedResponse\"I\n" +
 	"\x13ActionPromptRequest\x122\n" +
-	"\x04data\x18\x01 \x01(\v2\x1e.linker.common.v1.DevicePromptR\x04data\"\x16\n" +
+	"\x04data\x18\x01 \x01(\v2\x1e.linker.device.v1.DevicePromptR\x04data\"\x16\n" +
 	"\x14ActionPromptResponse\"I\n" +
 	"\x13ReaderReturnRequest\x122\n" +
-	"\x04data\x18\x01 \x01(\v2\x1e.linker.common.v1.DeviceInformR\x04data\"\x16\n" +
+	"\x04data\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceInformR\x04data\"\x16\n" +
 	"\x14ReaderReturnResponse2\xf9\x03\n" +
 	"\x15DeviceCallbackService\x12\\\n" +
-	"\vDeviceReply\x12$.linker.common.v1.DeviceReplyRequest\x1a%.linker.common.v1.DeviceReplyResponse\"\x00\x12_\n" +
-	"\fExecuteError\x12%.linker.common.v1.ExecuteErrorRequest\x1a&.linker.common.v1.ExecuteErrorResponse\"\x00\x12_\n" +
-	"\fStateChanged\x12%.linker.common.v1.StateChangedRequest\x1a&.linker.common.v1.StateChangedResponse\"\x00\x12_\n" +
-	"\fActionPrompt\x12%.linker.common.v1.ActionPromptRequest\x1a&.linker.common.v1.ActionPromptResponse\"\x00\x12_\n" +
-	"\fReaderReturn\x12%.linker.common.v1.ReaderReturnRequest\x1a&.linker.common.v1.ReaderReturnResponse\"\x00B\x1bZ\x19./gen/go/linker/common/v1b\x06proto3"
+	"\vDeviceReply\x12$.linker.device.v1.DeviceReplyRequest\x1a%.linker.device.v1.DeviceReplyResponse\"\x00\x12_\n" +
+	"\fExecuteError\x12%.linker.device.v1.ExecuteErrorRequest\x1a&.linker.device.v1.ExecuteErrorResponse\"\x00\x12_\n" +
+	"\fStateChanged\x12%.linker.device.v1.StateChangedRequest\x1a&.linker.device.v1.StateChangedResponse\"\x00\x12_\n" +
+	"\fActionPrompt\x12%.linker.device.v1.ActionPromptRequest\x1a&.linker.device.v1.ActionPromptResponse\"\x00\x12_\n" +
+	"\fReaderReturn\x12%.linker.device.v1.ReaderReturnRequest\x1a&.linker.device.v1.ReaderReturnResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
-	file_linker_common_v1_callback_proto_rawDescOnce sync.Once
-	file_linker_common_v1_callback_proto_rawDescData []byte
+	file_linker_device_v1_callback_proto_rawDescOnce sync.Once
+	file_linker_device_v1_callback_proto_rawDescData []byte
 )
 
-func file_linker_common_v1_callback_proto_rawDescGZIP() []byte {
-	file_linker_common_v1_callback_proto_rawDescOnce.Do(func() {
-		file_linker_common_v1_callback_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_linker_common_v1_callback_proto_rawDesc), len(file_linker_common_v1_callback_proto_rawDesc)))
+func file_linker_device_v1_callback_proto_rawDescGZIP() []byte {
+	file_linker_device_v1_callback_proto_rawDescOnce.Do(func() {
+		file_linker_device_v1_callback_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_linker_device_v1_callback_proto_rawDesc), len(file_linker_device_v1_callback_proto_rawDesc)))
 	})
-	return file_linker_common_v1_callback_proto_rawDescData
+	return file_linker_device_v1_callback_proto_rawDescData
 }
 
-var file_linker_common_v1_callback_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
-var file_linker_common_v1_callback_proto_goTypes = []any{
-	(*DeviceReplyRequest)(nil),   // 0: linker.common.v1.DeviceReplyRequest
-	(*DeviceReplyResponse)(nil),  // 1: linker.common.v1.DeviceReplyResponse
-	(*ExecuteErrorRequest)(nil),  // 2: linker.common.v1.ExecuteErrorRequest
-	(*ExecuteErrorResponse)(nil), // 3: linker.common.v1.ExecuteErrorResponse
-	(*StateChangedRequest)(nil),  // 4: linker.common.v1.StateChangedRequest
-	(*StateChangedResponse)(nil), // 5: linker.common.v1.StateChangedResponse
-	(*ActionPromptRequest)(nil),  // 6: linker.common.v1.ActionPromptRequest
-	(*ActionPromptResponse)(nil), // 7: linker.common.v1.ActionPromptResponse
-	(*ReaderReturnRequest)(nil),  // 8: linker.common.v1.ReaderReturnRequest
-	(*ReaderReturnResponse)(nil), // 9: linker.common.v1.ReaderReturnResponse
-	(*DeviceReply)(nil),          // 10: linker.common.v1.DeviceReply
-	(*DeviceState)(nil),          // 11: linker.common.v1.DeviceState
-	(*DevicePrompt)(nil),         // 12: linker.common.v1.DevicePrompt
-	(*DeviceInform)(nil),         // 13: linker.common.v1.DeviceInform
+var file_linker_device_v1_callback_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_linker_device_v1_callback_proto_goTypes = []any{
+	(*DeviceReplyRequest)(nil),   // 0: linker.device.v1.DeviceReplyRequest
+	(*DeviceReplyResponse)(nil),  // 1: linker.device.v1.DeviceReplyResponse
+	(*ExecuteErrorRequest)(nil),  // 2: linker.device.v1.ExecuteErrorRequest
+	(*ExecuteErrorResponse)(nil), // 3: linker.device.v1.ExecuteErrorResponse
+	(*StateChangedRequest)(nil),  // 4: linker.device.v1.StateChangedRequest
+	(*StateChangedResponse)(nil), // 5: linker.device.v1.StateChangedResponse
+	(*ActionPromptRequest)(nil),  // 6: linker.device.v1.ActionPromptRequest
+	(*ActionPromptResponse)(nil), // 7: linker.device.v1.ActionPromptResponse
+	(*ReaderReturnRequest)(nil),  // 8: linker.device.v1.ReaderReturnRequest
+	(*ReaderReturnResponse)(nil), // 9: linker.device.v1.ReaderReturnResponse
+	(*DeviceReply)(nil),          // 10: linker.device.v1.DeviceReply
+	(*DeviceState)(nil),          // 11: linker.device.v1.DeviceState
+	(*DevicePrompt)(nil),         // 12: linker.device.v1.DevicePrompt
+	(*DeviceInform)(nil),         // 13: linker.device.v1.DeviceInform
 }
-var file_linker_common_v1_callback_proto_depIdxs = []int32{
-	10, // 0: linker.common.v1.DeviceReplyRequest.data:type_name -> linker.common.v1.DeviceReply
-	10, // 1: linker.common.v1.ExecuteErrorRequest.data:type_name -> linker.common.v1.DeviceReply
-	11, // 2: linker.common.v1.StateChangedRequest.data:type_name -> linker.common.v1.DeviceState
-	12, // 3: linker.common.v1.ActionPromptRequest.data:type_name -> linker.common.v1.DevicePrompt
-	13, // 4: linker.common.v1.ReaderReturnRequest.data:type_name -> linker.common.v1.DeviceInform
-	0,  // 5: linker.common.v1.DeviceCallbackService.DeviceReply:input_type -> linker.common.v1.DeviceReplyRequest
-	2,  // 6: linker.common.v1.DeviceCallbackService.ExecuteError:input_type -> linker.common.v1.ExecuteErrorRequest
-	4,  // 7: linker.common.v1.DeviceCallbackService.StateChanged:input_type -> linker.common.v1.StateChangedRequest
-	6,  // 8: linker.common.v1.DeviceCallbackService.ActionPrompt:input_type -> linker.common.v1.ActionPromptRequest
-	8,  // 9: linker.common.v1.DeviceCallbackService.ReaderReturn:input_type -> linker.common.v1.ReaderReturnRequest
-	1,  // 10: linker.common.v1.DeviceCallbackService.DeviceReply:output_type -> linker.common.v1.DeviceReplyResponse
-	3,  // 11: linker.common.v1.DeviceCallbackService.ExecuteError:output_type -> linker.common.v1.ExecuteErrorResponse
-	5,  // 12: linker.common.v1.DeviceCallbackService.StateChanged:output_type -> linker.common.v1.StateChangedResponse
-	7,  // 13: linker.common.v1.DeviceCallbackService.ActionPrompt:output_type -> linker.common.v1.ActionPromptResponse
-	9,  // 14: linker.common.v1.DeviceCallbackService.ReaderReturn:output_type -> linker.common.v1.ReaderReturnResponse
+var file_linker_device_v1_callback_proto_depIdxs = []int32{
+	10, // 0: linker.device.v1.DeviceReplyRequest.data:type_name -> linker.device.v1.DeviceReply
+	10, // 1: linker.device.v1.ExecuteErrorRequest.data:type_name -> linker.device.v1.DeviceReply
+	11, // 2: linker.device.v1.StateChangedRequest.data:type_name -> linker.device.v1.DeviceState
+	12, // 3: linker.device.v1.ActionPromptRequest.data:type_name -> linker.device.v1.DevicePrompt
+	13, // 4: linker.device.v1.ReaderReturnRequest.data:type_name -> linker.device.v1.DeviceInform
+	0,  // 5: linker.device.v1.DeviceCallbackService.DeviceReply:input_type -> linker.device.v1.DeviceReplyRequest
+	2,  // 6: linker.device.v1.DeviceCallbackService.ExecuteError:input_type -> linker.device.v1.ExecuteErrorRequest
+	4,  // 7: linker.device.v1.DeviceCallbackService.StateChanged:input_type -> linker.device.v1.StateChangedRequest
+	6,  // 8: linker.device.v1.DeviceCallbackService.ActionPrompt:input_type -> linker.device.v1.ActionPromptRequest
+	8,  // 9: linker.device.v1.DeviceCallbackService.ReaderReturn:input_type -> linker.device.v1.ReaderReturnRequest
+	1,  // 10: linker.device.v1.DeviceCallbackService.DeviceReply:output_type -> linker.device.v1.DeviceReplyResponse
+	3,  // 11: linker.device.v1.DeviceCallbackService.ExecuteError:output_type -> linker.device.v1.ExecuteErrorResponse
+	5,  // 12: linker.device.v1.DeviceCallbackService.StateChanged:output_type -> linker.device.v1.StateChangedResponse
+	7,  // 13: linker.device.v1.DeviceCallbackService.ActionPrompt:output_type -> linker.device.v1.ActionPromptResponse
+	9,  // 14: linker.device.v1.DeviceCallbackService.ReaderReturn:output_type -> linker.device.v1.ReaderReturnResponse
 	10, // [10:15] is the sub-list for method output_type
 	5,  // [5:10] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
@@ -510,27 +510,27 @@ var file_linker_common_v1_callback_proto_depIdxs = []int32{
 	0,  // [0:5] is the sub-list for field type_name
 }
 
-func init() { file_linker_common_v1_callback_proto_init() }
-func file_linker_common_v1_callback_proto_init() {
-	if File_linker_common_v1_callback_proto != nil {
+func init() { file_linker_device_v1_callback_proto_init() }
+func file_linker_device_v1_callback_proto_init() {
+	if File_linker_device_v1_callback_proto != nil {
 		return
 	}
-	file_linker_common_v1_common_proto_init()
+	file_linker_device_v1_device_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_common_v1_callback_proto_rawDesc), len(file_linker_common_v1_callback_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_device_v1_callback_proto_rawDesc), len(file_linker_device_v1_callback_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_linker_common_v1_callback_proto_goTypes,
-		DependencyIndexes: file_linker_common_v1_callback_proto_depIdxs,
-		MessageInfos:      file_linker_common_v1_callback_proto_msgTypes,
+		GoTypes:           file_linker_device_v1_callback_proto_goTypes,
+		DependencyIndexes: file_linker_device_v1_callback_proto_depIdxs,
+		MessageInfos:      file_linker_device_v1_callback_proto_msgTypes,
 	}.Build()
-	File_linker_common_v1_callback_proto = out.File
-	file_linker_common_v1_callback_proto_goTypes = nil
-	file_linker_common_v1_callback_proto_depIdxs = nil
+	File_linker_device_v1_callback_proto = out.File
+	file_linker_device_v1_callback_proto_goTypes = nil
+	file_linker_device_v1_callback_proto_depIdxs = nil
 }

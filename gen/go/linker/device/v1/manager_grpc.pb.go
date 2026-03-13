@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             (unknown)
-// source: linker/common/v1/manager.proto
+// source: linker/device/v1/manager.proto
 
 package v1
 
@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceManagerService_Cancel_FullMethodName = "/linker.common.v1.DeviceManagerService/Cancel"
-	DeviceManagerService_Reset_FullMethodName  = "/linker.common.v1.DeviceManagerService/Reset"
-	DeviceManagerService_Status_FullMethodName = "/linker.common.v1.DeviceManagerService/Status"
+	DeviceManagerService_Cancel_FullMethodName = "/linker.device.v1.DeviceManagerService/Cancel"
+	DeviceManagerService_Reset_FullMethodName  = "/linker.device.v1.DeviceManagerService/Reset"
+	DeviceManagerService_Status_FullMethodName = "/linker.device.v1.DeviceManagerService/Status"
 )
 
 // DeviceManagerServiceClient is the client API for DeviceManagerService service.
@@ -186,7 +186,7 @@ func _DeviceManagerService_Status_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var DeviceManagerService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "linker.common.v1.DeviceManagerService",
+	ServiceName: "linker.device.v1.DeviceManagerService",
 	HandlerType: (*DeviceManagerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -203,5 +203,5 @@ var DeviceManagerService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "linker/common/v1/manager.proto",
+	Metadata: "linker/device/v1/manager.proto",
 }

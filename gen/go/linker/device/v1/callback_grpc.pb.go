@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             (unknown)
-// source: linker/common/v1/callback.proto
+// source: linker/device/v1/callback.proto
 
 package v1
 
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceCallbackService_DeviceReply_FullMethodName  = "/linker.common.v1.DeviceCallbackService/DeviceReply"
-	DeviceCallbackService_ExecuteError_FullMethodName = "/linker.common.v1.DeviceCallbackService/ExecuteError"
-	DeviceCallbackService_StateChanged_FullMethodName = "/linker.common.v1.DeviceCallbackService/StateChanged"
-	DeviceCallbackService_ActionPrompt_FullMethodName = "/linker.common.v1.DeviceCallbackService/ActionPrompt"
-	DeviceCallbackService_ReaderReturn_FullMethodName = "/linker.common.v1.DeviceCallbackService/ReaderReturn"
+	DeviceCallbackService_DeviceReply_FullMethodName  = "/linker.device.v1.DeviceCallbackService/DeviceReply"
+	DeviceCallbackService_ExecuteError_FullMethodName = "/linker.device.v1.DeviceCallbackService/ExecuteError"
+	DeviceCallbackService_StateChanged_FullMethodName = "/linker.device.v1.DeviceCallbackService/StateChanged"
+	DeviceCallbackService_ActionPrompt_FullMethodName = "/linker.device.v1.DeviceCallbackService/ActionPrompt"
+	DeviceCallbackService_ReaderReturn_FullMethodName = "/linker.device.v1.DeviceCallbackService/ReaderReturn"
 )
 
 // DeviceCallbackServiceClient is the client API for DeviceCallbackService service.
@@ -258,7 +258,7 @@ func _DeviceCallbackService_ReaderReturn_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var DeviceCallbackService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "linker.common.v1.DeviceCallbackService",
+	ServiceName: "linker.device.v1.DeviceCallbackService",
 	HandlerType: (*DeviceCallbackServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -283,5 +283,5 @@ var DeviceCallbackService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "linker/common/v1/callback.proto",
+	Metadata: "linker/device/v1/callback.proto",
 }

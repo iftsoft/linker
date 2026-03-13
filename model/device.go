@@ -32,12 +32,12 @@ func (dev *DeviceQuery) String() string {
 }
 
 type DeviceReply struct {
-	Device  string        `json:"device"`
-	Command string        `json:"command"`
-	Action  EnumDevAction `json:"action"`
-	State   EnumDevState  `json:"state"`
-	ErrCode EnumDevError  `json:"err_code"`
-	ErrText string        `json:"err_text"`
+	Device  string    `json:"device"`
+	Command string    `json:"command"`
+	Action  DevAction `json:"action"`
+	State   DevState  `json:"state"`
+	ErrCode DevError  `json:"err_code"`
+	ErrText string    `json:"err_text"`
 }
 
 func (dev *DeviceReply) String() string {
@@ -50,9 +50,10 @@ func (dev *DeviceReply) String() string {
 }
 
 type DeviceState struct {
-	Action   EnumDevAction `json:"action"`
-	NewState EnumDevState  `json:"new_state"`
-	OldState EnumDevState  `json:"old_state"`
+	Device   string    `json:"device"`
+	Action   DevAction `json:"action"`
+	NewState DevState  `json:"new_state"`
+	OldState DevState  `json:"old_state"`
 }
 
 func (dev *DeviceState) String() string {
@@ -65,8 +66,9 @@ func (dev *DeviceState) String() string {
 }
 
 type DevicePrompt struct {
-	Action EnumDevAction `json:"action"`
-	Prompt EnumDevPrompt `json:"prompt"`
+	Device string    `json:"device"`
+	Action DevAction `json:"action"`
+	Prompt DevPrompt `json:"prompt"`
 }
 
 func (dev *DevicePrompt) String() string {
@@ -79,8 +81,9 @@ func (dev *DevicePrompt) String() string {
 }
 
 type DeviceInform struct {
-	Action EnumDevAction `json:"action"`
-	Inform string        `json:"inform"`
+	Device string    `json:"device"`
+	Action DevAction `json:"action"`
+	Inform string    `json:"inform"`
 }
 
 func (dev *DeviceInform) String() string {
@@ -93,11 +96,11 @@ func (dev *DeviceInform) String() string {
 }
 
 type DeviceCallback interface {
-	DeviceReply(name string, reply *DeviceReply) error
-	ExecuteError(name string, value *DeviceReply) error
-	StateChanged(name string, value *DeviceState) error
-	ActionPrompt(name string, value *DevicePrompt) error
-	ReaderReturn(name string, value *DeviceInform) error
+	DeviceReply(reply *DeviceReply) error
+	ExecuteError(value *DeviceReply) error
+	StateChanged(value *DeviceState) error
+	ActionPrompt(value *DevicePrompt) error
+	ReaderReturn(value *DeviceInform) error
 }
 
 type DeviceManager interface {

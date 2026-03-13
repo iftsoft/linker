@@ -4,9 +4,9 @@ import (
 	"strings"
 )
 
-type EnumDevState uint32
-type EnumDevAction uint32
-type EnumDevPrompt uint32
+type DevState uint32
+type DevAction uint32
+type DevPrompt uint32
 type DevTypeMask uint64
 
 // Device types
@@ -65,7 +65,7 @@ func (e DevTypeMask) ToString() string {
 
 // Device status codes
 const (
-	DevStateUndefined EnumDevState = iota
+	DevStateUndefined DevState = iota
 	DevStateReady
 	DevStateWorking
 	DevStateWaiting
@@ -102,7 +102,7 @@ const (
 )
 
 // String returns a string explaining the device status
-func (e EnumDevState) String() string {
+func (e DevState) String() string {
 	switch e {
 	case DevStateUndefined:
 		return "Undefined"
@@ -179,7 +179,7 @@ func (e EnumDevState) String() string {
 
 // Device prompt codes
 const (
-	DevPromptNone EnumDevPrompt = iota
+	DevPromptNone DevPrompt = iota
 	DevPromptUnitWork
 	DevPromptUnitDone
 	DevPromptUnitError
@@ -209,7 +209,7 @@ const (
 )
 
 // String returns a string explaining the device prompt
-func (e EnumDevPrompt) String() string {
+func (e DevPrompt) String() string {
 	switch e {
 	case DevPromptNone:
 		return "Thank you."
@@ -272,7 +272,7 @@ func (e EnumDevPrompt) String() string {
 
 // Device action codes
 const (
-	DevActionDoNothing EnumDevAction = iota
+	DevActionDoNothing DevAction = iota
 	DevActionInitialization
 	DevActionReconciliation
 	DevActionDeviceStarting
@@ -302,11 +302,11 @@ const (
 	DevActionRelaySwitching
 	DevActionSensorChecking
 	DevActionItemVending
-	DevAction
+	DevActionLast
 )
 
 // String returns a string explaining the device action
-func (e EnumDevAction) String() string {
+func (e DevAction) String() string {
 	switch e {
 	case DevActionDoNothing:
 		return "Do nothing"
@@ -368,7 +368,7 @@ func (e EnumDevAction) String() string {
 		return "Sensor checking"
 	case DevActionItemVending:
 		return "Item vending"
-	case DevAction:
+	case DevActionLast:
 		return "Action"
 	default:
 		return "Unknown"
