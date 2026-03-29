@@ -1,0 +1,72 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/system/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.system.v1; // Defines the package name for the service and messages
+
+import "linker/system/v1/system.proto";
+
+// Defines the gRPC service with an RPC method
+service SystemManagerService {
+  // Terminate
+  rpc Terminate(TerminateRequest) returns (TerminateResponse) {}
+  // SysInform
+  rpc SysInform(SysInformRequest) returns (SysInformResponse) {}
+  // SysStart
+  rpc SysStart(SysStartRequest) returns (SysStartResponse) {}
+  // SysStop
+  rpc SysStop(SysStopRequest) returns (SysStopResponse) {}
+  // SysRestart
+  rpc SysRestart(SysRestartRequest) returns (SysRestartResponse) {}
+}
+
+// Defines the message structure for a terminate request
+message TerminateRequest {
+  SystemQuery query = 1;
+}
+
+// Defines the message structure for the terminate response
+message TerminateResponse {
+  SystemReply reply = 1;
+}
+
+// Defines the message structure for a inform request
+message SysInformRequest {
+  SystemQuery query = 1;
+}
+
+// Defines the message structure for the inform response
+message SysInformResponse {
+  SystemHealth reply = 1;
+}
+
+// Defines the message structure for a system start request
+message SysStartRequest {
+  SystemConfig config = 1;
+}
+
+// Defines the message structure for the system start response
+message SysStartResponse {
+  SystemReply reply = 1;
+}
+
+// Defines the message structure for a system stop request
+message SysStopRequest {
+  SystemQuery query = 1;
+}
+
+// Defines the message structure for the system stop response
+message SysStopResponse {
+  SystemReply reply = 1;
+}
+
+// Defines the message structure for a system restart request
+message SysRestartRequest {
+  SystemConfig config = 1;
+}
+
+// Defines the message structure for the system restart response
+message SysRestartResponse {
+  SystemReply reply = 1;
+}
+

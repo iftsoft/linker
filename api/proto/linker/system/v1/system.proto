@@ -1,0 +1,45 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/system/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.system.v1; // Defines the package name for the service and messages
+
+// Defines the message structure for a system query
+message SystemQuery {
+  string device = 1;
+}
+
+// Defines the message structure for a system config
+message SystemConfig {
+  string device = 1;
+  uint32 link_type = 2;  // 0-none, 1-COM, 2-USB
+  string port_name = 3;  // Serial port name
+  uint32 vendor_id = 4;  // Device Vendor ID
+  uint32 product_id = 5; // Device Product ID
+}
+
+// Defines the message structure for a system reply
+message SystemReply {
+  string device = 1;
+  string command = 2;
+  string message = 3;
+  uint32 sys_error = 4;
+  uint32 sys_state = 5;
+}
+
+// Defines the message structure for a system metrics
+message SystemMetrics {
+  uint64 uptime = 1;
+  uint32 dev_error = 2;
+  uint32 dev_state = 3;
+}
+
+// Defines the message structure for a system health
+message SystemHealth {
+  string device = 1;
+  int64 moment = 2;
+  uint32 sys_error = 3;
+  uint32 sys_state = 4;
+  SystemMetrics metrics = 5;
+}
+

@@ -17,7 +17,7 @@ func (c *CallbackClient) DeviceReply(ctx context.Context, reply *model.DeviceRep
 	input := &srv.DeviceReplyRequest{
 		Data: convertDeviceReply(reply),
 	}
-	_, err := c.api.DeviceReply(ctx, input)
+	_, err := c.device.DeviceReply(ctx, input)
 	if err != nil {
 		return fmt.Errorf("callback DeviceReply for %s.%s failed: %w", reply.Device, reply.Command, err)
 	}
@@ -33,7 +33,7 @@ func (c *CallbackClient) ExecuteError(ctx context.Context, value *model.DeviceRe
 	input := &srv.ExecuteErrorRequest{
 		Data: convertDeviceReply(value),
 	}
-	_, err := c.api.ExecuteError(ctx, input)
+	_, err := c.device.ExecuteError(ctx, input)
 	if err != nil {
 		return fmt.Errorf("callback ExecuteError for %s.%s failed: %w", value.Device, value.Command, err)
 	}
@@ -49,7 +49,7 @@ func (c *CallbackClient) StateChanged(ctx context.Context, value *model.DeviceSt
 	input := &srv.StateChangedRequest{
 		Data: convertDeviceState(value),
 	}
-	_, err := c.api.StateChanged(ctx, input)
+	_, err := c.device.StateChanged(ctx, input)
 	if err != nil {
 		return fmt.Errorf("callback StateChanged for %s.%s failed: %w", value.Device, value.Action.String(), err)
 	}
@@ -65,7 +65,7 @@ func (c *CallbackClient) ActionPrompt(ctx context.Context, value *model.DevicePr
 	input := &srv.ActionPromptRequest{
 		Data: convertDevicePrompt(value),
 	}
-	_, err := c.api.ActionPrompt(ctx, input)
+	_, err := c.device.ActionPrompt(ctx, input)
 	if err != nil {
 		return fmt.Errorf("callback ActionPrompt for %s.%s failed: %w", value.Device, value.Action.String(), err)
 	}
@@ -81,7 +81,7 @@ func (c *CallbackClient) ReaderReturn(ctx context.Context, value *model.DeviceIn
 	input := &srv.ReaderReturnRequest{
 		Data: convertDeviceInform(value),
 	}
-	_, err := c.api.ReaderReturn(ctx, input)
+	_, err := c.device.ReaderReturn(ctx, input)
 	if err != nil {
 		return fmt.Errorf("callback ReaderReturn for %s.%s failed: %w", value.Device, value.Action.String(), err)
 	}

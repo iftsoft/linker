@@ -1,8 +1,8 @@
-package common
+package model
 
 import "errors"
 
-type DevError uint16
+type DevError uint32
 
 // Device error codes
 const (

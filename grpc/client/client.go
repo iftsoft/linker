@@ -34,8 +34,8 @@ type DeviceCallbackClient interface {
 }
 
 type CallbackClient struct {
-	log *slog.Logger
-	api srv.DeviceCallbackServiceClient
+	log    *slog.Logger
+	device srv.DeviceCallbackServiceClient
 }
 
 func NewCallbackClient(ctx context.Context, log *slog.Logger, address string) (*CallbackClient, error) {
@@ -62,8 +62,8 @@ func NewCallbackClient(ctx context.Context, log *slog.Logger, address string) (*
 	}
 
 	return &CallbackClient{
-		log: log,
-		api: srv.NewDeviceCallbackServiceClient(conn),
+		log:    log,
+		device: srv.NewDeviceCallbackServiceClient(conn),
 	}, nil
 }
 
