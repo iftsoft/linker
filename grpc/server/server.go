@@ -34,7 +34,7 @@ type (
 	}
 )
 
-func New(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Server {
+func NewServer(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Server {
 	srv := &Server{
 		log:  log,
 		conf: cfg,
@@ -103,7 +103,6 @@ func (s *Server) Shutdown() {
 	s.log.Info("Stopping grpc server...")
 
 	// Graceful stop according to best practices
-	// https://github.com/grpc/grpc-go/tree/master/examples/features/gracefulstop#graceful-stop
 	timer := time.AfterFunc(gracefulStopTimeout, func() {
 		s.log.Warn("Server couldn't stop gracefully in time. Doing force stop.")
 		s.conn.Stop()
@@ -119,11 +118,3 @@ func (s *Server) grpcPanicRecoveryHandler(ctx context.Context, p any) error {
 
 	return status.Errorf(codes.Internal, "%s", p)
 }
-
-//func (s *Server) grpcExemplarFromContext(ctx context.Context) prometheus.Labels {
-//	if span := trace.SpanContextFromContext(ctx); span.IsSampled() {
-//		return prometheus.Labels{"traceID": span.TraceID().String()}
-//	}
-//
-//	return nil
-//}

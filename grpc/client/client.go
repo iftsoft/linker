@@ -3,14 +3,12 @@ package client
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
 
-	srv "github.com/iftsoft/linker/gen/go/linker/device/v1"
 	model "github.com/iftsoft/linker/model"
 )
 
@@ -33,12 +31,11 @@ type DeviceCallbackClient interface {
 	ReaderReturn(ctx context.Context, value *model.DeviceInform) error
 }
 
-type CallbackClient struct {
-	log    *slog.Logger
-	device srv.DeviceCallbackServiceClient
+type Client struct {
+	conn *grpc.ClientConn
 }
 
-func NewCallbackClient(ctx context.Context, log *slog.Logger, address string) (*CallbackClient, error) {
+func NewClient(ctx context.Context, address string) (*Client, error) {
 	opts := []grpc.DialOption{}
 	opts = append(opts,
 		grpc.WithUserAgent("linker"),
@@ -61,10 +58,17 @@ func NewCallbackClient(ctx context.Context, log *slog.Logger, address string) (*
 		s = conn.GetState()
 	}
 
-	return &CallbackClient{
-		log:    log,
-		device: srv.NewDeviceCallbackServiceClient(conn),
+	return &Client{
+		conn: conn,
 	}, nil
+}
+
+func (c *Client) Close() error {
+	return c.conn.Close()
+}
+
+func (c *Client) Connection() *grpc.ClientConn {
+	return c.conn
 }
 
 type TimeoutCallOption struct {
