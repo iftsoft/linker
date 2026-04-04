@@ -48,8 +48,8 @@ func (h *Callback) SystemReply(ctx context.Context, req *srv.SystemReplyRequest)
 		Device:   data.GetDevice(),
 		Command:  data.GetCommand(),
 		Message:  data.GetMessage(),
-		SysError: model.SysError(data.GetError()),
-		SysState: model.SysState(data.GetState()),
+		SysError: model.SysError(data.GetSysError()),
+		SysState: model.SysState(data.GetSysState()),
 	}
 	h.log.Debug("gRPC.SystemReply", slog.Any("reply", reply))
 

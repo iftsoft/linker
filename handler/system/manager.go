@@ -164,11 +164,11 @@ func SystemConfigToModel(data *srv.SystemConfig) *model.SystemConfig {
 
 func SystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
 	reply := &srv.SystemReply{
-		Device:  data.Device,
-		Command: data.Command,
-		Message: data.Message,
-		Error:   uint32(data.SysError),
-		State:   uint32(data.SysState),
+		Device:   data.Device,
+		Command:  data.Command,
+		Message:  data.Message,
+		SysError: uint32(data.SysError),
+		SysState: uint32(data.SysState),
 	}
 	return reply
 }

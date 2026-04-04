@@ -38,13 +38,15 @@ func Run(ctx context.Context, log *slog.Logger) error {
 		Port:    9090,
 		Address: "127.0.0.1:9090",
 	}
+	service := NewCallbackService(log)
 	grpcSrv := server.NewServer(log, config,
-		system.NewCallback(log, nil),
-		device.NewCallback(log, nil),
+		system.NewCallback(log, service),
+		device.NewCallback(log, service),
 	)
 	if grpcSrv == nil {
 		return errors.New("grpc server is nil")
 	}
+	defer grpcSrv.Shutdown()
 
 	// gRPC Server start
 	go func() {
@@ -55,8 +57,6 @@ func Run(ctx context.Context, log *slog.Logger) error {
 
 	log.Info("Application is running now, press Ctrl+C to shutdown")
 	<-ctx.Done()
-
-	grpcSrv.Shutdown()
 
 	return nil
 }
