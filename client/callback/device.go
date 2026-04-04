@@ -5,26 +5,26 @@ import (
 	"fmt"
 	"log/slog"
 
+	"google.golang.org/grpc"
+
 	device "github.com/iftsoft/linker/gen/go/linker/device/v1"
 	"github.com/iftsoft/linker/model"
 )
 
-// DeviceCallbackClient is the client API for DeviceCallbackService service.
-type DeviceCallbackClient interface {
-	// DeviceReply sends notification about device reply
-	DeviceReply(ctx context.Context, reply *model.DeviceReply) error
-	// ExecuteError sends notification about execute error
-	ExecuteError(ctx context.Context, value *model.DeviceReply) error
-	// StateChanged sends notification about device state changing
-	StateChanged(ctx context.Context, value *model.DeviceState) error
-	// ActionPrompt sends notification about action prompt for user
-	ActionPrompt(ctx context.Context, value *model.DevicePrompt) error
-	// ReaderReturn sends notification about device reading result
-	ReaderReturn(ctx context.Context, value *model.DeviceInform) error
+type DeviceCallbackClient struct {
+	log    *slog.Logger
+	device device.DeviceCallbackServiceClient
+}
+
+func NewDeviceCallbackClient(log *slog.Logger, conn *grpc.ClientConn) *DeviceCallbackClient {
+	return &DeviceCallbackClient{
+		log:    log,
+		device: device.NewDeviceCallbackServiceClient(conn),
+	}
 }
 
 // DeviceReply sends notification about device reply
-func (c *CallbackClient) DeviceReply(ctx context.Context, reply *model.DeviceReply) error {
+func (c *DeviceCallbackClient) DeviceReply(ctx context.Context, reply *model.DeviceReply) error {
 	c.log.Debug("CallbackClient.DeviceReply - grpc",
 		slog.String("device", reply.Device), slog.String("command", reply.Command))
 
@@ -40,7 +40,7 @@ func (c *CallbackClient) DeviceReply(ctx context.Context, reply *model.DeviceRep
 }
 
 // ExecuteError sends notification about execute error
-func (c *CallbackClient) ExecuteError(ctx context.Context, value *model.DeviceReply) error {
+func (c *DeviceCallbackClient) ExecuteError(ctx context.Context, value *model.DeviceReply) error {
 	c.log.Debug("CallbackClient.ExecuteError - grpc",
 		slog.String("device", value.Device), slog.String("command", value.Command))
 
@@ -56,7 +56,7 @@ func (c *CallbackClient) ExecuteError(ctx context.Context, value *model.DeviceRe
 }
 
 // StateChanged sends notification about device state changing
-func (c *CallbackClient) StateChanged(ctx context.Context, value *model.DeviceState) error {
+func (c *DeviceCallbackClient) StateChanged(ctx context.Context, value *model.DeviceState) error {
 	c.log.Debug("CallbackClient.StateChanged - grpc",
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
@@ -72,7 +72,7 @@ func (c *CallbackClient) StateChanged(ctx context.Context, value *model.DeviceSt
 }
 
 // ActionPrompt sends notification about action prompt for user
-func (c *CallbackClient) ActionPrompt(ctx context.Context, value *model.DevicePrompt) error {
+func (c *DeviceCallbackClient) ActionPrompt(ctx context.Context, value *model.DevicePrompt) error {
 	c.log.Debug("CallbackClient.ActionPrompt - grpc",
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
@@ -88,7 +88,7 @@ func (c *CallbackClient) ActionPrompt(ctx context.Context, value *model.DevicePr
 }
 
 // ReaderReturn sends notification about device reading result
-func (c *CallbackClient) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
+func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
 	c.log.Debug("CallbackClient.ReaderReturn - grpc",
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 

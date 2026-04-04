@@ -149,8 +149,8 @@ type SystemReply struct {
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	Command       string                 `protobuf:"bytes,2,opt,name=command,proto3" json:"command,omitempty"`
 	Message       string                 `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
-	Error         uint32                 `protobuf:"varint,4,opt,name=error,proto3" json:"error,omitempty"`
-	State         uint32                 `protobuf:"varint,5,opt,name=state,proto3" json:"state,omitempty"`
+	SysError      uint32                 `protobuf:"varint,4,opt,name=sys_error,json=sysError,proto3" json:"sys_error,omitempty"`
+	SysState      uint32                 `protobuf:"varint,5,opt,name=sys_state,json=sysState,proto3" json:"sys_state,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -206,16 +206,16 @@ func (x *SystemReply) GetMessage() string {
 	return ""
 }
 
-func (x *SystemReply) GetError() uint32 {
+func (x *SystemReply) GetSysError() uint32 {
 	if x != nil {
-		return x.Error
+		return x.SysError
 	}
 	return 0
 }
 
-func (x *SystemReply) GetState() uint32 {
+func (x *SystemReply) GetSysState() uint32 {
 	if x != nil {
-		return x.State
+		return x.SysState
 	}
 	return 0
 }
@@ -371,13 +371,13 @@ const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\tport_name\x18\x03 \x01(\tR\bportName\x12\x1b\n" +
 	"\tvendor_id\x18\x04 \x01(\rR\bvendorId\x12\x1d\n" +
 	"\n" +
-	"product_id\x18\x05 \x01(\rR\tproductId\"\x85\x01\n" +
+	"product_id\x18\x05 \x01(\rR\tproductId\"\x93\x01\n" +
 	"\vSystemReply\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x18\n" +
-	"\amessage\x18\x03 \x01(\tR\amessage\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\rR\x05error\x12\x14\n" +
-	"\x05state\x18\x05 \x01(\rR\x05state\"a\n" +
+	"\amessage\x18\x03 \x01(\tR\amessage\x12\x1b\n" +
+	"\tsys_error\x18\x04 \x01(\rR\bsysError\x12\x1b\n" +
+	"\tsys_state\x18\x05 \x01(\rR\bsysState\"a\n" +
 	"\rSystemMetrics\x12\x16\n" +
 	"\x06uptime\x18\x01 \x01(\x04R\x06uptime\x12\x1b\n" +
 	"\tdev_error\x18\x02 \x01(\rR\bdevError\x12\x1b\n" +

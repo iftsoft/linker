@@ -64,7 +64,7 @@ func NewServer(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Serv
 	t := &testpb.TestPingService{}
 	testpb.RegisterTestServiceServer(grpcSrv, t)
 
-	// This is a pretty cool feature, where it will give introspection capabilities to API (NOT FOR PROD!!!)
+	// This will give introspection capabilities to API
 	if srv.conf.ReflectionEnable {
 		reflection.Register(grpcSrv)
 	}

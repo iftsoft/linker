@@ -1,7 +1,6 @@
 package model
 
-type SysError uint32
-type SysState uint32
+import "context"
 
 const (
 	CmdSystemReply     = "SystemReply"
@@ -13,47 +12,26 @@ const (
 	CmdSystemRestart   = "SysRestart"
 )
 
-// System state codes
-const (
-	SysErrSuccess SysError = iota
-	SysErrSystemFail
-	SysErrDeviceFail
-)
-
-func (e SysError) String() string {
-	switch e {
-	case SysErrSuccess:
-		return "Success"
-	case SysErrSystemFail:
-		return "System fail"
-	case SysErrDeviceFail:
-		return "Device fail"
-	default:
-		return "Undefined"
-	}
+// SystemManager is the client API for SystemManagerService.
+type SystemManager interface {
+	// Terminate gracefully terminates running device application
+	Terminate(ctx context.Context, query *SystemQuery) (*SystemReply, error)
+	// SysInform returns health of device application
+	SysInform(ctx context.Context, query *SystemQuery) (*SystemHealth, error)
+	// SysStart turns device driver to initial state
+	SysStart(ctx context.Context, query *SystemConfig) (*SystemReply, error)
+	// SysStop gracefully deactivates device driver
+	SysStop(ctx context.Context, query *SystemQuery) (*SystemReply, error)
+	// SysRestart reactivates device driver with new config
+	SysRestart(ctx context.Context, query *SystemConfig) (*SystemReply, error)
 }
 
-// System state codes
-const (
-	SysStateUndefined SysState = iota
-	SysStateRunning
-	SysStateStopped
-	SysStateFailed
-)
-
-func (e SysState) String() string {
-	switch e {
-	case SysStateUndefined:
-		return "Undefined"
-	case SysStateRunning:
-		return "Running"
-	case SysStateStopped:
-		return "Stopped"
-	case SysStateFailed:
-		return "Failed"
-	default:
-		return "Unknown"
-	}
+// SystemCallback is the client API for SystemCallbackService.
+type SystemCallback interface {
+	// SystemReply sends notification about system reply
+	SystemReply(ctx context.Context, reply *SystemReply) error
+	// SystemHealth sends notification about execute error
+	SystemHealth(ctx context.Context, value *SystemHealth) error
 }
 
 type SystemQuery struct {
@@ -108,17 +86,4 @@ func NewSystemHealth() *SystemHealth {
 		},
 	}
 	return sh
-}
-
-type SystemCallback interface {
-	SystemReply(name string, reply *SystemReply) error
-	SystemHealth(name string, reply *SystemHealth) error
-}
-
-type SystemManager interface {
-	Terminate(name string, query *SystemQuery) error
-	SysInform(name string, query *SystemQuery) error
-	SysStart(name string, query *SystemConfig) error
-	SysStop(name string, query *SystemQuery) error
-	SysRestart(name string, query *SystemConfig) error
 }

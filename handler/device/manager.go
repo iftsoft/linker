@@ -13,19 +13,13 @@ import (
 	model "github.com/iftsoft/linker/model"
 )
 
-type ManagerAPI interface {
-	Cancel(ctx context.Context, reply *model.DeviceQuery) (*model.DeviceReply, error)
-	Reset(ctx context.Context, reply *model.DeviceQuery) (*model.DeviceReply, error)
-	Status(ctx context.Context, reply *model.DeviceQuery) (*model.DeviceReply, error)
-}
-
 type Manager struct {
 	log *slog.Logger
-	api ManagerAPI
+	api model.DeviceManager
 	srv.DeviceManagerServiceServer
 }
 
-func NewManager(log *slog.Logger, api ManagerAPI) *Manager {
+func NewManager(log *slog.Logger, api model.DeviceManager) *Manager {
 	return &Manager{
 		log: log,
 		api: api,

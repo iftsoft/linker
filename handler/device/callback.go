@@ -20,21 +20,13 @@ const (
 	strServiceFault    = "service fault"
 )
 
-type CallbackAPI interface {
-	DeviceReply(ctx context.Context, reply *model.DeviceReply) error
-	ExecuteError(ctx context.Context, value *model.DeviceReply) error
-	StateChanged(ctx context.Context, value *model.DeviceState) error
-	ActionPrompt(ctx context.Context, value *model.DevicePrompt) error
-	ReaderReturn(ctx context.Context, value *model.DeviceInform) error
-}
-
 type Callback struct {
 	log *slog.Logger
-	api CallbackAPI
+	api model.DeviceCallback
 	srv.DeviceCallbackServiceServer
 }
 
-func NewCallback(log *slog.Logger, api CallbackAPI) *Callback {
+func NewCallback(log *slog.Logger, api model.DeviceCallback) *Callback {
 	return &Callback{
 		log: log,
 		api: api,

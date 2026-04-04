@@ -1,4 +1,4 @@
-package device
+package system
 
 import (
 	"context"
@@ -20,18 +20,13 @@ const (
 	strServiceFault    = "service fault"
 )
 
-type CallbackAPI interface {
-	SystemReply(ctx context.Context, reply *model.SystemReply) error
-	SystemHealth(ctx context.Context, reply *model.SystemHealth) error
-}
-
 type Callback struct {
 	log *slog.Logger
-	api CallbackAPI
+	api model.SystemCallback
 	srv.SystemCallbackServiceServer
 }
 
-func NewCallback(log *slog.Logger, api CallbackAPI) *Callback {
+func NewCallback(log *slog.Logger, api model.SystemCallback) *Callback {
 	return &Callback{
 		log: log,
 		api: api,

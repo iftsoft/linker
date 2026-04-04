@@ -5,20 +5,26 @@ import (
 	"fmt"
 	"log/slog"
 
+	"google.golang.org/grpc"
+
 	system "github.com/iftsoft/linker/gen/go/linker/system/v1"
 	model "github.com/iftsoft/linker/model"
 )
 
-// SystemCallbackClient is the client API for SystemCallbackService service.
-type SystemCallbackClient interface {
-	// SystemReply sends notification about system reply
-	SystemReply(ctx context.Context, reply *model.SystemReply) error
-	// SystemHealth sends notification about execute error
-	SystemHealth(ctx context.Context, value *model.SystemHealth) error
+type SystemCallbackClient struct {
+	log    *slog.Logger
+	system system.SystemCallbackServiceClient
+}
+
+func NewSystemCallbackClient(log *slog.Logger, conn *grpc.ClientConn) *SystemCallbackClient {
+	return &SystemCallbackClient{
+		log:    log,
+		system: system.NewSystemCallbackServiceClient(conn),
+	}
 }
 
 // SystemReply sends notification about device reply
-func (c *CallbackClient) SystemReply(ctx context.Context, reply *model.SystemReply) error {
+func (c *SystemCallbackClient) SystemReply(ctx context.Context, reply *model.SystemReply) error {
 	c.log.Debug("CallbackClient.SystemReply - grpc",
 		slog.String("device", reply.Device), slog.String("command", reply.Command))
 
@@ -34,7 +40,7 @@ func (c *CallbackClient) SystemReply(ctx context.Context, reply *model.SystemRep
 }
 
 // SystemHealth sends notification about device reply
-func (c *CallbackClient) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
+func (c *SystemCallbackClient) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
 	c.log.Debug("CallbackClient.SystemHealth - grpc",
 		slog.String("device", reply.Device))
 

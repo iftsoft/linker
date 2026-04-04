@@ -1,4 +1,4 @@
-package device
+package system
 
 import (
 	"context"
@@ -13,21 +13,13 @@ import (
 	model "github.com/iftsoft/linker/model"
 )
 
-type ManagerAPI interface {
-	Terminate(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error)
-	SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error)
-	SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error)
-	SysStop(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error)
-	SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error)
-}
-
 type Manager struct {
 	log *slog.Logger
-	api ManagerAPI
+	api model.SystemManager
 	srv.SystemManagerServiceServer
 }
 
-func NewManager(log *slog.Logger, api ManagerAPI) *Manager {
+func NewManager(log *slog.Logger, api model.SystemManager) *Manager {
 	return &Manager{
 		log: log,
 		api: api,

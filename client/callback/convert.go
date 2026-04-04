@@ -63,11 +63,11 @@ func convertSystemReply(value *model.SystemReply) *system.SystemReply {
 		return nil
 	}
 	data := &system.SystemReply{
-		Device:  value.Device,
-		Command: value.Command,
-		Message: value.Message,
-		Error:   uint32(value.SysError),
-		State:   uint32(value.SysState),
+		Device:   value.Device,
+		Command:  value.Command,
+		Message:  value.Message,
+		SysError: uint32(value.SysError),
+		SysState: uint32(value.SysState),
 	}
 	return data
 }
