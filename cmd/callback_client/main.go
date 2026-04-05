@@ -10,11 +10,6 @@ import (
 	"time"
 
 	"github.com/iftsoft/linker/client/callback"
-	"github.com/iftsoft/linker/model"
-)
-
-const (
-	testDevice = "TestDevice"
 )
 
 func main() {
@@ -57,7 +52,7 @@ func RunClient(ctx context.Context, log *slog.Logger) error {
 			return err
 
 		case <-timer.C:
-			err = ProcessTest(ctx, grpcCli)
+			err = ProcessTest(ctx, log, grpcCli)
 			if err != nil {
 				log.Warn("Callback client processing failed", slog.String("error", err.Error()))
 			} else {
@@ -66,20 +61,4 @@ func RunClient(ctx context.Context, log *slog.Logger) error {
 			timer.Reset(period)
 		}
 	}
-}
-
-func ProcessTest(ctx context.Context, cli *callback.CallbackClient) error {
-	sysRep1 := &model.SystemReply{
-		Device:   testDevice,
-		Command:  model.CmdSystemInform,
-		Message:  "Ok",
-		SysState: model.SysStateRunning,
-		SysError: model.SysErrSuccess,
-	}
-	err := cli.SystemReply(ctx, sysRep1)
-	if err != nil {
-		return fmt.Errorf("system reply error: %w", err)
-	}
-
-	return nil
 }

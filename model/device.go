@@ -53,8 +53,8 @@ func (dev *DeviceQuery) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Timeout = %d",
-		dev.Timeout)
+	str := fmt.Sprintf("Device = %s, Timeout = %d, Offline = %t",
+		dev.Device, dev.Timeout, dev.Offline)
 	return str
 }
 
@@ -71,8 +71,8 @@ func (dev *DeviceReply) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Action = %s, State = %s, ErrCode = %s, ErrText = %s",
-		dev.Action, dev.State, dev.ErrCode, dev.ErrText)
+	str := fmt.Sprintf("Device = %s, Command = %s, Action = %s, State = %s, ErrCode = %s, ErrText = %s",
+		dev.Device, dev.Command, dev.Action.String(), dev.State.String(), dev.ErrCode.String(), dev.ErrText)
 	return str
 }
 
@@ -87,8 +87,8 @@ func (dev *DeviceState) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Action = %s, NewState = %s, OldState = %s",
-		dev.Action, dev.NewState, dev.OldState)
+	str := fmt.Sprintf("Device = %s, Action = %s, NewState = %s, OldState = %s",
+		dev.Device, dev.Action.String(), dev.NewState.String(), dev.OldState.String())
 	return str
 }
 
@@ -102,8 +102,8 @@ func (dev *DevicePrompt) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Action = %s, Prompt = %s",
-		dev.Action, dev.Prompt)
+	str := fmt.Sprintf("Device = %s, Action = %s, Prompt = %s",
+		dev.Device, dev.Action.String(), dev.Prompt.String())
 	return str
 }
 
@@ -117,23 +117,7 @@ func (dev *DeviceInform) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Action = %s, Inform = %s",
-		dev.Action, dev.Inform)
+	str := fmt.Sprintf("Device = %s, Action = %s, Inform = %s",
+		dev.Device, dev.Action.String(), dev.Inform)
 	return str
 }
-
-//type DeviceCallback interface {
-//	DeviceReply(reply *DeviceReply) error
-//	ExecuteError(value *DeviceReply) error
-//	StateChanged(value *DeviceState) error
-//	ActionPrompt(value *DevicePrompt) error
-//	ReaderReturn(value *DeviceInform) error
-//}
-//
-//type DeviceManager interface {
-//	Cancel(name string, query *DeviceQuery) error
-//	Reset(name string, query *DeviceQuery) error
-//	Status(name string, query *DeviceQuery) error
-//	RunAction(name string, query *DeviceQuery) error
-//	StopAction(name string, query *DeviceQuery) error
-//}

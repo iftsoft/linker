@@ -10,11 +10,6 @@ import (
 	"time"
 
 	"github.com/iftsoft/linker/client/manager"
-	"github.com/iftsoft/linker/model"
-)
-
-const (
-	testDevice = "TestDevice"
 )
 
 func main() {
@@ -57,7 +52,7 @@ func RunClient(ctx context.Context, log *slog.Logger) error {
 			return err
 
 		case <-timer.C:
-			err = ProcessTest(ctx, grpcCli)
+			err = ProcessTest(ctx, log, grpcCli)
 			if err != nil {
 				log.Warn("Manager client processing failed", slog.String("error", err.Error()))
 			} else {
@@ -66,16 +61,4 @@ func RunClient(ctx context.Context, log *slog.Logger) error {
 			timer.Reset(period)
 		}
 	}
-}
-
-func ProcessTest(ctx context.Context, cli *manager.ManagerClient) error {
-	sysRep1 := &model.SystemQuery{
-		Device: testDevice,
-	}
-	_, err := cli.Terminate(ctx, sysRep1)
-	if err != nil {
-		return fmt.Errorf("system query error: %w", err)
-	}
-
-	return nil
 }

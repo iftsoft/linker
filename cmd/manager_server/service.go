@@ -3,94 +3,140 @@ package main
 import (
 	"context"
 	"log/slog"
+	"time"
 
 	"github.com/iftsoft/linker/model"
 )
 
 type ManagerService struct {
 	log *slog.Logger
+
+	SysState model.SysState
+	DevState model.DevState
 }
 
 func NewManagerService(log *slog.Logger) *ManagerService {
 	return &ManagerService{
 		log: log,
-	}
-}
 
-// SystemReply sends notification about device reply
-func (c *ManagerService) SystemReply(ctx context.Context, reply *model.SystemReply) error {
-	c.log.Info("ManagerService.SystemReply", "reply", reply)
-	return nil
+		SysState: model.SysStateUndefined,
+		DevState: model.DevStateUndefined,
+	}
 }
 
 // Terminate gracefully terminates running device application
-func (c *ManagerService) Terminate(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
-	c.log.Info("ManagerService.Terminate", "query", query)
+func (ms *ManagerService) Terminate(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
+	ms.SysState = model.SysStateStopped
 	reply := &model.SystemReply{
-		Device: query.Device,
+		Device:   query.Device,
+		Command:  model.CmdSystemTerminate,
+		Message:  "Terminated",
+		SysState: ms.SysState,
+		SysError: model.SysErrSuccess,
 	}
+	ms.log.Info("ManagerService.Terminate", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // SysInform returns health of device application
-func (c *ManagerService) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
-	c.log.Info("ManagerService.SysInform", "query", query)
+func (ms *ManagerService) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
 	reply := &model.SystemHealth{
-		Device: query.Device,
+		Device:   query.Device,
+		Moment:   time.Now().Unix(),
+		SysState: ms.SysState,
+		SysError: model.SysErrSuccess,
+		Metrics: model.SystemMetrics{
+			Uptime:   1000,
+			DevError: model.DevErrorSuccess,
+			DevState: ms.DevState,
+		},
 	}
+	ms.log.Info("ManagerService.SysInform", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // SysStart turns device driver to initial state
-func (c *ManagerService) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
-	c.log.Info("ManagerService.SysStart", "query", query)
+func (ms *ManagerService) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+	ms.SysState = model.SysStateRunning
 	reply := &model.SystemReply{
-		Device: query.Device,
+		Device:   query.Device,
+		Command:  model.CmdSystemTerminate,
+		Message:  "Started",
+		SysState: ms.SysState,
+		SysError: model.SysErrSuccess,
 	}
+	ms.log.Info("ManagerService.SysStart", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // SysStop gracefully deactivates device driver
-func (c *ManagerService) SysStop(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
-	c.log.Info("ManagerService.SysStop", "query", query)
+func (ms *ManagerService) SysStop(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
+	ms.SysState = model.SysStateStopped
 	reply := &model.SystemReply{
-		Device: query.Device,
+		Device:   query.Device,
+		Command:  model.CmdSystemTerminate,
+		Message:  "Stopped",
+		SysState: ms.SysState,
+		SysError: model.SysErrSuccess,
 	}
+	ms.log.Info("ManagerService.SysStop", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // SysRestart reactivates device driver with new config
-func (c *ManagerService) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
-	c.log.Info("ManagerService.SysRestart", "query", query)
+func (ms *ManagerService) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+	ms.SysState = model.SysStateRunning
 	reply := &model.SystemReply{
-		Device: query.Device,
+		Device:   query.Device,
+		Command:  model.CmdSystemTerminate,
+		Message:  "Restarted",
+		SysState: ms.SysState,
+		SysError: model.SysErrSuccess,
 	}
+	ms.log.Info("ManagerService.SysRestart", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // Cancel interrupts current operation on device
-func (c *ManagerService) Cancel(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	c.log.Info("ManagerService.Cancel", "query", query)
+func (ms *ManagerService) Cancel(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
+	ms.DevState = model.DevStateReady
 	reply := &model.DeviceReply{
-		Device: query.Device,
+		Device:  query.Device,
+		Command: model.CmdDeviceCancel,
+		Action:  model.DevActionBarScanning,
+		State:   ms.DevState,
+		ErrCode: model.DevErrorSuccess,
+		ErrText: "Ok",
 	}
+	ms.log.Info("ManagerService.Cancel", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // Reset initializes device to initial state
-func (c *ManagerService) Reset(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	c.log.Info("ManagerService.Reset", "query", query)
+func (ms *ManagerService) Reset(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
+	ms.DevState = model.DevStateReady
 	reply := &model.DeviceReply{
-		Device: query.Device,
+		Device:  query.Device,
+		Command: model.CmdDeviceReset,
+		Action:  model.DevActionBarScanning,
+		State:   ms.DevState,
+		ErrCode: model.DevErrorSuccess,
+		ErrText: "Ok",
 	}
+	ms.log.Info("ManagerService.Reset", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
 
 // Status returns current status of device
-func (c *ManagerService) Status(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	c.log.Info("ManagerService.Status", "query", query)
+func (ms *ManagerService) Status(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
 	reply := &model.DeviceReply{
-		Device: query.Device,
+		Device:  query.Device,
+		Command: model.CmdDeviceStatus,
+		Action:  model.DevActionBarScanning,
+		State:   ms.DevState,
+		ErrCode: model.DevErrorSuccess,
+		ErrText: "Ok",
 	}
+	ms.log.Info("ManagerService.Status", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }

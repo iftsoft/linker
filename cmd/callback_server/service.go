@@ -18,43 +18,43 @@ func NewCallbackService(log *slog.Logger) *CallbackService {
 }
 
 // SystemReply sends notification about device reply
-func (c *CallbackService) SystemReply(ctx context.Context, reply *model.SystemReply) error {
-	c.log.Info("CallbackService.SystemReply", "reply", reply)
+func (cs *CallbackService) SystemReply(ctx context.Context, reply *model.SystemReply) error {
+	cs.log.Info("CallbackService.SystemReply", "reply", reply.String())
 	return nil
 }
 
 // SystemHealth sends notification about device reply
-func (c *CallbackService) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
-	c.log.Info("CallbackService.SystemHealth", "reply", reply)
+func (cs *CallbackService) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
+	cs.log.Info("CallbackService.SystemHealth", "reply", reply.String())
 	return nil
 }
 
 // DeviceReply sends notification about device reply
-func (c *CallbackService) DeviceReply(ctx context.Context, reply *model.DeviceReply) error {
-	c.log.Info("CallbackService.DeviceReply", "reply", reply)
+func (cs *CallbackService) DeviceReply(ctx context.Context, reply *model.DeviceReply) error {
+	cs.log.Info("CallbackService.DeviceReply", "reply", reply.String())
 	return nil
 }
 
 // ExecuteError sends notification about execute error
-func (c *CallbackService) ExecuteError(ctx context.Context, value *model.DeviceReply) error {
-	c.log.Info("CallbackService.ExecuteError", "value", value)
+func (cs *CallbackService) ExecuteError(ctx context.Context, value *model.DeviceReply) error {
+	cs.log.Info("CallbackService.ExecuteError", "value", value.String())
 	return nil
 }
 
 // StateChanged sends notification about device state changing
-func (c *CallbackService) StateChanged(ctx context.Context, value *model.DeviceState) error {
-	c.log.Info("CallbackService.StateChanged", "value", value)
+func (cs *CallbackService) StateChanged(ctx context.Context, value *model.DeviceState) error {
+	cs.log.Info("CallbackService.StateChanged", "value", value.String())
 	return nil
 }
 
 // ActionPrompt sends notification about action prompt for user
-func (c *CallbackService) ActionPrompt(ctx context.Context, value *model.DevicePrompt) error {
-	c.log.Info("CallbackService.ActionPrompt", "value", value)
+func (cs *CallbackService) ActionPrompt(ctx context.Context, value *model.DevicePrompt) error {
+	cs.log.Info("CallbackService.ActionPrompt", "value", value.String())
 	return nil
 }
 
 // ReaderReturn sends notification about device reading result
-func (c *CallbackService) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
-	c.log.Info("CallbackService.ReaderReturn", "value", value)
+func (cs *CallbackService) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
+	cs.log.Info("CallbackService.ReaderReturn", "value", value.String())
 	return nil
 }

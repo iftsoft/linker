@@ -1,6 +1,9 @@
 package model
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 const (
 	CmdSystemReply     = "SystemReply"
@@ -38,6 +41,14 @@ type SystemQuery struct {
 	Device string `json:"device"`
 }
 
+func (sys *SystemQuery) String() string {
+	if sys == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Device = %s", sys.Device)
+	return str
+}
+
 type SystemConfig struct {
 	Device    string `json:"device"`
 	LinkType  uint32 `json:"link_type"`  // 0-none, 1-COM, 2-USB
@@ -46,12 +57,30 @@ type SystemConfig struct {
 	ProductID uint32 `json:"product_id"` // Device Product ID
 }
 
+func (sys *SystemConfig) String() string {
+	if sys == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Device = %s, LinkType = %d, PortName = %s, VendorID = %d, ProductID = %d",
+		sys.Device, sys.LinkType, sys.PortName, sys.VendorID, sys.ProductID)
+	return str
+}
+
 type SystemReply struct {
 	Device   string   `json:"device"`
 	Command  string   `json:"command"`
 	Message  string   `json:"message"`
 	SysError SysError `json:"sys_error"`
 	SysState SysState `json:"sys_state"`
+}
+
+func (sys *SystemReply) String() string {
+	if sys == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Device = %s, Command = %s, Message = %s, SysError = %s, SysState = %s",
+		sys.Device, sys.Command, sys.Message, sys.SysError.String(), sys.SysState.String())
+	return str
 }
 
 type SystemMetrics struct {
@@ -63,6 +92,15 @@ type SystemMetrics struct {
 	Topics   map[string]string  `json:"topics"`
 }
 
+func (sys *SystemMetrics) String() string {
+	if sys == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Uptime = %d, DevError = %s, DevState = %s",
+		sys.Uptime, sys.DevError.String(), sys.DevState.String())
+	return str
+}
+
 type SystemHealth struct {
 	Device   string        `json:"device"`
 	Moment   int64         `json:"moment"`
@@ -71,8 +109,18 @@ type SystemHealth struct {
 	Metrics  SystemMetrics `json:"metrics"`
 }
 
-func NewSystemHealth() *SystemHealth {
+func (sys *SystemHealth) String() string {
+	if sys == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Device = %s, Moment = %d, SysError = %s, SysState = %s, Metrics = (%s)",
+		sys.Device, sys.Moment, sys.SysError.String(), sys.SysState.String(), sys.Metrics.String())
+	return str
+}
+
+func NewSystemHealth(dev string) *SystemHealth {
 	sh := &SystemHealth{
+		Device:   dev,
 		Moment:   0,
 		SysError: 0,
 		SysState: 0,
