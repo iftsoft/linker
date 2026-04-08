@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"sync"
 
 	"github.com/iftsoft/linker/grpc/client"
 	"github.com/iftsoft/linker/model"
@@ -17,6 +18,7 @@ type ManagerClient struct {
 	client *client.Client
 	system model.SystemManager
 	device model.DeviceManager
+	mux    sync.Mutex
 }
 
 func NewManagerClient(ctx context.Context, log *slog.Logger, address string) (*ManagerClient, error) {
@@ -39,64 +41,80 @@ func (c *ManagerClient) Close() error {
 
 // Terminate gracefully terminates running device application
 func (c *ManagerClient) Terminate(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
-	if c.system != nil {
-		return c.system.Terminate(ctx, query)
+	if c.system == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.Terminate(ctx, query)
 }
 
 // SysInform returns health of device application
 func (c *ManagerClient) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
-	if c.system != nil {
-		return c.system.SysInform(ctx, query)
+	if c.system == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.SysInform(ctx, query)
 }
 
 // SysStart turns device driver to initial state
 func (c *ManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
-	if c.system != nil {
-		return c.system.SysStart(ctx, query)
+	if c.system == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.SysStart(ctx, query)
 }
 
 // SysStop gracefully deactivates device driver
 func (c *ManagerClient) SysStop(ctx context.Context, query *model.SystemQuery) (*model.SystemReply, error) {
-	if c.system != nil {
-		return c.system.SysStop(ctx, query)
+	if c.system == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.SysStop(ctx, query)
 }
 
 // SysRestart reactivates device driver with new config
 func (c *ManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
-	if c.system != nil {
-		return c.system.SysRestart(ctx, query)
+	if c.system == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.SysRestart(ctx, query)
 }
 
 // Cancel interrupts current operation on device
 func (c *ManagerClient) Cancel(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	if c.system != nil {
-		return c.device.Cancel(ctx, query)
+	if c.device == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.device.Cancel(ctx, query)
 }
 
 // Reset initializes device to initial state
 func (c *ManagerClient) Reset(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	if c.system != nil {
-		return c.device.Reset(ctx, query)
+	if c.device == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.device.Reset(ctx, query)
 }
 
 // Status returns current status of device
 func (c *ManagerClient) Status(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
-	if c.system != nil {
-		return c.device.Status(ctx, query)
+	if c.device == nil {
+		return nil, ErrNotInitialized
 	}
-	return nil, ErrNotInitialized
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.device.Status(ctx, query)
 }
