@@ -8,9 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/iftsoft/linker/grpc/server"
-	device "github.com/iftsoft/linker/handler/device"
-	system "github.com/iftsoft/linker/handler/system"
+	"github.com/iftsoft/linker/handler"
 )
 
 func main() {
@@ -33,16 +31,9 @@ func main() {
 
 func Run(ctx context.Context, log *slog.Logger) error {
 	// gRPC Server init
-	config := server.Config{
-		Host:    "127.0.0.1",
-		Port:    9090,
-		Address: "127.0.0.1:9090",
-	}
+	address := "127.0.0.1:9090"
 	service := NewCallbackService(log)
-	grpcSrv := server.NewServer(log, config,
-		system.NewCallback(log, service),
-		device.NewCallback(log, service),
-	)
+	grpcSrv := handler.NewCallbackServer(log, address, service)
 	if grpcSrv == nil {
 		return errors.New("grpc server is nil")
 	}

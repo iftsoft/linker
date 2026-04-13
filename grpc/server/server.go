@@ -14,7 +14,6 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 )
 
@@ -25,8 +24,8 @@ const (
 type (
 	Server struct {
 		log  *slog.Logger
-		conf Config
 		conn *grpc.Server
+		addr string
 	}
 
 	ServiceRegistrar interface {
@@ -34,10 +33,10 @@ type (
 	}
 )
 
-func NewServer(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Server {
+func NewServer(log *slog.Logger, address string, handlers ...ServiceRegistrar) *Server {
 	srv := &Server{
 		log:  log,
-		conf: cfg,
+		addr: address,
 	}
 
 	// Init proto validator
@@ -65,9 +64,9 @@ func NewServer(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Serv
 	testpb.RegisterTestServiceServer(grpcSrv, t)
 
 	// This will give introspection capabilities to API
-	if srv.conf.ReflectionEnable {
-		reflection.Register(grpcSrv)
-	}
+	//if srv.conf.ReflectionEnable {
+	//	reflection.Register(grpcSrv)
+	//}
 
 	// register a server services handlers and its implementation
 	for _, handler := range handlers {
@@ -80,14 +79,14 @@ func NewServer(log *slog.Logger, cfg Config, handlers ...ServiceRegistrar) *Serv
 }
 
 func (s *Server) Start() error {
-	lis, err := net.Listen("tcp", s.conf.Address)
+	lis, err := net.Listen("tcp", s.addr)
 	if err != nil {
 		s.log.Error("GPRS server failed to listen", slog.Any("error", err))
 
 		return errors.WithStack(err)
 	}
 
-	s.log.Info("Starting grpc server", slog.String("address", s.conf.Address))
+	s.log.Info("Starting grpc server", slog.String("address", s.addr))
 
 	err = s.conn.Serve(lis)
 	if err != nil {
