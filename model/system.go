@@ -31,10 +31,19 @@ type SystemManager interface {
 
 // SystemCallback is the client API for SystemCallbackService.
 type SystemCallback interface {
+	Greeting(ctx context.Context, query *GreetingInfo) error
 	// SystemReply sends notification about system reply
 	SystemReply(ctx context.Context, reply *SystemReply) error
 	// SystemHealth sends notification about execute error
 	SystemHealth(ctx context.Context, value *SystemHealth) error
+}
+
+type GreetingInfo struct {
+	Device    string       `json:"device"`    // Name of device
+	GrpcPort  uint32       `json:"grpc_port"` // gRPC port for device management
+	DevType   DevTypeMask  `json:"devType"`   // Implemented device types
+	Supported DevScopeMask `json:"supported"` // Manager interfaces that driver supported
+	Required  DevScopeMask `json:"required"`  // Callback interfaces that driver required
 }
 
 type SystemQuery struct {
