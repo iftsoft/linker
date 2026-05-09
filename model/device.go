@@ -27,6 +27,8 @@ type DeviceManager interface {
 	Reset(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
 	// Status returns current status of device
 	Status(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
+	// Execute returns result of command execution
+	Execute(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
 }
 
 // DeviceCallback is the client API for DeviceCallbackService.

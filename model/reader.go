@@ -15,43 +15,35 @@ const (
 	CmdChipCommand     = "ChipCommand"
 )
 
-type ReaderCardPos struct {
-	Position int16 `json:"position"`
-}
-
-type ReaderCardInfo struct {
-	Track1  string `json:"track1"`
-	Track2  string `json:"track2"`
-	Track3  string `json:"track3"`
-	RawData string `json:"raw_data"`
-	CardPan string `json:"card_pan"`
-	ExpDate string `json:"exp_date"`
-	Holder  string `json:"holder"`
-}
-
-//type ReaderChipQuery struct {
-//	Protocol int16  `json:"protocol"`
-//	Query    []byte `json:"query"`
-//}
-
-//type ReaderChipReply struct {
-//	DeviceReply
-//	Protocol int16  `json:"protocol"`
-//	Reply    []byte `json:"reply"`
-//}
-
 type ReaderCallback interface {
+	// CardPosition sends notification about new card position
 	CardPosition(ctx context.Context, value *ReaderCardPos) error
+	// CardDescription sends notification about card information
 	CardDescription(ctx context.Context, value *ReaderCardInfo) error
-	//ChipResponse(ctx context.Context, reply *ReaderChipReply) error
 }
 
 type ReaderManager interface {
-	EnterCard(ctx context.Context, query *DeviceQuery) error
-	EjectCard(ctx context.Context, query *DeviceQuery) error
-	CaptureCard(ctx context.Context, query *DeviceQuery) error
-	ReadCard(ctx context.Context, query *DeviceQuery) error
-	//ChipGetATR(ctx context.Context, query *DeviceQuery) error
-	//ChipPowerOff(ctx context.Context, query *DeviceQuery) error
-	//ChipCommand(ctx context.Context, query *ReaderChipQuery) error
+	// EnterCard trys to accept card in card reader device
+	EnterCard(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
+	// EjectCard trys to reject card from card reader device
+	EjectCard(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
+	// CaptureCard trys to capture card inside card reader device
+	CaptureCard(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
+	// ReadCard trys to read card information from card
+	ReadCard(ctx context.Context, query *DeviceQuery) (*ReaderCardInfo, error)
+}
+
+type ReaderCardPos struct {
+	Device   string `json:"device"`
+	Position int32  `json:"position"`
+}
+
+type ReaderCardInfo struct {
+	Device  string `json:"device"`
+	CardPan string `json:"card_pan"`
+	ExpDate string `json:"exp_date"`
+	Holder  string `json:"holder"`
+	Track1  string `json:"track1"`
+	Track2  string `json:"track2"`
+	Track3  string `json:"track3"`
 }

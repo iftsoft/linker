@@ -12,78 +12,74 @@ const (
 	CmdValidatorStore = "ValidatorStore"
 	CmdInitValidator  = "InitValidator"
 	CmdDoValidate     = "DoValidate"
-	CmdNoteAccept     = "NoteAccept"
-	CmdNoteReturn     = "NoteReturn"
+	CmdAcceptNote     = "AcceptNote"
+	CmdReturnNote     = "ReturnNote"
 	CmdStopValidate   = "StopValidate"
 	CmdCheckValidator = "CheckValidator"
 	CmdClearValidator = "ClearValidator"
 )
 
-type ValidNoteList []*ValidatorNote
+type ValidatorCallback interface {
+	// NoteAccepted sends notification about new note in escrow
+	NoteAccepted(ctx context.Context, value *ValidatorAccept) error
+	// CashIsStored sends notification that note is stored to cassette
+	CashIsStored(ctx context.Context, value *ValidatorAccept) error
+	// CashReturned sends notification that note is returned to user
+	CashReturned(ctx context.Context, value *ValidatorAccept) error
+	// ValidatorStore sends notification about current cassette state
+	ValidatorStore(ctx context.Context, reply *ValidatorStore) error
+}
+
+type ValidatorManager interface {
+	// InitValidator does primary initialization of the validator
+	InitValidator(ctx context.Context, query *ValidatorQuery) (*DeviceReply, error)
+	// DoValidate starts accepting cash from user
+	DoValidate(ctx context.Context, query *ValidatorQuery) (*DeviceReply, error)
+	// AcceptNote puts the validated note to the cassette
+	AcceptNote(ctx context.Context, query *ValidatorQuery) (*DeviceReply, error)
+	// ReturnNote returns the validated note to the user
+	ReturnNote(ctx context.Context, query *ValidatorQuery) (*DeviceReply, error)
+	// StopValidate disables accepting new notes by validator
+	StopValidate(ctx context.Context, query *ValidatorQuery) (*DeviceReply, error)
+	// CheckValidator returns current cassette state
+	CheckValidator(ctx context.Context, query *ValidatorQuery) (*ValidatorStore, error)
+	// ClearValidator clears all cassette data (settlement or reconciliation)
+	ClearValidator(ctx context.Context, query *ValidatorQuery) (*ValidatorStore, error)
+}
 
 type ValidatorNote struct {
-	Device   string   `json:"device"`
 	Currency Currency `json:"currency"`
-	Count    Counter  `json:"count"`
 	Nominal  Amount   `json:"nominal"`
+	Count    Counter  `json:"count"`
 	Amount   Amount   `json:"amount"`
-}
-
-type BatchState int16
-
-const (
-	StateEmpty BatchState = iota
-	StateActive
-	StateCorrect
-	StateMismatch
-)
-
-func (e BatchState) String() string {
-	switch e {
-	case StateEmpty:
-		return "Empty"
-	case StateActive:
-		return "Active"
-	case StateCorrect:
-		return "Correct"
-	case StateMismatch:
-		return "Mismatch"
-	default:
-		return "Unknown"
-	}
-}
-
-type ValidatorBatch struct {
-	Notes   ValidNoteList `json:"notes"`
-	BatchId int64         `json:"batch_id"`
-	State   BatchState    `json:"state"`
-	Detail  string        `json:"detail"`
-}
-
-func (dev *ValidatorBatch) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Batch Id=%d, State=%s, Detail=%s, %s",
-		dev.BatchId, dev.State.String(), dev.Detail, dev.Notes.String())
-	return str
 }
 
 func (vn *ValidatorNote) String() string {
 	if vn == nil {
 		return ""
 	}
-	str := fmt.Sprintf("%s Note %7.2f * %3d = %9.2f of %3d (%s) - %s",
-		vn.Device, vn.Nominal, vn.Count, vn.Amount, vn.Currency, vn.Currency.IsoCode(), vn.Currency.String())
+	str := fmt.Sprintf("%9s * %3d = %12s %s - %s",
+		AmountText(vn.Nominal, vn.Currency), vn.Count, AmountText(vn.Amount, vn.Currency),
+		vn.Currency.IsoCode(), vn.Currency.PlainText())
 	return str
 }
 
-func (vl ValidNoteList) String() string {
-	str := "Validator Note List:"
-	for i, note := range vl {
-		if note != nil {
-			str += fmt.Sprintf("\n    Line:%2d - %s", i, note.String())
-		}
+type ValidatorBatch struct {
+	Device  string          `json:"device"`
+	BatchId int64           `json:"batch_id"`
+	State   BatchState      `json:"state"`
+	Details string          `json:"details"`
+	Notes   []ValidatorNote `json:"notes"`
+}
+
+func (dev *ValidatorBatch) String() string {
+	if dev == nil {
+		return ""
+	}
+	str := fmt.Sprintf("Device=%s, Batch Id=%d, State=%s, Details=%s",
+		dev.Device, dev.BatchId, dev.State.String(), dev.Details)
+	for i, note := range dev.Notes {
+		str += fmt.Sprintf("\n    Line:%2d - Note: %s", i, note.String())
 	}
 	return str
 }
@@ -103,22 +99,20 @@ func (dev *ValidatorStore) String() string {
 }
 
 type ValidatorAccept struct {
-	Currency Currency `json:"currency"`
-	Nominal  Amount   `json:"nominal"`
-	Count    Counter  `json:"count"`
-	Amount   Amount   `json:"amount"`
+	Device string        `json:"device"`
+	Note   ValidatorNote `json:"note"`
 }
 
 func (dev *ValidatorAccept) String() string {
 	if dev == nil {
 		return ""
 	}
-	str := fmt.Sprintf("Nominal: %7.2f, Count: %d, Amount: %7.2f, Currency: %d (%s) %s",
-		dev.Nominal, dev.Count, dev.Amount, dev.Currency, dev.Currency.IsoCode(), dev.Currency.String())
+	str := fmt.Sprintf("Device: %7, Note: %s", dev.Device, dev.Note.String())
 	return str
 }
 
 type ValidatorQuery struct {
+	Device    string   `json:"device"`
 	Currency  Currency `json:"currency"`
 	Operation int64    `json:"operation"`
 }
@@ -132,30 +126,9 @@ func (dev *ValidatorQuery) String() string {
 	return str
 }
 
-//type ValidatorReply struct {
-//	Currency DevCurrency
+//type ValidatorBooker interface {
+//	InitNoteList(ctx context.Context, list ValidatorNoteList) error
+//	ReadNoteList(ctx context.Context, data *ValidatorBatch) error
+//	DepositNote(ctx context.Context, extraId int64, value *ValidatorAccept) error
+//	CloseBatch(ctx context.Context, data *ValidatorBatch) error
 //}
-
-type ValidatorCallback interface {
-	NoteAccepted(ctx context.Context, value *ValidatorAccept) error
-	CashIsStored(ctx context.Context, value *ValidatorAccept) error
-	CashReturned(ctx context.Context, value *ValidatorAccept) error
-	ValidatorStore(ctx context.Context, reply *ValidatorStore) error
-}
-
-type ValidatorManager interface {
-	InitValidator(ctx context.Context, query *ValidatorQuery) error
-	DoValidate(ctx context.Context, query *ValidatorQuery) error
-	NoteAccept(ctx context.Context, query *ValidatorQuery) error
-	NoteReturn(ctx context.Context, query *ValidatorQuery) error
-	StopValidate(ctx context.Context, query *ValidatorQuery) error
-	CheckValidator(ctx context.Context, query *ValidatorQuery) error
-	ClearValidator(ctx context.Context, query *ValidatorQuery) error
-}
-
-type ValidatorBooker interface {
-	InitNoteList(ctx context.Context, list ValidNoteList) error
-	ReadNoteList(ctx context.Context, data *ValidatorBatch) error
-	DepositNote(ctx context.Context, extraId int64, value *ValidatorAccept) error
-	CloseBatch(ctx context.Context, data *ValidatorBatch) error
-}
