@@ -93,6 +93,27 @@ func (h *Manager) Status(ctx context.Context, req *srv.StatusRequest) (*srv.Stat
 	return resp, err
 }
 
+// Execute returns result of command execution
+func (h *Manager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*srv.ExecuteResponse, error) {
+	if req == nil {
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ExecuteRequest is nil"))
+	}
+
+	query := DeviceQueryToModel(req.GetQuery())
+	h.log.Debug("gRPC.Execute", slog.Any("query", query))
+
+	reply, err := h.api.Execute(ctx, query)
+	if err != nil {
+		h.log.Error("gRPC.Execute failed", slog.Any("error", err))
+	}
+
+	resp := &srv.ExecuteResponse{
+		Reply: DeviceReplyToProto(reply),
+	}
+
+	return resp, err
+}
+
 func Serialize(value any) string {
 	dump, err := json.Marshal(value)
 	if err != nil {

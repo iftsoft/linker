@@ -12,11 +12,10 @@ const (
 	CmdActionPrompt = "ActionPrompt"
 	CmdReaderReturn = "ReaderReturn"
 
-	CmdDeviceCancel = "Cancel"
-	CmdDeviceReset  = "Reset"
-	CmdDeviceStatus = "Status"
-	CmdRunAction    = "RunAction"
-	CmdStopAction   = "StopAction"
+	CmdDeviceCancel  = "Cancel"
+	CmdDeviceReset   = "Reset"
+	CmdDeviceStatus  = "Status"
+	CmdDeviceExecute = "Execute"
 )
 
 // DeviceManager is the client API for DeviceManagerService.

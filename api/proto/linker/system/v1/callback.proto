@@ -8,11 +8,21 @@ import "linker/system/v1/system.proto";
 
 // Defines the gRPC service with an RPC method
 service SystemCallbackService {
+  // GreetingInfo sends notification about device application
+  rpc GreetingInfo(GreetingInfoRequest) returns (GreetingInfoResponse) {}
   // Notification about system reply
   rpc SystemReply(SystemReplyRequest) returns (SystemReplyResponse) {}
   // Notification about system health
   rpc SystemHealth(SystemHealthRequest) returns (SystemHealthResponse) {}
 }
+
+// Defines the message structure for a greeting info request
+message GreetingInfoRequest {
+  GreetingInfo data = 1;
+}
+
+// Defines the message structure for the greeting info response
+message GreetingInfoResponse {}
 
 // Defines the message structure for a system reply request
 message SystemReplyRequest {

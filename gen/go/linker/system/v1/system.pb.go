@@ -358,6 +358,83 @@ func (x *SystemHealth) GetMetrics() *SystemMetrics {
 	return nil
 }
 
+// Defines the message structure for a system health
+type GreetingInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
+	GrpcPort      uint32                 `protobuf:"varint,2,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
+	DevType       uint64                 `protobuf:"varint,3,opt,name=dev_type,json=devType,proto3" json:"dev_type,omitempty"`
+	Supported     uint64                 `protobuf:"varint,4,opt,name=supported,proto3" json:"supported,omitempty"`
+	Required      uint64                 `protobuf:"varint,5,opt,name=required,proto3" json:"required,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GreetingInfo) Reset() {
+	*x = GreetingInfo{}
+	mi := &file_linker_system_v1_system_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GreetingInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GreetingInfo) ProtoMessage() {}
+
+func (x *GreetingInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_system_v1_system_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GreetingInfo.ProtoReflect.Descriptor instead.
+func (*GreetingInfo) Descriptor() ([]byte, []int) {
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GreetingInfo) GetDevice() string {
+	if x != nil {
+		return x.Device
+	}
+	return ""
+}
+
+func (x *GreetingInfo) GetGrpcPort() uint32 {
+	if x != nil {
+		return x.GrpcPort
+	}
+	return 0
+}
+
+func (x *GreetingInfo) GetDevType() uint64 {
+	if x != nil {
+		return x.DevType
+	}
+	return 0
+}
+
+func (x *GreetingInfo) GetSupported() uint64 {
+	if x != nil {
+		return x.Supported
+	}
+	return 0
+}
+
+func (x *GreetingInfo) GetRequired() uint64 {
+	if x != nil {
+		return x.Required
+	}
+	return 0
+}
+
 var File_linker_system_v1_system_proto protoreflect.FileDescriptor
 
 const file_linker_system_v1_system_proto_rawDesc = "" +
@@ -387,7 +464,13 @@ const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\x06moment\x18\x02 \x01(\x03R\x06moment\x12\x1b\n" +
 	"\tsys_error\x18\x03 \x01(\rR\bsysError\x12\x1b\n" +
 	"\tsys_state\x18\x04 \x01(\rR\bsysState\x129\n" +
-	"\ametrics\x18\x05 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametricsB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
+	"\ametrics\x18\x05 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\x98\x01\n" +
+	"\fGreetingInfo\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1b\n" +
+	"\tgrpc_port\x18\x02 \x01(\rR\bgrpcPort\x12\x19\n" +
+	"\bdev_type\x18\x03 \x01(\x04R\adevType\x12\x1c\n" +
+	"\tsupported\x18\x04 \x01(\x04R\tsupported\x12\x1a\n" +
+	"\brequired\x18\x05 \x01(\x04R\brequiredB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
 
 var (
 	file_linker_system_v1_system_proto_rawDescOnce sync.Once
@@ -401,13 +484,14 @@ func file_linker_system_v1_system_proto_rawDescGZIP() []byte {
 	return file_linker_system_v1_system_proto_rawDescData
 }
 
-var file_linker_system_v1_system_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_linker_system_v1_system_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_linker_system_v1_system_proto_goTypes = []any{
 	(*SystemQuery)(nil),   // 0: linker.system.v1.SystemQuery
 	(*SystemConfig)(nil),  // 1: linker.system.v1.SystemConfig
 	(*SystemReply)(nil),   // 2: linker.system.v1.SystemReply
 	(*SystemMetrics)(nil), // 3: linker.system.v1.SystemMetrics
 	(*SystemHealth)(nil),  // 4: linker.system.v1.SystemHealth
+	(*GreetingInfo)(nil),  // 5: linker.system.v1.GreetingInfo
 }
 var file_linker_system_v1_system_proto_depIdxs = []int32{
 	3, // 0: linker.system.v1.SystemHealth.metrics:type_name -> linker.system.v1.SystemMetrics
@@ -429,7 +513,7 @@ func file_linker_system_v1_system_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_system_v1_system_proto_rawDesc), len(file_linker_system_v1_system_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -43,3 +43,12 @@ message SystemHealth {
   SystemMetrics metrics = 5;
 }
 
+// Defines the message structure for a system health
+message GreetingInfo {
+  string device = 1;
+  uint32 grpc_port = 2;
+  uint64 dev_type = 3;
+  uint64 supported = 4;
+  uint64 required = 5;
+}
+

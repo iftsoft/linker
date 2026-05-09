@@ -70,3 +70,19 @@ func (c *DeviceManagerClient) Status(ctx context.Context, query *model.DeviceQue
 	reply := convertDeviceReply(resp.GetReply())
 	return reply, nil
 }
+
+// Execute returns result of command execution
+func (c *DeviceManagerClient) Execute(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
+	c.log.Debug("ManagerClient.Execute - grpc", slog.String("device", query.Device))
+
+	input := &device.ExecuteRequest{
+		Query: convertDeviceQuery(query),
+	}
+	resp, err := c.device.Execute(ctx, input)
+	if err != nil {
+		return nil, fmt.Errorf("command Status for %s failed: %w", query.Device, err)
+	}
+
+	reply := convertDeviceReply(resp.GetReply())
+	return reply, nil
+}

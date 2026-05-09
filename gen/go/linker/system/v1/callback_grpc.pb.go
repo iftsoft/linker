@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	SystemCallbackService_GreetingInfo_FullMethodName = "/linker.system.v1.SystemCallbackService/GreetingInfo"
 	SystemCallbackService_SystemReply_FullMethodName  = "/linker.system.v1.SystemCallbackService/SystemReply"
 	SystemCallbackService_SystemHealth_FullMethodName = "/linker.system.v1.SystemCallbackService/SystemHealth"
 )
@@ -29,6 +30,8 @@ const (
 //
 // Defines the gRPC service with an RPC method
 type SystemCallbackServiceClient interface {
+	// GreetingInfo sends notification about device application
+	GreetingInfo(ctx context.Context, in *GreetingInfoRequest, opts ...grpc.CallOption) (*GreetingInfoResponse, error)
 	// Notification about system reply
 	SystemReply(ctx context.Context, in *SystemReplyRequest, opts ...grpc.CallOption) (*SystemReplyResponse, error)
 	// Notification about system health
@@ -41,6 +44,16 @@ type systemCallbackServiceClient struct {
 
 func NewSystemCallbackServiceClient(cc grpc.ClientConnInterface) SystemCallbackServiceClient {
 	return &systemCallbackServiceClient{cc}
+}
+
+func (c *systemCallbackServiceClient) GreetingInfo(ctx context.Context, in *GreetingInfoRequest, opts ...grpc.CallOption) (*GreetingInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GreetingInfoResponse)
+	err := c.cc.Invoke(ctx, SystemCallbackService_GreetingInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *systemCallbackServiceClient) SystemReply(ctx context.Context, in *SystemReplyRequest, opts ...grpc.CallOption) (*SystemReplyResponse, error) {
@@ -69,6 +82,8 @@ func (c *systemCallbackServiceClient) SystemHealth(ctx context.Context, in *Syst
 //
 // Defines the gRPC service with an RPC method
 type SystemCallbackServiceServer interface {
+	// GreetingInfo sends notification about device application
+	GreetingInfo(context.Context, *GreetingInfoRequest) (*GreetingInfoResponse, error)
 	// Notification about system reply
 	SystemReply(context.Context, *SystemReplyRequest) (*SystemReplyResponse, error)
 	// Notification about system health
@@ -83,6 +98,9 @@ type SystemCallbackServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSystemCallbackServiceServer struct{}
 
+func (UnimplementedSystemCallbackServiceServer) GreetingInfo(context.Context, *GreetingInfoRequest) (*GreetingInfoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GreetingInfo not implemented")
+}
 func (UnimplementedSystemCallbackServiceServer) SystemReply(context.Context, *SystemReplyRequest) (*SystemReplyResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SystemReply not implemented")
 }
@@ -108,6 +126,24 @@ func RegisterSystemCallbackServiceServer(s grpc.ServiceRegistrar, srv SystemCall
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&SystemCallbackService_ServiceDesc, srv)
+}
+
+func _SystemCallbackService_GreetingInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GreetingInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SystemCallbackServiceServer).GreetingInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SystemCallbackService_GreetingInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SystemCallbackServiceServer).GreetingInfo(ctx, req.(*GreetingInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SystemCallbackService_SystemReply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -153,6 +189,10 @@ var SystemCallbackService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "linker.system.v1.SystemCallbackService",
 	HandlerType: (*SystemCallbackServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GreetingInfo",
+			Handler:    _SystemCallbackService_GreetingInfo_Handler,
+		},
 		{
 			MethodName: "SystemReply",
 			Handler:    _SystemCallbackService_SystemReply_Handler,

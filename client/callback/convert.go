@@ -58,6 +58,20 @@ func convertDeviceInform(value *model.DeviceInform) *device.DeviceInform {
 	return data
 }
 
+func convertGreetingInfo(value *model.GreetingInfo) *system.GreetingInfo {
+	if value == nil {
+		return nil
+	}
+	data := &system.GreetingInfo{
+		Device:    value.Device,
+		GrpcPort:  value.GrpcPort,
+		DevType:   uint64(value.DevType),
+		Supported: uint64(value.Supported),
+		Required:  uint64(value.Required),
+	}
+	return data
+}
+
 func convertSystemReply(value *model.SystemReply) *system.SystemReply {
 	if value == nil {
 		return nil

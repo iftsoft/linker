@@ -140,3 +140,17 @@ func (ms *ManagerService) Status(ctx context.Context, query *model.DeviceQuery) 
 	ms.log.Info("ManagerService.Status", "query", query.String(), "reply", reply.String())
 	return reply, nil
 }
+
+// Execute returns result of command execution
+func (ms *ManagerService) Execute(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
+	reply := &model.DeviceReply{
+		Device:  query.Device,
+		Command: model.CmdDeviceExecute,
+		Action:  model.DevActionBarScanning,
+		State:   ms.DevState,
+		ErrCode: model.DevErrorSuccess,
+		ErrText: "Ok",
+	}
+	ms.log.Info("ManagerService.Execute", "query", query.String(), "reply", reply.String())
+	return reply, nil
+}

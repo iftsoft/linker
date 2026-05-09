@@ -23,6 +23,22 @@ func NewSystemCallbackClient(log *slog.Logger, conn *grpc.ClientConn) *SystemCal
 	}
 }
 
+// GreetingInfo sends notification about device application
+func (c *SystemCallbackClient) GreetingInfo(ctx context.Context, reply *model.GreetingInfo) error {
+	c.log.Debug("CallbackClient.GreetingInfo - grpc",
+		slog.String("device", reply.Device), slog.Uint64("GrpcPort", uint64(reply.GrpcPort)))
+
+	input := &system.GreetingInfoRequest{
+		Data: convertGreetingInfo(reply),
+	}
+	_, err := c.system.GreetingInfo(ctx, input)
+	if err != nil {
+		return fmt.Errorf("callback GreetingInfo for %s.%d failed: %w", reply.Device, reply.GrpcPort, err)
+	}
+
+	return nil
+}
+
 // SystemReply sends notification about device reply
 func (c *SystemCallbackClient) SystemReply(ctx context.Context, reply *model.SystemReply) error {
 	c.log.Debug("CallbackClient.SystemReply - grpc",

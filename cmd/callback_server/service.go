@@ -17,6 +17,12 @@ func NewCallbackService(log *slog.Logger) *CallbackService {
 	}
 }
 
+// GreetingInfo sends notification about device application
+func (cs *CallbackService) GreetingInfo(ctx context.Context, reply *model.GreetingInfo) error {
+	cs.log.Info("CallbackService.GreetingInfo", "reply", reply)
+	return nil
+}
+
 // SystemReply sends notification about device reply
 func (cs *CallbackService) SystemReply(ctx context.Context, reply *model.SystemReply) error {
 	cs.log.Info("CallbackService.SystemReply", "reply", reply.String())
