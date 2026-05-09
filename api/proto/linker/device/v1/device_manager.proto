@@ -14,6 +14,8 @@ service DeviceManagerService {
   rpc Reset(ResetRequest) returns (ResetResponse) {}
   // Get status of device
   rpc Status(StatusRequest) returns (StatusResponse) {}
+  // Execute performs a device function
+  rpc Execute(ExecuteRequest) returns (ExecuteResponse) {}
 }
 
 // Defines the message structure for a cancel request
@@ -43,6 +45,16 @@ message StatusRequest {
 
 // Defines the message structure for the status response
 message StatusResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a execution request
+message ExecuteRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the execution response
+message ExecuteResponse {
   DeviceReply reply = 1;
 }
 

@@ -1,0 +1,22 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+// Defines the message structure for a device query
+message ReaderCardPos {
+  string device = 1;
+  int32 position = 2;
+}
+
+// Defines the message structure for a command reply
+message ReaderCardInfo {
+  string device = 1;
+  string card_pan = 2;
+  string exp_date = 3;
+  string holder = 4;
+  string track1 = 7;
+  string track2 = 8;
+  string track3 = 9;
+}

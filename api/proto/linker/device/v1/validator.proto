@@ -1,0 +1,36 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+// Defines the message structure for a validator query
+message ValidatorQuery {
+  string device = 1;
+  uint32 currency = 2;
+  int64 operation = 3;
+}
+
+// Defines the message structure for a cash item
+message ValidatorNote {
+  uint32 currency = 1;
+  int64 nominal = 2;
+  uint32 count = 3;
+  int64 amount = 4;
+}
+
+// DeviceState the message structure for a accepted note
+message ValidatorAccept {
+  string device = 1;
+  ValidatorNote note = 2;
+}
+
+// DeviceState the message structure for a cassette state
+message ValidatorBatch {
+  string device = 1;
+  int64 batch_id = 2;
+  uint32 state = 3;
+  string details = 4;
+  repeated ValidatorNote notes = 5;
+}
+

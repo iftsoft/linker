@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             (unknown)
-// source: linker/device/v1/callback.proto
+// source: linker/device/v1/device_callback.proto
 
 package v1
 
@@ -283,5 +283,5 @@ var DeviceCallbackService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "linker/device/v1/callback.proto",
+	Metadata: "linker/device/v1/device_callback.proto",
 }

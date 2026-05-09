@@ -1,0 +1,99 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+import "linker/device/v1/device.proto";
+import "linker/device/v1/validator.proto";
+
+// Defines the gRPC service with an RPC method
+service ValidatorManagerService {
+  // InitValidator does primary initialization of the validator
+  rpc InitValidator(InitValidatorRequest) returns (InitValidatorResponse) {}
+  // DoValidate starts accepting cash from user
+  rpc DoValidate(DoValidateRequest) returns (DoValidateResponse) {}
+  // AcceptNote puts the validated note to the cassette
+  rpc AcceptNote(AcceptNoteRequest) returns (AcceptNoteResponse) {}
+  // ReturnNote returns the validated note to the user
+  rpc ReturnNote(ReturnNoteRequest) returns (ReturnNoteResponse) {}
+  // StopValidate disables accepting new notes by validator
+  rpc StopValidate(StopValidateRequest) returns (StopValidateResponse) {}
+  // CheckValidator returns current cassette state
+  rpc CheckValidator(CheckValidatorRequest) returns (CheckValidatorResponse) {}
+  // ClearValidator clears all cassette data (settlement or reconciliation)
+  rpc ClearValidator(ClearValidatorRequest) returns (ClearValidatorResponse) {}
+}
+
+// Defines the message structure for a cancel request
+message InitValidatorRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the cancel response
+message InitValidatorResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a reset request
+message DoValidateRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the reset response
+message DoValidateResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a status request
+message AcceptNoteRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message AcceptNoteResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a status request
+message ReturnNoteRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message ReturnNoteResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a status request
+message StopValidateRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message StopValidateResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a status request
+message CheckValidatorRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message CheckValidatorResponse {
+  DeviceReply reply = 1;
+  ValidatorBatch batch = 2;
+}
+
+// Defines the message structure for a status request
+message ClearValidatorRequest {
+  ValidatorQuery query = 1;
+}
+
+// Defines the message structure for the status response
+message ClearValidatorResponse {
+  DeviceReply reply = 1;
+  ValidatorBatch batch = 2;
+}
+

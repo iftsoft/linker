@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             (unknown)
-// source: linker/device/v1/manager.proto
+// source: linker/device/v1/device_manager.proto
 
 package v1
 
@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceManagerService_Cancel_FullMethodName = "/linker.device.v1.DeviceManagerService/Cancel"
-	DeviceManagerService_Reset_FullMethodName  = "/linker.device.v1.DeviceManagerService/Reset"
-	DeviceManagerService_Status_FullMethodName = "/linker.device.v1.DeviceManagerService/Status"
+	DeviceManagerService_Cancel_FullMethodName  = "/linker.device.v1.DeviceManagerService/Cancel"
+	DeviceManagerService_Reset_FullMethodName   = "/linker.device.v1.DeviceManagerService/Reset"
+	DeviceManagerService_Status_FullMethodName  = "/linker.device.v1.DeviceManagerService/Status"
+	DeviceManagerService_Execute_FullMethodName = "/linker.device.v1.DeviceManagerService/Execute"
 )
 
 // DeviceManagerServiceClient is the client API for DeviceManagerService service.
@@ -36,6 +37,8 @@ type DeviceManagerServiceClient interface {
 	Reset(ctx context.Context, in *ResetRequest, opts ...grpc.CallOption) (*ResetResponse, error)
 	// Get status of device
 	Status(ctx context.Context, in *StatusRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// Execute performs a device function
+	Execute(ctx context.Context, in *ExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error)
 }
 
 type deviceManagerServiceClient struct {
@@ -76,6 +79,16 @@ func (c *deviceManagerServiceClient) Status(ctx context.Context, in *StatusReque
 	return out, nil
 }
 
+func (c *deviceManagerServiceClient) Execute(ctx context.Context, in *ExecuteRequest, opts ...grpc.CallOption) (*ExecuteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExecuteResponse)
+	err := c.cc.Invoke(ctx, DeviceManagerService_Execute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceManagerServiceServer is the server API for DeviceManagerService service.
 // All implementations must embed UnimplementedDeviceManagerServiceServer
 // for forward compatibility.
@@ -88,6 +101,8 @@ type DeviceManagerServiceServer interface {
 	Reset(context.Context, *ResetRequest) (*ResetResponse, error)
 	// Get status of device
 	Status(context.Context, *StatusRequest) (*StatusResponse, error)
+	// Execute performs a device function
+	Execute(context.Context, *ExecuteRequest) (*ExecuteResponse, error)
 	mustEmbedUnimplementedDeviceManagerServiceServer()
 }
 
@@ -106,6 +121,9 @@ func (UnimplementedDeviceManagerServiceServer) Reset(context.Context, *ResetRequ
 }
 func (UnimplementedDeviceManagerServiceServer) Status(context.Context, *StatusRequest) (*StatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Status not implemented")
+}
+func (UnimplementedDeviceManagerServiceServer) Execute(context.Context, *ExecuteRequest) (*ExecuteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Execute not implemented")
 }
 func (UnimplementedDeviceManagerServiceServer) mustEmbedUnimplementedDeviceManagerServiceServer() {}
 func (UnimplementedDeviceManagerServiceServer) testEmbeddedByValue()                              {}
@@ -182,6 +200,24 @@ func _DeviceManagerService_Status_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeviceManagerService_Execute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecuteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceManagerServiceServer).Execute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceManagerService_Execute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceManagerServiceServer).Execute(ctx, req.(*ExecuteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeviceManagerService_ServiceDesc is the grpc.ServiceDesc for DeviceManagerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -201,7 +237,11 @@ var DeviceManagerService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Status",
 			Handler:    _DeviceManagerService_Status_Handler,
 		},
+		{
+			MethodName: "Execute",
+			Handler:    _DeviceManagerService_Execute_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "linker/device/v1/manager.proto",
+	Metadata: "linker/device/v1/device_manager.proto",
 }

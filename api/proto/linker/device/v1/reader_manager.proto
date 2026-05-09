@@ -1,0 +1,60 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+import "linker/device/v1/device.proto";
+
+// Defines the gRPC service with an RPC method
+service ReaderManagerService {
+  // EnterCard trys to accept card in card reader device
+  rpc EnterCard(EnterCardRequest) returns (EnterCardResponse) {}
+  // EjectCard trys to reject card from card reader device
+  rpc EjectCard(EjectCardRequest) returns (EjectCardResponse) {}
+  // CaptureCard trys to capture card inside card reader device
+  rpc CaptureCard(CaptureCardRequest) returns (CaptureCardResponse) {}
+  // ReadCard trys to read card information from card
+  rpc ReadCard(ReadCardRequest) returns (ReadCardResponse) {}
+}
+
+// Defines the message structure for a enter card request
+message EnterCardRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the enter card response
+message EnterCardResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a eject card request
+message EjectCardRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the eject card response
+message EjectCardResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a capture card request
+message CaptureCardRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the capture card response
+message CaptureCardResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a read card request
+message ReadCardRequest {
+  DeviceQuery query = 1;
+}
+
+// Defines the message structure for the read card response
+message ReadCardResponse {
+  DeviceReply reply = 1;
+}
+

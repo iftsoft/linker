@@ -1,0 +1,37 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+import "linker/device/v1/device.proto";
+import "linker/device/v1/printer.proto";
+
+// Defines the gRPC service with an RPC method
+service PrinterManagerService {
+  // InitPrinter does primary initialization of printer before printing
+  rpc InitPrinter(InitPrinterRequest) returns (InitPrinterResponse) {}
+  // PrintText trys to print given text on the printer
+  rpc PrintText(PrintTextRequest) returns (PrintTextResponse) {}
+}
+
+// Defines the message structure for a cancel request
+message InitPrinterRequest {
+  PrinterSetup query = 1;
+}
+
+// Defines the message structure for the cancel response
+message InitPrinterResponse {
+  DeviceReply reply = 1;
+}
+
+// Defines the message structure for a reset request
+message PrintTextRequest {
+  PrinterQuery query = 1;
+}
+
+// Defines the message structure for the reset response
+message PrintTextResponse {
+  PrinterProgress reply = 1;
+}
+

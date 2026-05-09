@@ -1,0 +1,22 @@
+syntax = "proto3"; // Specifies the protobuf syntax version
+
+option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go package name for generated code
+
+package linker.device.v1; // Defines the package name for the service and messages
+
+import "linker/device/v1/printer.proto";
+
+// Defines the gRPC service with an RPC method
+service PrinterCallbackService {
+  // PrinterProgress sent notification about printing progress
+  rpc PrinterProgress(PrinterProgressRequest) returns (PrinterProgressResponse) {}
+}
+
+// Defines the message structure for a printer progress request
+message PrinterProgressRequest {
+  PrinterProgress data = 1;
+}
+
+// Defines the message structure for the printer progress response
+message PrinterProgressResponse {}
+
