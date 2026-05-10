@@ -5,42 +5,35 @@ import (
 	"errors"
 	"log/slog"
 
-	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	srv "github.com/iftsoft/linker/gen/go/linker/system/v1"
 	model "github.com/iftsoft/linker/model"
 )
 
-const (
-	strMissingRequest  = "missing request"
-	strConversionError = "conversion error"
-	strServiceFault    = "service fault"
-)
-
-type Callback struct {
+type SystemCallback struct {
 	log *slog.Logger
 	api model.SystemCallback
 	srv.SystemCallbackServiceServer
 }
 
-func NewCallback(log *slog.Logger, api model.SystemCallback) *Callback {
-	return &Callback{
+func NewSystemCallback(log *slog.Logger, api model.SystemCallback) *SystemCallback {
+	return &SystemCallback{
 		log: log,
 		api: api,
 	}
 }
 
-func (h *Callback) Register(s grpc.ServiceRegistrar) {
+func (h *SystemCallback) Register(s grpc.ServiceRegistrar) {
 	srv.RegisterSystemCallbackServiceServer(s, h)
 }
 
 // SystemReply implements Notification about system reply
-func (h *Callback) SystemReply(ctx context.Context, req *srv.SystemReplyRequest) (*srv.SystemReplyResponse, error) {
+func (h *SystemCallback) SystemReply(ctx context.Context, req *srv.SystemReplyRequest) (*srv.SystemReplyResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SystemReplyRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SystemReplyRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -64,9 +57,10 @@ func (h *Callback) SystemReply(ctx context.Context, req *srv.SystemReplyRequest)
 }
 
 // SystemHealth implements Notification about system health
-func (h *Callback) SystemHealth(ctx context.Context, req *srv.SystemHealthRequest) (*srv.SystemHealthResponse, error) {
+func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealthRequest) (*srv.SystemHealthResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SystemHealthRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SystemHealthRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -86,18 +80,4 @@ func (h *Callback) SystemHealth(ctx context.Context, req *srv.SystemHealthReques
 	resp := &srv.SystemHealthResponse{}
 
 	return resp, err
-}
-
-func MakeErrorWithDetails(code codes.Code, msg string, e error) error {
-	details := &errdetails.ErrorInfo{
-		Reason: e.Error(),
-		Domain: "apis.base-cms",
-	}
-
-	sts, err := status.New(code, msg).WithDetails(details)
-	if err != nil {
-		sts = status.New(codes.Internal, err.Error())
-	}
-
-	return sts.Err()
 }

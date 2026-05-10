@@ -8,8 +8,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
-
-	model "github.com/iftsoft/linker/model"
 )
 
 const (
@@ -17,19 +15,19 @@ const (
 	defaultCallTimeout    = 5 * time.Second
 )
 
-// DeviceCallbackClient is the client API for DeviceCallbackService service.
-type DeviceCallbackClient interface {
-	// DeviceReply sends notification about device reply
-	DeviceReply(ctx context.Context, reply *model.DeviceReply) error
-	// ExecuteError sends notification about execute error
-	ExecuteError(ctx context.Context, value *model.DeviceReply) error
-	// StateChanged sends notification about device state changing
-	StateChanged(ctx context.Context, value *model.DeviceState) error
-	// ActionPrompt sends notification about action prompt for user
-	ActionPrompt(ctx context.Context, value *model.DevicePrompt) error
-	// ReaderReturn sends notification about device reading result
-	ReaderReturn(ctx context.Context, value *model.DeviceInform) error
-}
+//// DeviceCallbackClient is the client API for DeviceCallbackService service.
+//type DeviceCallbackClient interface {
+//	// DeviceReply sends notification about device reply
+//	DeviceReply(ctx context.Context, reply *model.DeviceReply) error
+//	// ExecuteError sends notification about execute error
+//	ExecuteError(ctx context.Context, value *model.DeviceReply) error
+//	// StateChanged sends notification about device state changing
+//	StateChanged(ctx context.Context, value *model.DeviceState) error
+//	// ActionPrompt sends notification about action prompt for user
+//	ActionPrompt(ctx context.Context, value *model.DevicePrompt) error
+//	// ReaderReturn sends notification about device reading result
+//	ReaderReturn(ctx context.Context, value *model.DeviceInform) error
+//}
 
 type Client struct {
 	conn *grpc.ClientConn

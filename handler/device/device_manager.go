@@ -2,7 +2,6 @@ package device
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"log/slog"
 
@@ -13,27 +12,28 @@ import (
 	model "github.com/iftsoft/linker/model"
 )
 
-type Manager struct {
+type DeviceManager struct {
 	log *slog.Logger
 	api model.DeviceManager
 	srv.DeviceManagerServiceServer
 }
 
-func NewManager(log *slog.Logger, api model.DeviceManager) *Manager {
-	return &Manager{
+func NewDeviceManager(log *slog.Logger, api model.DeviceManager) *DeviceManager {
+	return &DeviceManager{
 		log: log,
 		api: api,
 	}
 }
 
-func (h *Manager) Register(s grpc.ServiceRegistrar) {
+func (h *DeviceManager) Register(s grpc.ServiceRegistrar) {
 	srv.RegisterDeviceManagerServiceServer(s, h)
 }
 
 // Cancel interrupts current operation on device
-func (h *Manager) Cancel(ctx context.Context, req *srv.CancelRequest) (*srv.CancelResponse, error) {
+func (h *DeviceManager) Cancel(ctx context.Context, req *srv.CancelRequest) (*srv.CancelResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("CancelRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("CancelRequest is nil"))
 	}
 
 	query := DeviceQueryToModel(req.GetQuery())
@@ -52,9 +52,10 @@ func (h *Manager) Cancel(ctx context.Context, req *srv.CancelRequest) (*srv.Canc
 }
 
 // Reset turns device to initial state
-func (h *Manager) Reset(ctx context.Context, req *srv.ResetRequest) (*srv.ResetResponse, error) {
+func (h *DeviceManager) Reset(ctx context.Context, req *srv.ResetRequest) (*srv.ResetResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ResetRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ResetRequest is nil"))
 	}
 
 	query := DeviceQueryToModel(req.GetQuery())
@@ -73,9 +74,10 @@ func (h *Manager) Reset(ctx context.Context, req *srv.ResetRequest) (*srv.ResetR
 }
 
 // Status returns status of device
-func (h *Manager) Status(ctx context.Context, req *srv.StatusRequest) (*srv.StatusResponse, error) {
+func (h *DeviceManager) Status(ctx context.Context, req *srv.StatusRequest) (*srv.StatusResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("StatusRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("StatusRequest is nil"))
 	}
 
 	query := DeviceQueryToModel(req.GetQuery())
@@ -94,9 +96,10 @@ func (h *Manager) Status(ctx context.Context, req *srv.StatusRequest) (*srv.Stat
 }
 
 // Execute returns result of command execution
-func (h *Manager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*srv.ExecuteResponse, error) {
+func (h *DeviceManager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*srv.ExecuteResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ExecuteRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ExecuteRequest is nil"))
 	}
 
 	query := DeviceQueryToModel(req.GetQuery())
@@ -112,15 +115,6 @@ func (h *Manager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*srv.Ex
 	}
 
 	return resp, err
-}
-
-func Serialize(value any) string {
-	dump, err := json.Marshal(value)
-	if err != nil {
-		return "{}"
-	}
-
-	return string(dump)
 }
 
 func DeviceQueryToModel(data *srv.DeviceQuery) *model.DeviceQuery {

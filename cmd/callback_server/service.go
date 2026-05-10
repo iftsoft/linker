@@ -64,3 +64,45 @@ func (cs *CallbackService) ReaderReturn(ctx context.Context, value *model.Device
 	cs.log.Info("CallbackService.ReaderReturn", "value", value.String())
 	return nil
 }
+
+// PrinterProgress sent notification about printing progress
+func (cs *CallbackService) PrinterProgress(ctx context.Context, value *model.PrinterProgress) error {
+	cs.log.Info("CallbackService.PrinterProgress", "value", value)
+	return nil
+}
+
+// CardPosition sends notification about new card position
+func (cs *CallbackService) CardPosition(ctx context.Context, value *model.CardPosition) error {
+	cs.log.Info("CallbackService.CardPosition", "value", value)
+	return nil
+}
+
+// CardDescription sends notification about card information
+func (cs *CallbackService) CardDescription(ctx context.Context, value *model.CardDescription) error {
+	cs.log.Info("CallbackService.CardDescription", "value", value)
+	return nil
+}
+
+// NoteAccepted sends notification about new note in escrow
+func (cs *CallbackService) NoteAccepted(ctx context.Context, value *model.ValidatorAccept) error {
+	cs.log.Info("CallbackService.NoteAccepted", "value", value.String())
+	return nil
+}
+
+// CashIsStored sends notification that note is stored to cassette
+func (cs *CallbackService) CashIsStored(ctx context.Context, value *model.ValidatorAccept) error {
+	cs.log.Info("CallbackService.CashIsStored", "value", value.String())
+	return nil
+}
+
+// CashReturned sends notification that note is returned to user
+func (cs *CallbackService) CashReturned(ctx context.Context, value *model.ValidatorAccept) error {
+	cs.log.Info("CallbackService.CashReturned", "value", value.String())
+	return nil
+}
+
+// ValidatorStore sends notification about current cassette state
+func (cs *CallbackService) ValidatorStore(ctx context.Context, value *model.ValidatorBatch) error {
+	cs.log.Info("CallbackService.ValidatorStore", "value", value.String())
+	return nil
+}

@@ -35,6 +35,6 @@ type PrinterSetup struct {
 type PrinterProgress struct {
 	Device   string `json:"device"`
 	DocName  string `json:"doc_name"`
-	PageDone int32  `json:"page_done"`
-	PagesAll int32  `json:"pages_all"`
+	PageDone uint32 `json:"page_done"`
+	PagesAll uint32 `json:"pages_all"`
 }

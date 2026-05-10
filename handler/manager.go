@@ -12,12 +12,18 @@ import (
 type ManagerService interface {
 	model.SystemManager
 	model.DeviceManager
+	model.PrinterManager
+	model.ReaderManager
+	model.ValidatorManager
 }
 
 func NewManagerServer(log *slog.Logger, address string, service ManagerService) *server.Server {
 	grpcSrv := server.NewServer(log, address,
-		system.NewManager(log, service),
-		device.NewManager(log, service),
+		system.NewSystemManager(log, service),
+		device.NewDeviceManager(log, service),
+		device.NewPrinterManager(log, service),
+		device.NewReaderManager(log, service),
+		device.NewValidatorManager(log, service),
 	)
 	return grpcSrv
 }

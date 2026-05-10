@@ -2,7 +2,6 @@ package system
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"log/slog"
 
@@ -13,27 +12,28 @@ import (
 	model "github.com/iftsoft/linker/model"
 )
 
-type Manager struct {
+type SystemManager struct {
 	log *slog.Logger
 	api model.SystemManager
 	srv.SystemManagerServiceServer
 }
 
-func NewManager(log *slog.Logger, api model.SystemManager) *Manager {
-	return &Manager{
+func NewSystemManager(log *slog.Logger, api model.SystemManager) *SystemManager {
+	return &SystemManager{
 		log: log,
 		api: api,
 	}
 }
 
-func (h *Manager) Register(s grpc.ServiceRegistrar) {
+func (h *SystemManager) Register(s grpc.ServiceRegistrar) {
 	srv.RegisterSystemManagerServiceServer(s, h)
 }
 
 // Terminate interrupts system execution
-func (h *Manager) Terminate(ctx context.Context, req *srv.TerminateRequest) (*srv.TerminateResponse, error) {
+func (h *SystemManager) Terminate(ctx context.Context, req *srv.TerminateRequest) (*srv.TerminateResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("TerminateRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("TerminateRequest is nil"))
 	}
 
 	query := SystemQueryToModel(req.GetQuery())
@@ -52,9 +52,10 @@ func (h *Manager) Terminate(ctx context.Context, req *srv.TerminateRequest) (*sr
 }
 
 // SysInform returns system health information
-func (h *Manager) SysInform(ctx context.Context, req *srv.SysInformRequest) (*srv.SysInformResponse, error) {
+func (h *SystemManager) SysInform(ctx context.Context, req *srv.SysInformRequest) (*srv.SysInformResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SysInformRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SysInformRequest is nil"))
 	}
 
 	query := SystemQueryToModel(req.GetQuery())
@@ -73,9 +74,10 @@ func (h *Manager) SysInform(ctx context.Context, req *srv.SysInformRequest) (*sr
 }
 
 // SysStart turns system device to initial state
-func (h *Manager) SysStart(ctx context.Context, req *srv.SysStartRequest) (*srv.SysStartResponse, error) {
+func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) (*srv.SysStartResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SysStartRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SysStartRequest is nil"))
 	}
 
 	config := SystemConfigToModel(req.GetConfig())
@@ -94,9 +96,10 @@ func (h *Manager) SysStart(ctx context.Context, req *srv.SysStartRequest) (*srv.
 }
 
 // SysStop deactivates system device
-func (h *Manager) SysStop(ctx context.Context, req *srv.SysStopRequest) (*srv.SysStopResponse, error) {
+func (h *SystemManager) SysStop(ctx context.Context, req *srv.SysStopRequest) (*srv.SysStopResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SysStopRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SysStopRequest is nil"))
 	}
 
 	query := SystemQueryToModel(req.GetQuery())
@@ -115,9 +118,10 @@ func (h *Manager) SysStop(ctx context.Context, req *srv.SysStopRequest) (*srv.Sy
 }
 
 // SysRestart reactivates system device
-func (h *Manager) SysRestart(ctx context.Context, req *srv.SysRestartRequest) (*srv.SysRestartResponse, error) {
+func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartRequest) (*srv.SysRestartResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("SysRestartRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SysRestartRequest is nil"))
 	}
 
 	config := SystemConfigToModel(req.GetConfig())
@@ -133,15 +137,6 @@ func (h *Manager) SysRestart(ctx context.Context, req *srv.SysRestartRequest) (*
 	}
 
 	return resp, err
-}
-
-func Serialize(value any) string {
-	dump, err := json.Marshal(value)
-	if err != nil {
-		return "{}"
-	}
-
-	return string(dump)
 }
 
 func SystemQueryToModel(data *srv.SystemQuery) *model.SystemQuery {

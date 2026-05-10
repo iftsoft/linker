@@ -5,42 +5,35 @@ import (
 	"errors"
 	"log/slog"
 
-	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	srv "github.com/iftsoft/linker/gen/go/linker/device/v1"
 	model "github.com/iftsoft/linker/model"
 )
 
-const (
-	strMissingRequest  = "missing request"
-	strConversionError = "conversion error"
-	strServiceFault    = "service fault"
-)
-
-type Callback struct {
+type DeviceCallback struct {
 	log *slog.Logger
 	api model.DeviceCallback
 	srv.DeviceCallbackServiceServer
 }
 
-func NewCallback(log *slog.Logger, api model.DeviceCallback) *Callback {
-	return &Callback{
+func NewDeviceCallback(log *slog.Logger, api model.DeviceCallback) *DeviceCallback {
+	return &DeviceCallback{
 		log: log,
 		api: api,
 	}
 }
 
-func (h *Callback) Register(s grpc.ServiceRegistrar) {
+func (h *DeviceCallback) Register(s grpc.ServiceRegistrar) {
 	srv.RegisterDeviceCallbackServiceServer(s, h)
 }
 
 // DeviceReply implements Notification about device reply
-func (h *Callback) DeviceReply(ctx context.Context, req *srv.DeviceReplyRequest) (*srv.DeviceReplyResponse, error) {
+func (h *DeviceCallback) DeviceReply(ctx context.Context, req *srv.DeviceReplyRequest) (*srv.DeviceReplyResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("DeviceReplyRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("DeviceReplyRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -65,9 +58,10 @@ func (h *Callback) DeviceReply(ctx context.Context, req *srv.DeviceReplyRequest)
 }
 
 // ExecuteError implements Notification about execute error
-func (h *Callback) ExecuteError(ctx context.Context, req *srv.ExecuteErrorRequest) (*srv.ExecuteErrorResponse, error) {
+func (h *DeviceCallback) ExecuteError(ctx context.Context, req *srv.ExecuteErrorRequest) (*srv.ExecuteErrorResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ExecuteErrorRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ExecuteErrorRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -92,9 +86,10 @@ func (h *Callback) ExecuteError(ctx context.Context, req *srv.ExecuteErrorReques
 }
 
 // StateChanged implements Notification about device state changing
-func (h *Callback) StateChanged(ctx context.Context, req *srv.StateChangedRequest) (*srv.StateChangedResponse, error) {
+func (h *DeviceCallback) StateChanged(ctx context.Context, req *srv.StateChangedRequest) (*srv.StateChangedResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("StateChangedRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("StateChangedRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -117,9 +112,10 @@ func (h *Callback) StateChanged(ctx context.Context, req *srv.StateChangedReques
 }
 
 // ActionPrompt implements Notification about action prompt for user
-func (h *Callback) ActionPrompt(ctx context.Context, req *srv.ActionPromptRequest) (*srv.ActionPromptResponse, error) {
+func (h *DeviceCallback) ActionPrompt(ctx context.Context, req *srv.ActionPromptRequest) (*srv.ActionPromptResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ActionPromptRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ActionPromptRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -141,9 +137,10 @@ func (h *Callback) ActionPrompt(ctx context.Context, req *srv.ActionPromptReques
 }
 
 // ReaderReturn implements Notification about device reading result
-func (h *Callback) ReaderReturn(ctx context.Context, req *srv.ReaderReturnRequest) (*srv.ReaderReturnResponse, error) {
+func (h *DeviceCallback) ReaderReturn(ctx context.Context, req *srv.ReaderReturnRequest) (*srv.ReaderReturnResponse, error) {
 	if req == nil {
-		return nil, MakeErrorWithDetails(codes.InvalidArgument, strMissingRequest, errors.New("ReaderReturnRequest is nil"))
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ReaderReturnRequest is nil"))
 	}
 
 	data := req.GetData()
@@ -162,18 +159,4 @@ func (h *Callback) ReaderReturn(ctx context.Context, req *srv.ReaderReturnReques
 	resp := &srv.ReaderReturnResponse{}
 
 	return resp, err
-}
-
-func MakeErrorWithDetails(code codes.Code, msg string, e error) error {
-	details := &errdetails.ErrorInfo{
-		Reason: e.Error(),
-		Domain: "apis.base-cms",
-	}
-
-	sts, err := status.New(code, msg).WithDetails(details)
-	if err != nil {
-		sts = status.New(codes.Internal, err.Error())
-	}
-
-	return sts.Err()
 }
