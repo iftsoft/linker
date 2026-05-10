@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 
 	system "github.com/iftsoft/linker/gen/go/linker/system/v1"
-	model "github.com/iftsoft/linker/model"
+	"github.com/iftsoft/linker/model"
 )
 
 type SystemCallbackClient struct {
@@ -69,4 +69,45 @@ func (c *SystemCallbackClient) SystemHealth(ctx context.Context, reply *model.Sy
 	}
 
 	return nil
+}
+
+func convertGreetingInfo(value *model.GreetingInfo) *system.GreetingInfo {
+	if value == nil {
+		return nil
+	}
+	data := &system.GreetingInfo{
+		Device:    value.Device,
+		GrpcPort:  value.GrpcPort,
+		DevType:   uint64(value.DevType),
+		Supported: uint64(value.Supported),
+		Required:  uint64(value.Required),
+	}
+	return data
+}
+
+func convertSystemReply(value *model.SystemReply) *system.SystemReply {
+	if value == nil {
+		return nil
+	}
+	data := &system.SystemReply{
+		Device:   value.Device,
+		Command:  value.Command,
+		Message:  value.Message,
+		SysError: uint32(value.SysError),
+		SysState: uint32(value.SysState),
+	}
+	return data
+}
+
+func convertSystemHealth(value *model.SystemHealth) *system.SystemHealth {
+	if value == nil {
+		return nil
+	}
+	data := &system.SystemHealth{
+		Device:   value.Device,
+		Moment:   value.Moment,
+		SysError: uint32(value.SysError),
+		SysState: uint32(value.SysState),
+	}
+	return data
 }

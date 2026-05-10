@@ -17,9 +17,9 @@ const (
 
 type ReaderCallback interface {
 	// CardPosition sends notification about new card position
-	CardPosition(ctx context.Context, value *ReaderCardPos) error
+	CardPosition(ctx context.Context, value *CardPosition) error
 	// CardDescription sends notification about card information
-	CardDescription(ctx context.Context, value *ReaderCardInfo) error
+	CardDescription(ctx context.Context, value *CardDescription) error
 }
 
 type ReaderManager interface {
@@ -30,15 +30,15 @@ type ReaderManager interface {
 	// CaptureCard trys to capture card inside card reader device
 	CaptureCard(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
 	// ReadCard trys to read card information from card
-	ReadCard(ctx context.Context, query *DeviceQuery) (*ReaderCardInfo, error)
+	ReadCard(ctx context.Context, query *DeviceQuery) (*CardDescription, error)
 }
 
-type ReaderCardPos struct {
+type CardPosition struct {
 	Device   string `json:"device"`
 	Position int32  `json:"position"`
 }
 
-type ReaderCardInfo struct {
+type CardDescription struct {
 	Device  string `json:"device"`
 	CardPan string `json:"card_pan"`
 	ExpDate string `json:"exp_date"`

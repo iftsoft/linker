@@ -21,8 +21,8 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Defines the message structure for a device query
-type ReaderCardPos struct {
+// Defines the message structure for a card position
+type CardPosition struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	Position      int32                  `protobuf:"varint,2,opt,name=position,proto3" json:"position,omitempty"`
@@ -30,20 +30,20 @@ type ReaderCardPos struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReaderCardPos) Reset() {
-	*x = ReaderCardPos{}
+func (x *CardPosition) Reset() {
+	*x = CardPosition{}
 	mi := &file_linker_device_v1_reader_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReaderCardPos) String() string {
+func (x *CardPosition) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReaderCardPos) ProtoMessage() {}
+func (*CardPosition) ProtoMessage() {}
 
-func (x *ReaderCardPos) ProtoReflect() protoreflect.Message {
+func (x *CardPosition) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_reader_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,27 +55,27 @@ func (x *ReaderCardPos) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReaderCardPos.ProtoReflect.Descriptor instead.
-func (*ReaderCardPos) Descriptor() ([]byte, []int) {
+// Deprecated: Use CardPosition.ProtoReflect.Descriptor instead.
+func (*CardPosition) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ReaderCardPos) GetDevice() string {
+func (x *CardPosition) GetDevice() string {
 	if x != nil {
 		return x.Device
 	}
 	return ""
 }
 
-func (x *ReaderCardPos) GetPosition() int32 {
+func (x *CardPosition) GetPosition() int32 {
 	if x != nil {
 		return x.Position
 	}
 	return 0
 }
 
-// Defines the message structure for a command reply
-type ReaderCardInfo struct {
+// Defines the message structure for a card description
+type CardDescription struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	CardPan       string                 `protobuf:"bytes,2,opt,name=card_pan,json=cardPan,proto3" json:"card_pan,omitempty"`
@@ -88,20 +88,20 @@ type ReaderCardInfo struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReaderCardInfo) Reset() {
-	*x = ReaderCardInfo{}
+func (x *CardDescription) Reset() {
+	*x = CardDescription{}
 	mi := &file_linker_device_v1_reader_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReaderCardInfo) String() string {
+func (x *CardDescription) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReaderCardInfo) ProtoMessage() {}
+func (*CardDescription) ProtoMessage() {}
 
-func (x *ReaderCardInfo) ProtoReflect() protoreflect.Message {
+func (x *CardDescription) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_reader_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -113,54 +113,54 @@ func (x *ReaderCardInfo) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReaderCardInfo.ProtoReflect.Descriptor instead.
-func (*ReaderCardInfo) Descriptor() ([]byte, []int) {
+// Deprecated: Use CardDescription.ProtoReflect.Descriptor instead.
+func (*CardDescription) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ReaderCardInfo) GetDevice() string {
+func (x *CardDescription) GetDevice() string {
 	if x != nil {
 		return x.Device
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetCardPan() string {
+func (x *CardDescription) GetCardPan() string {
 	if x != nil {
 		return x.CardPan
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetExpDate() string {
+func (x *CardDescription) GetExpDate() string {
 	if x != nil {
 		return x.ExpDate
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetHolder() string {
+func (x *CardDescription) GetHolder() string {
 	if x != nil {
 		return x.Holder
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetTrack1() string {
+func (x *CardDescription) GetTrack1() string {
 	if x != nil {
 		return x.Track1
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetTrack2() string {
+func (x *CardDescription) GetTrack2() string {
 	if x != nil {
 		return x.Track2
 	}
 	return ""
 }
 
-func (x *ReaderCardInfo) GetTrack3() string {
+func (x *CardDescription) GetTrack3() string {
 	if x != nil {
 		return x.Track3
 	}
@@ -171,11 +171,11 @@ var File_linker_device_v1_reader_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_reader_proto_rawDesc = "" +
 	"\n" +
-	"\x1dlinker/device/v1/reader.proto\x12\x10linker.device.v1\"C\n" +
-	"\rReaderCardPos\x12\x16\n" +
+	"\x1dlinker/device/v1/reader.proto\x12\x10linker.device.v1\"B\n" +
+	"\fCardPosition\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1a\n" +
-	"\bposition\x18\x02 \x01(\x05R\bposition\"\xbe\x01\n" +
-	"\x0eReaderCardInfo\x12\x16\n" +
+	"\bposition\x18\x02 \x01(\x05R\bposition\"\xbf\x01\n" +
+	"\x0fCardDescription\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x19\n" +
 	"\bcard_pan\x18\x02 \x01(\tR\acardPan\x12\x19\n" +
 	"\bexp_date\x18\x03 \x01(\tR\aexpDate\x12\x16\n" +
@@ -198,8 +198,8 @@ func file_linker_device_v1_reader_proto_rawDescGZIP() []byte {
 
 var file_linker_device_v1_reader_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_linker_device_v1_reader_proto_goTypes = []any{
-	(*ReaderCardPos)(nil),  // 0: linker.device.v1.ReaderCardPos
-	(*ReaderCardInfo)(nil), // 1: linker.device.v1.ReaderCardInfo
+	(*CardPosition)(nil),    // 0: linker.device.v1.CardPosition
+	(*CardDescription)(nil), // 1: linker.device.v1.CardDescription
 }
 var file_linker_device_v1_reader_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

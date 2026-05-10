@@ -102,3 +102,55 @@ func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.De
 
 	return nil
 }
+
+func convertDeviceReply(value *model.DeviceReply) *device.DeviceReply {
+	if value == nil {
+		return nil
+	}
+	data := &device.DeviceReply{
+		Device:  value.Device,
+		Command: value.Command,
+		Action:  uint32(value.Action),
+		State:   uint32(value.State),
+		ErrCode: uint32(value.ErrCode),
+		ErrText: value.ErrText,
+	}
+	return data
+}
+
+func convertDeviceState(value *model.DeviceState) *device.DeviceState {
+	if value == nil {
+		return nil
+	}
+	data := &device.DeviceState{
+		Device:   value.Device,
+		Action:   uint32(value.Action),
+		NewState: uint32(value.NewState),
+		OldState: uint32(value.OldState),
+	}
+	return data
+}
+
+func convertDevicePrompt(value *model.DevicePrompt) *device.DevicePrompt {
+	if value == nil {
+		return nil
+	}
+	data := &device.DevicePrompt{
+		Device: value.Device,
+		Action: uint32(value.Action),
+		Prompt: uint32(value.Prompt),
+	}
+	return data
+}
+
+func convertDeviceInform(value *model.DeviceInform) *device.DeviceInform {
+	if value == nil {
+		return nil
+	}
+	data := &device.DeviceInform{
+		Device: value.Device,
+		Action: uint32(value.Action),
+		Inform: value.Inform,
+	}
+	return data
+}

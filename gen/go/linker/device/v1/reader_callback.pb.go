@@ -24,7 +24,7 @@ const (
 // Defines the message structure for a device reply request
 type CardPositionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ReaderCardPos         `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Data          *CardPosition          `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,7 +59,7 @@ func (*CardPositionRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_callback_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CardPositionRequest) GetData() *ReaderCardPos {
+func (x *CardPositionRequest) GetData() *CardPosition {
 	if x != nil {
 		return x.Data
 	}
@@ -106,7 +106,7 @@ func (*CardPositionResponse) Descriptor() ([]byte, []int) {
 // Defines the message structure for an execute error request
 type CardDescriptionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ReaderCardInfo        `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Data          *CardDescription       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -141,7 +141,7 @@ func (*CardDescriptionRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_callback_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CardDescriptionRequest) GetData() *ReaderCardInfo {
+func (x *CardDescriptionRequest) GetData() *CardDescription {
 	if x != nil {
 		return x.Data
 	}
@@ -189,12 +189,12 @@ var File_linker_device_v1_reader_callback_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_reader_callback_proto_rawDesc = "" +
 	"\n" +
-	"&linker/device/v1/reader_callback.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/reader.proto\"J\n" +
-	"\x13CardPositionRequest\x123\n" +
-	"\x04data\x18\x01 \x01(\v2\x1f.linker.device.v1.ReaderCardPosR\x04data\"\x16\n" +
-	"\x14CardPositionResponse\"N\n" +
-	"\x16CardDescriptionRequest\x124\n" +
-	"\x04data\x18\x01 \x01(\v2 .linker.device.v1.ReaderCardInfoR\x04data\"\x19\n" +
+	"&linker/device/v1/reader_callback.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/reader.proto\"I\n" +
+	"\x13CardPositionRequest\x122\n" +
+	"\x04data\x18\x01 \x01(\v2\x1e.linker.device.v1.CardPositionR\x04data\"\x16\n" +
+	"\x14CardPositionResponse\"O\n" +
+	"\x16CardDescriptionRequest\x125\n" +
+	"\x04data\x18\x01 \x01(\v2!.linker.device.v1.CardDescriptionR\x04data\"\x19\n" +
 	"\x17CardDescriptionResponse2\xe2\x01\n" +
 	"\x15ReaderCallbackService\x12_\n" +
 	"\fCardPosition\x12%.linker.device.v1.CardPositionRequest\x1a&.linker.device.v1.CardPositionResponse\"\x00\x12h\n" +
@@ -218,12 +218,12 @@ var file_linker_device_v1_reader_callback_proto_goTypes = []any{
 	(*CardPositionResponse)(nil),    // 1: linker.device.v1.CardPositionResponse
 	(*CardDescriptionRequest)(nil),  // 2: linker.device.v1.CardDescriptionRequest
 	(*CardDescriptionResponse)(nil), // 3: linker.device.v1.CardDescriptionResponse
-	(*ReaderCardPos)(nil),           // 4: linker.device.v1.ReaderCardPos
-	(*ReaderCardInfo)(nil),          // 5: linker.device.v1.ReaderCardInfo
+	(*CardPosition)(nil),            // 4: linker.device.v1.CardPosition
+	(*CardDescription)(nil),         // 5: linker.device.v1.CardDescription
 }
 var file_linker_device_v1_reader_callback_proto_depIdxs = []int32{
-	4, // 0: linker.device.v1.CardPositionRequest.data:type_name -> linker.device.v1.ReaderCardPos
-	5, // 1: linker.device.v1.CardDescriptionRequest.data:type_name -> linker.device.v1.ReaderCardInfo
+	4, // 0: linker.device.v1.CardPositionRequest.data:type_name -> linker.device.v1.CardPosition
+	5, // 1: linker.device.v1.CardDescriptionRequest.data:type_name -> linker.device.v1.CardDescription
 	0, // 2: linker.device.v1.ReaderCallbackService.CardPosition:input_type -> linker.device.v1.CardPositionRequest
 	2, // 3: linker.device.v1.ReaderCallbackService.CardDescription:input_type -> linker.device.v1.CardDescriptionRequest
 	1, // 4: linker.device.v1.ReaderCallbackService.CardPosition:output_type -> linker.device.v1.CardPositionResponse

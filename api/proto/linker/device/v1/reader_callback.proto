@@ -16,7 +16,7 @@ service ReaderCallbackService {
 
 // Defines the message structure for a device reply request
 message CardPositionRequest {
-  ReaderCardPos data = 1;
+  CardPosition data = 1;
 }
 
 // Defines the message structure for the device reply response
@@ -24,7 +24,7 @@ message CardPositionResponse {}
 
 // Defines the message structure for an execute error request
 message CardDescriptionRequest {
-  ReaderCardInfo data = 1;
+  CardDescription data = 1;
 }
 
 // Defines the message structure for an execute error response

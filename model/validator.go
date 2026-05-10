@@ -27,7 +27,7 @@ type ValidatorCallback interface {
 	// CashReturned sends notification that note is returned to user
 	CashReturned(ctx context.Context, value *ValidatorAccept) error
 	// ValidatorStore sends notification about current cassette state
-	ValidatorStore(ctx context.Context, reply *ValidatorStore) error
+	ValidatorStore(ctx context.Context, reply *ValidatorBatch) error
 }
 
 type ValidatorManager interface {
