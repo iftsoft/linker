@@ -30,7 +30,7 @@ type ReaderManager interface {
 	// CaptureCard trys to capture card inside card reader device
 	CaptureCard(ctx context.Context, query *DeviceQuery) (*DeviceReply, error)
 	// ReadCard trys to read card information from card
-	ReadCard(ctx context.Context, query *DeviceQuery) (*CardDescription, error)
+	ReadCard(ctx context.Context, query *DeviceQuery) (*ReadCardReply, error)
 }
 
 type CardPosition struct {
@@ -46,4 +46,9 @@ type CardDescription struct {
 	Track1  string `json:"track1"`
 	Track2  string `json:"track2"`
 	Track3  string `json:"track3"`
+}
+
+type ReadCardReply struct {
+	Reply *DeviceReply     `json:"reply"`
+	Card  *CardDescription `json:"card"`
 }

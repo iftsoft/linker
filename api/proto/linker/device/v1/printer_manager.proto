@@ -11,8 +11,8 @@ import "linker/device/v1/printer.proto";
 service PrinterManagerService {
   // InitPrinter does primary initialization of printer before printing
   rpc InitPrinter(InitPrinterRequest) returns (InitPrinterResponse) {}
-  // PrintText trys to print given text on the printer
-  rpc PrintText(PrintTextRequest) returns (PrintTextResponse) {}
+  // PrintPage trys to print given text on the printer
+  rpc PrintPage(PrintPageRequest) returns (PrintPageResponse) {}
 }
 
 // Defines the message structure for a cancel request
@@ -26,12 +26,12 @@ message InitPrinterResponse {
 }
 
 // Defines the message structure for a reset request
-message PrintTextRequest {
+message PrintPageRequest {
   PrinterQuery query = 1;
 }
 
 // Defines the message structure for the reset response
-message PrintTextResponse {
-  PrinterProgress reply = 1;
+message PrintPageResponse {
+  DeviceReply reply = 1;
 }
 

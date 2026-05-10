@@ -112,27 +112,27 @@ func (x *InitPrinterResponse) GetReply() *DeviceReply {
 }
 
 // Defines the message structure for a reset request
-type PrintTextRequest struct {
+type PrintPageRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Query         *PrinterQuery          `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PrintTextRequest) Reset() {
-	*x = PrintTextRequest{}
+func (x *PrintPageRequest) Reset() {
+	*x = PrintPageRequest{}
 	mi := &file_linker_device_v1_printer_manager_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PrintTextRequest) String() string {
+func (x *PrintPageRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PrintTextRequest) ProtoMessage() {}
+func (*PrintPageRequest) ProtoMessage() {}
 
-func (x *PrintTextRequest) ProtoReflect() protoreflect.Message {
+func (x *PrintPageRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_printer_manager_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -144,12 +144,12 @@ func (x *PrintTextRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PrintTextRequest.ProtoReflect.Descriptor instead.
-func (*PrintTextRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use PrintPageRequest.ProtoReflect.Descriptor instead.
+func (*PrintPageRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_printer_manager_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *PrintTextRequest) GetQuery() *PrinterQuery {
+func (x *PrintPageRequest) GetQuery() *PrinterQuery {
 	if x != nil {
 		return x.Query
 	}
@@ -157,27 +157,27 @@ func (x *PrintTextRequest) GetQuery() *PrinterQuery {
 }
 
 // Defines the message structure for the reset response
-type PrintTextResponse struct {
+type PrintPageResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Reply         *PrinterProgress       `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
+	Reply         *DeviceReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PrintTextResponse) Reset() {
-	*x = PrintTextResponse{}
+func (x *PrintPageResponse) Reset() {
+	*x = PrintPageResponse{}
 	mi := &file_linker_device_v1_printer_manager_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PrintTextResponse) String() string {
+func (x *PrintPageResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PrintTextResponse) ProtoMessage() {}
+func (*PrintPageResponse) ProtoMessage() {}
 
-func (x *PrintTextResponse) ProtoReflect() protoreflect.Message {
+func (x *PrintPageResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_printer_manager_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -189,12 +189,12 @@ func (x *PrintTextResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PrintTextResponse.ProtoReflect.Descriptor instead.
-func (*PrintTextResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use PrintPageResponse.ProtoReflect.Descriptor instead.
+func (*PrintPageResponse) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_printer_manager_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *PrintTextResponse) GetReply() *PrinterProgress {
+func (x *PrintPageResponse) GetReply() *DeviceReply {
 	if x != nil {
 		return x.Reply
 	}
@@ -210,13 +210,13 @@ const file_linker_device_v1_printer_manager_proto_rawDesc = "" +
 	"\x05query\x18\x01 \x01(\v2\x1e.linker.device.v1.PrinterSetupR\x05query\"J\n" +
 	"\x13InitPrinterResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\"H\n" +
-	"\x10PrintTextRequest\x124\n" +
-	"\x05query\x18\x01 \x01(\v2\x1e.linker.device.v1.PrinterQueryR\x05query\"L\n" +
-	"\x11PrintTextResponse\x127\n" +
-	"\x05reply\x18\x01 \x01(\v2!.linker.device.v1.PrinterProgressR\x05reply2\xcd\x01\n" +
+	"\x10PrintPageRequest\x124\n" +
+	"\x05query\x18\x01 \x01(\v2\x1e.linker.device.v1.PrinterQueryR\x05query\"H\n" +
+	"\x11PrintPageResponse\x123\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply2\xcd\x01\n" +
 	"\x15PrinterManagerService\x12\\\n" +
 	"\vInitPrinter\x12$.linker.device.v1.InitPrinterRequest\x1a%.linker.device.v1.InitPrinterResponse\"\x00\x12V\n" +
-	"\tPrintText\x12\".linker.device.v1.PrintTextRequest\x1a#.linker.device.v1.PrintTextResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
+	"\tPrintPage\x12\".linker.device.v1.PrintPageRequest\x1a#.linker.device.v1.PrintPageResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
 	file_linker_device_v1_printer_manager_proto_rawDescOnce sync.Once
@@ -234,22 +234,21 @@ var file_linker_device_v1_printer_manager_proto_msgTypes = make([]protoimpl.Mess
 var file_linker_device_v1_printer_manager_proto_goTypes = []any{
 	(*InitPrinterRequest)(nil),  // 0: linker.device.v1.InitPrinterRequest
 	(*InitPrinterResponse)(nil), // 1: linker.device.v1.InitPrinterResponse
-	(*PrintTextRequest)(nil),    // 2: linker.device.v1.PrintTextRequest
-	(*PrintTextResponse)(nil),   // 3: linker.device.v1.PrintTextResponse
+	(*PrintPageRequest)(nil),    // 2: linker.device.v1.PrintPageRequest
+	(*PrintPageResponse)(nil),   // 3: linker.device.v1.PrintPageResponse
 	(*PrinterSetup)(nil),        // 4: linker.device.v1.PrinterSetup
 	(*DeviceReply)(nil),         // 5: linker.device.v1.DeviceReply
 	(*PrinterQuery)(nil),        // 6: linker.device.v1.PrinterQuery
-	(*PrinterProgress)(nil),     // 7: linker.device.v1.PrinterProgress
 }
 var file_linker_device_v1_printer_manager_proto_depIdxs = []int32{
 	4, // 0: linker.device.v1.InitPrinterRequest.query:type_name -> linker.device.v1.PrinterSetup
 	5, // 1: linker.device.v1.InitPrinterResponse.reply:type_name -> linker.device.v1.DeviceReply
-	6, // 2: linker.device.v1.PrintTextRequest.query:type_name -> linker.device.v1.PrinterQuery
-	7, // 3: linker.device.v1.PrintTextResponse.reply:type_name -> linker.device.v1.PrinterProgress
+	6, // 2: linker.device.v1.PrintPageRequest.query:type_name -> linker.device.v1.PrinterQuery
+	5, // 3: linker.device.v1.PrintPageResponse.reply:type_name -> linker.device.v1.DeviceReply
 	0, // 4: linker.device.v1.PrinterManagerService.InitPrinter:input_type -> linker.device.v1.InitPrinterRequest
-	2, // 5: linker.device.v1.PrinterManagerService.PrintText:input_type -> linker.device.v1.PrintTextRequest
+	2, // 5: linker.device.v1.PrinterManagerService.PrintPage:input_type -> linker.device.v1.PrintPageRequest
 	1, // 6: linker.device.v1.PrinterManagerService.InitPrinter:output_type -> linker.device.v1.InitPrinterResponse
-	3, // 7: linker.device.v1.PrinterManagerService.PrintText:output_type -> linker.device.v1.PrintTextResponse
+	3, // 7: linker.device.v1.PrinterManagerService.PrintPage:output_type -> linker.device.v1.PrintPageResponse
 	6, // [6:8] is the sub-list for method output_type
 	4, // [4:6] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

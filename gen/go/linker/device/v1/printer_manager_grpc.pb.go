@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	PrinterManagerService_InitPrinter_FullMethodName = "/linker.device.v1.PrinterManagerService/InitPrinter"
-	PrinterManagerService_PrintText_FullMethodName   = "/linker.device.v1.PrinterManagerService/PrintText"
+	PrinterManagerService_PrintPage_FullMethodName   = "/linker.device.v1.PrinterManagerService/PrintPage"
 )
 
 // PrinterManagerServiceClient is the client API for PrinterManagerService service.
@@ -31,8 +31,8 @@ const (
 type PrinterManagerServiceClient interface {
 	// InitPrinter does primary initialization of printer before printing
 	InitPrinter(ctx context.Context, in *InitPrinterRequest, opts ...grpc.CallOption) (*InitPrinterResponse, error)
-	// PrintText trys to print given text on the printer
-	PrintText(ctx context.Context, in *PrintTextRequest, opts ...grpc.CallOption) (*PrintTextResponse, error)
+	// PrintPage trys to print given text on the printer
+	PrintPage(ctx context.Context, in *PrintPageRequest, opts ...grpc.CallOption) (*PrintPageResponse, error)
 }
 
 type printerManagerServiceClient struct {
@@ -53,10 +53,10 @@ func (c *printerManagerServiceClient) InitPrinter(ctx context.Context, in *InitP
 	return out, nil
 }
 
-func (c *printerManagerServiceClient) PrintText(ctx context.Context, in *PrintTextRequest, opts ...grpc.CallOption) (*PrintTextResponse, error) {
+func (c *printerManagerServiceClient) PrintPage(ctx context.Context, in *PrintPageRequest, opts ...grpc.CallOption) (*PrintPageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PrintTextResponse)
-	err := c.cc.Invoke(ctx, PrinterManagerService_PrintText_FullMethodName, in, out, cOpts...)
+	out := new(PrintPageResponse)
+	err := c.cc.Invoke(ctx, PrinterManagerService_PrintPage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +71,8 @@ func (c *printerManagerServiceClient) PrintText(ctx context.Context, in *PrintTe
 type PrinterManagerServiceServer interface {
 	// InitPrinter does primary initialization of printer before printing
 	InitPrinter(context.Context, *InitPrinterRequest) (*InitPrinterResponse, error)
-	// PrintText trys to print given text on the printer
-	PrintText(context.Context, *PrintTextRequest) (*PrintTextResponse, error)
+	// PrintPage trys to print given text on the printer
+	PrintPage(context.Context, *PrintPageRequest) (*PrintPageResponse, error)
 	mustEmbedUnimplementedPrinterManagerServiceServer()
 }
 
@@ -86,8 +86,8 @@ type UnimplementedPrinterManagerServiceServer struct{}
 func (UnimplementedPrinterManagerServiceServer) InitPrinter(context.Context, *InitPrinterRequest) (*InitPrinterResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method InitPrinter not implemented")
 }
-func (UnimplementedPrinterManagerServiceServer) PrintText(context.Context, *PrintTextRequest) (*PrintTextResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method PrintText not implemented")
+func (UnimplementedPrinterManagerServiceServer) PrintPage(context.Context, *PrintPageRequest) (*PrintPageResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PrintPage not implemented")
 }
 func (UnimplementedPrinterManagerServiceServer) mustEmbedUnimplementedPrinterManagerServiceServer() {}
 func (UnimplementedPrinterManagerServiceServer) testEmbeddedByValue()                               {}
@@ -128,20 +128,20 @@ func _PrinterManagerService_InitPrinter_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PrinterManagerService_PrintText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PrintTextRequest)
+func _PrinterManagerService_PrintPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PrintPageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PrinterManagerServiceServer).PrintText(ctx, in)
+		return srv.(PrinterManagerServiceServer).PrintPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PrinterManagerService_PrintText_FullMethodName,
+		FullMethod: PrinterManagerService_PrintPage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PrinterManagerServiceServer).PrintText(ctx, req.(*PrintTextRequest))
+		return srv.(PrinterManagerServiceServer).PrintPage(ctx, req.(*PrintPageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -158,8 +158,8 @@ var PrinterManagerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PrinterManagerService_InitPrinter_Handler,
 		},
 		{
-			MethodName: "PrintText",
-			Handler:    _PrinterManagerService_PrintText_Handler,
+			MethodName: "PrintPage",
+			Handler:    _PrinterManagerService_PrintPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

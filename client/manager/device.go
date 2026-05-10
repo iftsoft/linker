@@ -86,3 +86,30 @@ func (c *DeviceManagerClient) Execute(ctx context.Context, query *model.DeviceQu
 	reply := convertDeviceReply(resp.GetReply())
 	return reply, nil
 }
+
+func convertDeviceQuery(value *model.DeviceQuery) *device.DeviceQuery {
+	if value == nil {
+		return nil
+	}
+	data := &device.DeviceQuery{
+		Device:  value.Device,
+		Timeout: value.Timeout,
+		Offline: value.Offline,
+	}
+	return data
+}
+
+func convertDeviceReply(value *device.DeviceReply) *model.DeviceReply {
+	if value == nil {
+		return nil
+	}
+	data := &model.DeviceReply{
+		Device:  value.Device,
+		Command: value.Command,
+		Action:  model.DevAction(value.Action),
+		State:   model.DevState(value.State),
+		ErrCode: model.DevError(value.ErrCode),
+		ErrText: value.ErrText,
+	}
+	return data
+}

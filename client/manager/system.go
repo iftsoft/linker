@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 
 	system "github.com/iftsoft/linker/gen/go/linker/system/v1"
-	model "github.com/iftsoft/linker/model"
+	"github.com/iftsoft/linker/model"
 )
 
 type SystemManagerClient struct {
@@ -101,4 +101,55 @@ func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.Syste
 
 	reply := convertSystemReply(resp.GetReply())
 	return reply, nil
+}
+
+func convertSystemQuery(value *model.SystemQuery) *system.SystemQuery {
+	if value == nil {
+		return nil
+	}
+	data := &system.SystemQuery{
+		Device: value.Device,
+	}
+	return data
+}
+
+func convertSystemConfig(value *model.SystemConfig) *system.SystemConfig {
+	if value == nil {
+		return nil
+	}
+	data := &system.SystemConfig{
+		Device:    value.Device,
+		LinkType:  value.LinkType,
+		PortName:  value.PortName,
+		VendorId:  value.VendorID,
+		ProductId: value.ProductID,
+	}
+	return data
+}
+
+func convertSystemReply(value *system.SystemReply) *model.SystemReply {
+	if value == nil {
+		return nil
+	}
+	data := &model.SystemReply{
+		Device:   value.Device,
+		Command:  value.Command,
+		Message:  value.Message,
+		SysError: model.SysError(value.SysError),
+		SysState: model.SysState(value.SysState),
+	}
+	return data
+}
+
+func convertSystemHealth(value *system.SystemHealth) *model.SystemHealth {
+	if value == nil {
+		return nil
+	}
+	data := &model.SystemHealth{
+		Device:   value.Device,
+		Moment:   value.Moment,
+		SysError: model.SysError(value.SysError),
+		SysState: model.SysState(value.SysState),
+	}
+	return data
 }

@@ -5,6 +5,7 @@ option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go p
 package linker.device.v1; // Defines the package name for the service and messages
 
 import "linker/device/v1/device.proto";
+import "linker/device/v1/reader.proto";
 
 // Defines the gRPC service with an RPC method
 service ReaderManagerService {
@@ -56,5 +57,6 @@ message ReadCardRequest {
 // Defines the message structure for the read card response
 message ReadCardResponse {
   DeviceReply reply = 1;
+  CardDescription card = 2;
 }
 

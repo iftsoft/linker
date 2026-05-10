@@ -4,7 +4,7 @@ import "context"
 
 const (
 	CmdInitPrinter     = "InitPrinter"
-	CmdPrintText       = "PrintText"
+	CmdPrintPage       = "PrintPage"
 	CmdPrinterProgress = "PrinterProgress"
 )
 
@@ -16,8 +16,8 @@ type PrinterCallback interface {
 type PrinterManager interface {
 	// InitPrinter does primary initialization of printer before printing
 	InitPrinter(ctx context.Context, query *PrinterSetup) (*DeviceReply, error)
-	// PrintText trys to print given text on the printer
-	PrintText(ctx context.Context, query *PrinterQuery) (*PrinterProgress, error)
+	// PrintPage trys to print given text on the printer
+	PrintPage(ctx context.Context, query *PrinterQuery) (*DeviceReply, error)
 }
 
 type PrinterQuery struct {
@@ -27,9 +27,9 @@ type PrinterQuery struct {
 
 type PrinterSetup struct {
 	Device    string `json:"device"`
-	PaperPath int32  `json:"paper_path"`
+	PaperPath uint32 `json:"paper_path"`
 	Landscape bool   `json:"landscape"`
-	ShowImage int32  `json:"show_image"`
+	ShowImage uint32 `json:"show_image"`
 }
 
 type PrinterProgress struct {

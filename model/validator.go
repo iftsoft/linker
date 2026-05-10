@@ -85,8 +85,8 @@ func (dev *ValidatorBatch) String() string {
 }
 
 type ValidatorStore struct {
-	DeviceReply
-	ValidatorBatch
+	Reply *DeviceReply    `json:"reply"`
+	Batch *ValidatorBatch `json:"batch"`
 }
 
 func (dev *ValidatorStore) String() string {
@@ -94,7 +94,7 @@ func (dev *ValidatorStore) String() string {
 		return ""
 	}
 	str := fmt.Sprintf("%s, %s",
-		dev.DeviceReply.String(), dev.ValidatorBatch.String())
+		dev.Reply.String(), dev.Batch.String())
 	return str
 }
 
