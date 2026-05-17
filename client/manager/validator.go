@@ -160,17 +160,17 @@ func convertValidatorBatch(value *device.ValidatorBatch) *model.ValidatorBatch {
 		return nil
 	}
 	data := &model.ValidatorBatch{
-		Device:  value.Device,
-		BatchId: value.BatchId,
-		State:   model.BatchState(value.State),
-		Details: value.Details,
+		Device:  value.GetDevice(),
+		BatchId: value.GetBatchId(),
+		State:   model.BatchState(value.GetState()),
+		Details: value.GetDetails(),
 	}
-	for _, note := range value.Notes {
+	for _, note := range value.GetNotes() {
 		cash := model.ValidatorNote{
-			Currency: model.Currency(note.Currency),
-			Nominal:  model.Amount(note.Nominal),
-			Count:    model.Counter(note.Count),
-			Amount:   model.Amount(note.Amount),
+			Currency: model.Currency(note.GetCurrency()),
+			Nominal:  model.Amount(note.GetNominal()),
+			Count:    model.Counter(note.GetCount()),
+			Amount:   model.Amount(note.GetAmount()),
 		}
 		data.Notes = append(data.Notes, cash)
 	}

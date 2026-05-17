@@ -42,7 +42,7 @@ func (c *ReaderCallbackClient) CardPosition(ctx context.Context, reply *model.Ca
 // CardDescription sends notification about card information
 func (c *ReaderCallbackClient) CardDescription(ctx context.Context, reply *model.CardDescription) error {
 	c.log.Debug("CallbackClient.CardDescription - grpc",
-		slog.String("device", reply.Device), slog.String("PAN", reply.CardPan))
+		slog.String("device", reply.Device), slog.String("PAN", reply.CardPan.String()))
 
 	input := &device.CardDescriptionRequest{
 		Data: convertCardDescription(reply),
@@ -72,12 +72,12 @@ func convertCardDescription(value *model.CardDescription) *device.CardDescriptio
 	}
 	data := &device.CardDescription{
 		Device:  value.Device,
-		CardPan: value.CardPan,
+		CardPan: string(value.CardPan),
 		ExpDate: value.ExpDate,
 		Holder:  value.Holder,
-		Track1:  value.Track1,
-		Track2:  value.Track2,
-		Track3:  value.Track3,
+		Track1:  string(value.Track1),
+		Track2:  string(value.Track2),
+		Track3:  string(value.Track3),
 	}
 	return data
 }

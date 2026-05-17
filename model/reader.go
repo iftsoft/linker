@@ -1,6 +1,10 @@
 package model
 
-import "context"
+import (
+	"context"
+	"fmt"
+	"strings"
+)
 
 const (
 	CmdCardPosition    = "CardPosition"
@@ -38,17 +42,43 @@ type CardPosition struct {
 	Position int32  `json:"position"`
 }
 
+type CardPAN string
+type Track string
+
 type CardDescription struct {
-	Device  string `json:"device"`
-	CardPan string `json:"card_pan"`
-	ExpDate string `json:"exp_date"`
-	Holder  string `json:"holder"`
-	Track1  string `json:"track1"`
-	Track2  string `json:"track2"`
-	Track3  string `json:"track3"`
+	Device  string  `json:"device"`
+	CardPan CardPAN `json:"card_pan"`
+	ExpDate string  `json:"exp_date"`
+	Holder  string  `json:"holder"`
+	Track1  Track   `json:"track1"`
+	Track2  Track   `json:"track2"`
+	Track3  Track   `json:"track3"`
 }
 
 type ReadCardReply struct {
 	Reply *DeviceReply     `json:"reply"`
 	Card  *CardDescription `json:"card"`
+}
+
+func (pan CardPAN) String() string {
+	size := len(pan)
+	if size < 10 {
+		return string(pan)
+	}
+	beg := pan[0:4]
+	mid := strings.Repeat("*", size-8)
+	end := pan[size-4 : size]
+	str := fmt.Sprintf("%s%s%s", beg, mid, end)
+	return str
+}
+
+func (tr Track) String() string {
+	size := len(tr)
+	if size < 10 {
+		return string(tr)
+	}
+	beg := tr[0:4]
+	end := tr[size-4 : size]
+	str := fmt.Sprintf("%s-%d-%s", beg, size-8, end)
+	return str
 }

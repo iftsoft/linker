@@ -121,12 +121,12 @@ func (h *ReaderManager) ReadCard(ctx context.Context, req *srv.ReadCardRequest) 
 func CardDescriptionToProto(data *model.CardDescription) *srv.CardDescription {
 	reply := &srv.CardDescription{
 		Device:  data.Device,
-		CardPan: data.CardPan,
+		CardPan: string(data.CardPan),
 		ExpDate: data.ExpDate,
 		Holder:  data.Holder,
-		Track1:  data.Track1,
-		Track2:  data.Track2,
-		Track3:  data.Track3,
+		Track1:  string(data.Track1),
+		Track2:  string(data.Track2),
+		Track3:  string(data.Track3),
 	}
 	return reply
 }

@@ -162,7 +162,33 @@ func (h *ValidatorManager) CheckValidator(ctx context.Context, req *srv.CheckVal
 	return resp, err
 }
 
+// ClearValidator returns current cassette state
+func (h *ValidatorManager) ClearValidator(ctx context.Context, req *srv.ClearValidatorRequest) (*srv.ClearValidatorResponse, error) {
+	if req == nil {
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("ClearValidatorRequest is nil"))
+	}
+
+	query := ValidatorQueryToModel(req.GetQuery())
+	h.log.Debug("gRPC.ClearValidator", slog.Any("query", query))
+
+	store, err := h.api.ClearValidator(ctx, query)
+	if err != nil {
+		h.log.Error("gRPC.ClearValidator failed", slog.Any("error", err))
+	}
+
+	resp := &srv.ClearValidatorResponse{
+		Reply: DeviceReplyToProto(store.Reply),
+		Batch: ValidatorBatchToProto(store.Batch),
+	}
+
+	return resp, err
+}
+
 func ValidatorQueryToModel(data *srv.ValidatorQuery) *model.ValidatorQuery {
+	if data == nil {
+		return nil
+	}
 	query := &model.ValidatorQuery{
 		Device:    data.GetDevice(),
 		Currency:  model.Currency(data.GetCurrency()),
@@ -182,14 +208,19 @@ func ValidatorNoteToProto(note model.ValidatorNote) *srv.ValidatorNote {
 }
 
 func ValidatorBatchToProto(data *model.ValidatorBatch) *srv.ValidatorBatch {
+	if data == nil {
+		return nil
+	}
 	reply := &srv.ValidatorBatch{
 		Device:  data.Device,
 		BatchId: data.BatchId,
 		State:   uint32(data.State),
 		Details: data.Details,
+		Notes:   make([]*srv.ValidatorNote, len(data.Notes)),
 	}
 	for _, note := range data.Notes {
-		reply.Notes = append(reply.Notes, ValidatorNoteToProto(note))
+		item := ValidatorNoteToProto(note)
+		reply.Notes = append(reply.Notes, item)
 	}
 	return reply
 }

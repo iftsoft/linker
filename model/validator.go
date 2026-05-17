@@ -54,33 +54,26 @@ type ValidatorNote struct {
 	Amount   Amount   `json:"amount"`
 }
 
-func (vn *ValidatorNote) String() string {
-	if vn == nil {
-		return ""
-	}
-	str := fmt.Sprintf("%9s * %3d = %12s %s - %s",
-		AmountText(vn.Nominal, vn.Currency), vn.Count, AmountText(vn.Amount, vn.Currency),
-		vn.Currency.IsoCode(), vn.Currency.PlainText())
+func (vn ValidatorNote) String() string {
+	str := fmt.Sprintf("%7s *%3d = %9s %s",
+		AmountText(vn.Nominal, vn.Currency), vn.Count,
+		AmountText(vn.Amount, vn.Currency), vn.Currency.IsoCode())
 	return str
 }
 
+type ValidatorBox []ValidatorNote
+
 type ValidatorBatch struct {
-	Device  string          `json:"device"`
-	BatchId int64           `json:"batch_id"`
-	State   BatchState      `json:"state"`
-	Details string          `json:"details"`
-	Notes   []ValidatorNote `json:"notes"`
+	Device  string       `json:"device"`
+	BatchId int64        `json:"batch_id"`
+	State   BatchState   `json:"state"`
+	Details string       `json:"details"`
+	Notes   ValidatorBox `json:"notes"`
 }
 
-func (dev *ValidatorBatch) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device=%s, Batch Id=%d, State=%s, Details=%s",
-		dev.Device, dev.BatchId, dev.State.String(), dev.Details)
-	for i, note := range dev.Notes {
-		str += fmt.Sprintf("\n    Line:%2d - Note: %s", i, note.String())
-	}
+func (vb ValidatorBatch) String() string {
+	str := fmt.Sprintf("Device:%s, BatchId:%d, State:%s, Details:%s, Notes:%v",
+		vb.Device, vb.BatchId, vb.State.String(), vb.Details, vb.Notes)
 	return str
 }
 
@@ -89,12 +82,15 @@ type ValidatorStore struct {
 	Batch *ValidatorBatch `json:"batch"`
 }
 
-func (dev *ValidatorStore) String() string {
-	if dev == nil {
-		return ""
+func (vs ValidatorStore) String() string {
+	var reply, batch string
+	if vs.Reply != nil {
+		reply = vs.Reply.String()
 	}
-	str := fmt.Sprintf("%s, %s",
-		dev.Reply.String(), dev.Batch.String())
+	if vs.Batch != nil {
+		batch = vs.Batch.String()
+	}
+	str := fmt.Sprintf("Reply:{%s} Batch:{%s}", reply, batch)
 	return str
 }
 
@@ -103,27 +99,10 @@ type ValidatorAccept struct {
 	Note   ValidatorNote `json:"note"`
 }
 
-func (dev *ValidatorAccept) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device: %7, Note: %s", dev.Device, dev.Note.String())
-	return str
-}
-
 type ValidatorQuery struct {
 	Device    string   `json:"device"`
 	Currency  Currency `json:"currency"`
 	Operation int64    `json:"operation"`
-}
-
-func (dev *ValidatorQuery) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Currency = %s, Operation = %d",
-		dev.Currency, dev.Operation)
-	return str
 }
 
 //type ValidatorBooker interface {

@@ -118,6 +118,9 @@ func (h *DeviceManager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*
 }
 
 func DeviceQueryToModel(data *srv.DeviceQuery) *model.DeviceQuery {
+	if data == nil {
+		return nil
+	}
 	query := &model.DeviceQuery{
 		Device:  data.GetDevice(),
 		Timeout: data.GetTimeout(),
@@ -127,6 +130,9 @@ func DeviceQueryToModel(data *srv.DeviceQuery) *model.DeviceQuery {
 }
 
 func DeviceReplyToProto(data *model.DeviceReply) *srv.DeviceReply {
+	if data == nil {
+		return nil
+	}
 	reply := &srv.DeviceReply{
 		Device:  data.Device,
 		Command: data.Command,

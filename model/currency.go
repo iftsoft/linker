@@ -280,9 +280,9 @@ func AmountText(value Amount, curr Currency) string {
 	case 10:
 		return fmt.Sprintf("%d.%d", maxUnit, minUnit)
 	case 100:
-		return fmt.Sprintf("%d.%2d", maxUnit, minUnit)
+		return fmt.Sprintf("%d.%02d", maxUnit, minUnit)
 	case 1000:
-		return fmt.Sprintf("%d.%3d", maxUnit, minUnit)
+		return fmt.Sprintf("%d.%03d", maxUnit, minUnit)
 	default:
 		return strconv.Itoa(int(value))
 	}

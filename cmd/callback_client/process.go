@@ -16,6 +16,7 @@ const (
 
 func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	log.Info("Processing Test")
+	// System callback
 	err := ProcessSystemReply(ctx, log, cli)
 	if err != nil {
 		return err
@@ -24,6 +25,7 @@ func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackCl
 	if err != nil {
 		return err
 	}
+	// Device callback
 	err = ProcessDeviceReply(ctx, log, cli)
 	if err != nil {
 		return err
@@ -44,19 +46,51 @@ func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackCl
 	if err != nil {
 		return err
 	}
+	// Printer callback
+	err = ProcessPrinterProgress(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	// Reader callback
+	err = ProcessCardPosition(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	err = ProcessCardDescription(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	// Printer callback
+	err = ProcessNoteAccepted(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	err = ProcessCashIsStored(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	err = ProcessCashReturned(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	err = ProcessValidatorStore(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func ProcessSystemReply(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	reply := &model.SystemReply{
+	reply := model.SystemReply{
 		Device:   testDevice,
 		Command:  model.CmdSystemInform,
 		Message:  "Ok",
 		SysState: model.SysStateRunning,
 		SysError: model.SysErrSuccess,
 	}
-	log.Info("Processing SystemReply", "reply", reply.String())
-	err := cli.SystemReply(ctx, reply)
+	log.Info("Processing SystemReply", "reply", reply)
+	err := cli.SystemReply(ctx, &reply)
 	if err != nil {
 		return fmt.Errorf("system reply error: %w", err)
 	}
@@ -65,7 +99,7 @@ func ProcessSystemReply(ctx context.Context, log *slog.Logger, cli *callback.Cal
 }
 
 func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	health := &model.SystemHealth{
+	health := model.SystemHealth{
 		Device:   testDevice,
 		Moment:   time.Now().Unix(),
 		SysState: model.SysStateRunning,
@@ -79,8 +113,8 @@ func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.Ca
 			Topics:   make(map[string]string),
 		},
 	}
-	log.Info("Processing SystemHealth", "health", health.String())
-	err := cli.SystemHealth(ctx, health)
+	log.Info("Processing SystemHealth", "health", health)
+	err := cli.SystemHealth(ctx, &health)
 	if err != nil {
 		return fmt.Errorf("system health error: %w", err)
 	}
@@ -89,7 +123,7 @@ func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.Ca
 }
 
 func ProcessDeviceReply(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	reply := &model.DeviceReply{
+	reply := model.DeviceReply{
 		Device:  testDevice,
 		Command: model.CmdDeviceStatus,
 		Action:  model.DevActionBarScanning,
@@ -97,8 +131,8 @@ func ProcessDeviceReply(ctx context.Context, log *slog.Logger, cli *callback.Cal
 		ErrCode: model.DevErrorSuccess,
 		ErrText: "Ok",
 	}
-	log.Info("Processing DeviceReply", "reply", reply.String())
-	err := cli.DeviceReply(ctx, reply)
+	log.Info("Processing DeviceReply", "reply", reply)
+	err := cli.DeviceReply(ctx, &reply)
 	if err != nil {
 		return fmt.Errorf("device reply error: %w", err)
 	}
@@ -107,7 +141,7 @@ func ProcessDeviceReply(ctx context.Context, log *slog.Logger, cli *callback.Cal
 }
 
 func ProcessExecuteError(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	value := &model.DeviceReply{
+	value := model.DeviceReply{
 		Device:  testDevice,
 		Command: model.CmdDeviceStatus,
 		Action:  model.DevActionBarScanning,
@@ -115,8 +149,8 @@ func ProcessExecuteError(ctx context.Context, log *slog.Logger, cli *callback.Ca
 		ErrCode: model.DevErrorSuccess,
 		ErrText: "Ok",
 	}
-	log.Info("Processing ExecuteError", "value", value.String())
-	err := cli.ExecuteError(ctx, value)
+	log.Info("Processing ExecuteError", "value", value)
+	err := cli.ExecuteError(ctx, &value)
 	if err != nil {
 		return fmt.Errorf("execuet error error: %w", err)
 	}
@@ -125,14 +159,14 @@ func ProcessExecuteError(ctx context.Context, log *slog.Logger, cli *callback.Ca
 }
 
 func ProcessStateChanged(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	value := &model.DeviceState{
+	value := model.DeviceState{
 		Device:   testDevice,
 		Action:   model.DevActionBarScanning,
 		OldState: model.DevStateWaiting,
 		NewState: model.DevStateWorking,
 	}
-	log.Info("Processing StateChanged", "value", value.String())
-	err := cli.StateChanged(ctx, value)
+	log.Info("Processing StateChanged", "value", value)
+	err := cli.StateChanged(ctx, &value)
 	if err != nil {
 		return fmt.Errorf("state changed error: %w", err)
 	}
@@ -141,13 +175,13 @@ func ProcessStateChanged(ctx context.Context, log *slog.Logger, cli *callback.Ca
 }
 
 func ProcessActionPrompt(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	value := &model.DevicePrompt{
+	value := model.DevicePrompt{
 		Device: testDevice,
 		Action: model.DevActionBarScanning,
 		Prompt: model.DevPromptScanBarcode,
 	}
-	log.Info("Processing ActionPrompt", "value", value.String())
-	err := cli.ActionPrompt(ctx, value)
+	log.Info("Processing ActionPrompt", "value", value)
+	err := cli.ActionPrompt(ctx, &value)
 	if err != nil {
 		return fmt.Errorf("action prompt error: %w", err)
 	}
@@ -156,15 +190,151 @@ func ProcessActionPrompt(ctx context.Context, log *slog.Logger, cli *callback.Ca
 }
 
 func ProcessReaderReturn(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	value := &model.DeviceInform{
+	value := model.DeviceInform{
 		Device: testDevice,
 		Action: model.DevActionBarScanning,
 		Inform: "12345678",
 	}
-	log.Info("Processing ReaderReturn", "value", value.String())
-	err := cli.ReaderReturn(ctx, value)
+	log.Info("Processing ReaderReturn", "value", value)
+	err := cli.ReaderReturn(ctx, &value)
 	if err != nil {
 		return fmt.Errorf("reader return error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessPrinterProgress(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.PrinterProgress{
+		Device:   testDevice,
+		DocName:  "PrinterProgress",
+		PageDone: 1,
+		PagesAll: 2,
+	}
+	log.Info("Processing PrinterProgress", "value", value)
+	err := cli.PrinterProgress(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("printer progress error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessCardPosition(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.CardPosition{
+		Device:   testDevice,
+		Position: 1,
+	}
+	log.Info("Processing CardPosition", "value", value)
+	err := cli.CardPosition(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("card position error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessCardDescription(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.CardDescription{
+		Device:  testDevice,
+		CardPan: "1234567890123456",
+		ExpDate: "12/28",
+		Holder:  "TEST_USER",
+		Track1:  "fasffafafsadfasddfsdafsdsdf",
+		Track2:  "012345678",
+		Track3:  "",
+	}
+	log.Info("Processing CardDescription", "value", value)
+	err := cli.CardDescription(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("card description error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessNoteAccepted(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.ValidatorAccept{
+		Device: testDevice,
+		Note: model.ValidatorNote{
+			Currency: model.CurrencyUSD,
+			Nominal:  5,
+			Count:    2,
+			Amount:   10,
+		},
+	}
+	log.Info("Processing NoteAccepted", "value", value)
+	err := cli.NoteAccepted(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("note accepted error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessCashIsStored(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.ValidatorAccept{
+		Device: testDevice,
+		Note: model.ValidatorNote{
+			Currency: model.CurrencyUSD,
+			Nominal:  5,
+			Count:    2,
+			Amount:   10,
+		},
+	}
+	log.Info("Processing CashIsStored", "value", value)
+	err := cli.CashIsStored(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("note is stored error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessCashReturned(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.ValidatorAccept{
+		Device: testDevice,
+		Note: model.ValidatorNote{
+			Currency: model.CurrencyUSD,
+			Nominal:  5,
+			Count:    2,
+			Amount:   10,
+		},
+	}
+	log.Info("Processing CashReturned", "value", value)
+	err := cli.CashReturned(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("note returned error: %w", err)
+	}
+
+	return nil
+}
+
+func ProcessValidatorStore(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	value := model.ValidatorBatch{
+		Device:  testDevice,
+		BatchId: 12,
+		State:   model.StateActive,
+		Details: "Cassette 1",
+		Notes: []model.ValidatorNote{
+			{
+				Currency: model.CurrencyUSD,
+				Nominal:  5,
+				Count:    2,
+				Amount:   10,
+			},
+			{
+				Currency: model.CurrencyUSD,
+				Nominal:  100,
+				Count:    3,
+				Amount:   300,
+			},
+		},
+	}
+	log.Info("Processing ValidatorStore", "value", value)
+	err := cli.ValidatorStore(ctx, &value)
+	if err != nil {
+		return fmt.Errorf("validator store error: %w", err)
 	}
 
 	return nil

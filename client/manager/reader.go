@@ -101,12 +101,12 @@ func convertCardDescription(value *device.CardDescription) *model.CardDescriptio
 	}
 	data := &model.CardDescription{
 		Device:  value.Device,
-		CardPan: value.CardPan,
+		CardPan: model.CardPAN(value.CardPan),
 		ExpDate: value.ExpDate,
 		Holder:  value.Holder,
-		Track1:  value.Track1,
-		Track2:  value.Track2,
-		Track3:  value.Track3,
+		Track1:  model.Track(value.Track1),
+		Track2:  model.Track(value.Track2),
+		Track3:  model.Track(value.Track3),
 	}
 	return data
 }

@@ -63,12 +63,12 @@ func (h *ReaderCallback) CardDescription(ctx context.Context, req *srv.CardDescr
 	data := req.GetData()
 	reply := model.CardDescription{
 		Device:  data.GetDevice(),
-		CardPan: data.GetCardPan(),
+		CardPan: model.CardPAN(data.GetCardPan()),
 		ExpDate: data.GetExpDate(),
 		Holder:  data.GetHolder(),
-		Track1:  data.GetTrack1(),
-		Track2:  data.GetTrack2(),
-		Track3:  data.GetTrack3(),
+		Track1:  model.Track(data.GetTrack1()),
+		Track2:  model.Track(data.GetTrack2()),
+		Track3:  model.Track(data.GetTrack3()),
 	}
 	h.log.Debug("gRPC.CardDescription", slog.Any("reply", reply))
 

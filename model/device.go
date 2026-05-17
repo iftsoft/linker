@@ -50,11 +50,8 @@ type DeviceQuery struct {
 	Offline bool   `json:"offline"`
 }
 
-func (dev *DeviceQuery) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Timeout = %d, Offline = %t",
+func (dev DeviceQuery) String() string {
+	str := fmt.Sprintf("Device:%s, Timeout:%d, Offline:%t",
 		dev.Device, dev.Timeout, dev.Offline)
 	return str
 }
@@ -69,10 +66,7 @@ type DeviceReply struct {
 }
 
 func (dev *DeviceReply) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Command = %s, Action = %s, State = %s, ErrCode = %s, ErrText = %s",
+	str := fmt.Sprintf("Device:%s, Command:%s, Action:%s, State:%s, ErrCode:%s, ErrText:%s",
 		dev.Device, dev.Command, dev.Action.String(), dev.State.String(), dev.ErrCode.String(), dev.ErrText)
 	return str
 }
@@ -84,14 +78,14 @@ type DeviceState struct {
 	OldState DevState  `json:"old_state"`
 }
 
-func (dev *DeviceState) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Action = %s, NewState = %s, OldState = %s",
-		dev.Device, dev.Action.String(), dev.NewState.String(), dev.OldState.String())
-	return str
-}
+//func (dev *DeviceState) String() string {
+//	if dev == nil {
+//		return ""
+//	}
+//	str := fmt.Sprintf("Device = %s, Action = %s, NewState = %s, OldState = %s",
+//		dev.Device, dev.Action.String(), dev.NewState.String(), dev.OldState.String())
+//	return str
+//}
 
 type DevicePrompt struct {
 	Device string    `json:"device"`
@@ -99,14 +93,14 @@ type DevicePrompt struct {
 	Prompt DevPrompt `json:"prompt"`
 }
 
-func (dev *DevicePrompt) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Action = %s, Prompt = %s",
-		dev.Device, dev.Action.String(), dev.Prompt.String())
-	return str
-}
+//func (dev *DevicePrompt) String() string {
+//	if dev == nil {
+//		return ""
+//	}
+//	str := fmt.Sprintf("Device = %s, Action = %s, Prompt = %s",
+//		dev.Device, dev.Action.String(), dev.Prompt.String())
+//	return str
+//}
 
 type DeviceInform struct {
 	Device string    `json:"device"`
@@ -114,11 +108,11 @@ type DeviceInform struct {
 	Inform string    `json:"inform"`
 }
 
-func (dev *DeviceInform) String() string {
-	if dev == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Action = %s, Inform = %s",
-		dev.Device, dev.Action.String(), dev.Inform)
-	return str
-}
+//func (dev *DeviceInform) String() string {
+//	if dev == nil {
+//		return ""
+//	}
+//	str := fmt.Sprintf("Device = %s, Action = %s, Inform = %s",
+//		dev.Device, dev.Action.String(), dev.Inform)
+//	return str
+//}

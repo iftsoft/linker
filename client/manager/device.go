@@ -104,12 +104,12 @@ func convertDeviceReply(value *device.DeviceReply) *model.DeviceReply {
 		return nil
 	}
 	data := &model.DeviceReply{
-		Device:  value.Device,
-		Command: value.Command,
-		Action:  model.DevAction(value.Action),
-		State:   model.DevState(value.State),
-		ErrCode: model.DevError(value.ErrCode),
-		ErrText: value.ErrText,
+		Device:  value.GetDevice(),
+		Command: value.GetCommand(),
+		Action:  model.DevAction(value.GetAction()),
+		State:   model.DevState(value.GetState()),
+		ErrCode: model.DevError(value.GetErrCode()),
+		ErrText: value.GetErrText(),
 	}
 	return data
 }
