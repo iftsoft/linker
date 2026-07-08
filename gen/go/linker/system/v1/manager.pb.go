@@ -112,27 +112,27 @@ func (x *TerminateResponse) GetReply() *SystemReply {
 }
 
 // Defines the message structure for a inform request
-type SysInformRequest struct {
+type SysHealthRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Query         *SystemQuery           `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SysInformRequest) Reset() {
-	*x = SysInformRequest{}
+func (x *SysHealthRequest) Reset() {
+	*x = SysHealthRequest{}
 	mi := &file_linker_system_v1_manager_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SysInformRequest) String() string {
+func (x *SysHealthRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SysInformRequest) ProtoMessage() {}
+func (*SysHealthRequest) ProtoMessage() {}
 
-func (x *SysInformRequest) ProtoReflect() protoreflect.Message {
+func (x *SysHealthRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_system_v1_manager_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -144,12 +144,12 @@ func (x *SysInformRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SysInformRequest.ProtoReflect.Descriptor instead.
-func (*SysInformRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use SysHealthRequest.ProtoReflect.Descriptor instead.
+func (*SysHealthRequest) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_manager_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *SysInformRequest) GetQuery() *SystemQuery {
+func (x *SysHealthRequest) GetQuery() *SystemQuery {
 	if x != nil {
 		return x.Query
 	}
@@ -157,27 +157,28 @@ func (x *SysInformRequest) GetQuery() *SystemQuery {
 }
 
 // Defines the message structure for the inform response
-type SysInformResponse struct {
+type SysHealthResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Reply         *SystemHealth          `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
+	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
+	Metrics       *SystemMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SysInformResponse) Reset() {
-	*x = SysInformResponse{}
+func (x *SysHealthResponse) Reset() {
+	*x = SysHealthResponse{}
 	mi := &file_linker_system_v1_manager_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SysInformResponse) String() string {
+func (x *SysHealthResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SysInformResponse) ProtoMessage() {}
+func (*SysHealthResponse) ProtoMessage() {}
 
-func (x *SysInformResponse) ProtoReflect() protoreflect.Message {
+func (x *SysHealthResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_system_v1_manager_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -189,14 +190,21 @@ func (x *SysInformResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SysInformResponse.ProtoReflect.Descriptor instead.
-func (*SysInformResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use SysHealthResponse.ProtoReflect.Descriptor instead.
+func (*SysHealthResponse) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_manager_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *SysInformResponse) GetReply() *SystemHealth {
+func (x *SysHealthResponse) GetReply() *SystemReply {
 	if x != nil {
 		return x.Reply
+	}
+	return nil
+}
+
+func (x *SysHealthResponse) GetMetrics() *SystemMetrics {
+	if x != nil {
+		return x.Metrics
 	}
 	return nil
 }
@@ -250,6 +258,7 @@ func (x *SysStartRequest) GetConfig() *SystemConfig {
 type SysStartResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
+	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -287,6 +296,13 @@ func (*SysStartResponse) Descriptor() ([]byte, []int) {
 func (x *SysStartResponse) GetReply() *SystemReply {
 	if x != nil {
 		return x.Reply
+	}
+	return nil
+}
+
+func (x *SysStartResponse) GetSetup() *SystemSetup {
+	if x != nil {
+		return x.Setup
 	}
 	return nil
 }
@@ -430,6 +446,7 @@ func (x *SysRestartRequest) GetConfig() *SystemConfig {
 type SysRestartResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
+	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -471,6 +488,13 @@ func (x *SysRestartResponse) GetReply() *SystemReply {
 	return nil
 }
 
+func (x *SysRestartResponse) GetSetup() *SystemSetup {
+	if x != nil {
+		return x.Setup
+	}
+	return nil
+}
+
 var File_linker_system_v1_manager_proto protoreflect.FileDescriptor
 
 const file_linker_system_v1_manager_proto_rawDesc = "" +
@@ -480,25 +504,28 @@ const file_linker_system_v1_manager_proto_rawDesc = "" +
 	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"H\n" +
 	"\x11TerminateResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\"G\n" +
-	"\x10SysInformRequest\x123\n" +
-	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"I\n" +
-	"\x11SysInformResponse\x124\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemHealthR\x05reply\"I\n" +
+	"\x10SysHealthRequest\x123\n" +
+	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"\x83\x01\n" +
+	"\x11SysHealthResponse\x123\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x129\n" +
+	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"I\n" +
 	"\x0fSysStartRequest\x126\n" +
-	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"G\n" +
+	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"|\n" +
 	"\x10SysStartResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\"E\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x123\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup\"E\n" +
 	"\x0eSysStopRequest\x123\n" +
 	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"F\n" +
 	"\x0fSysStopResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\"K\n" +
 	"\x11SysRestartRequest\x126\n" +
-	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"I\n" +
+	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"~\n" +
 	"\x12SysRestartResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply2\xc8\x03\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x123\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup2\xc8\x03\n" +
 	"\x14SystemManagerService\x12V\n" +
 	"\tTerminate\x12\".linker.system.v1.TerminateRequest\x1a#.linker.system.v1.TerminateResponse\"\x00\x12V\n" +
-	"\tSysInform\x12\".linker.system.v1.SysInformRequest\x1a#.linker.system.v1.SysInformResponse\"\x00\x12S\n" +
+	"\tSysHealth\x12\".linker.system.v1.SysHealthRequest\x1a#.linker.system.v1.SysHealthResponse\"\x00\x12S\n" +
 	"\bSysStart\x12!.linker.system.v1.SysStartRequest\x1a\".linker.system.v1.SysStartResponse\"\x00\x12P\n" +
 	"\aSysStop\x12 .linker.system.v1.SysStopRequest\x1a!.linker.system.v1.SysStopResponse\"\x00\x12Y\n" +
 	"\n" +
@@ -520,8 +547,8 @@ var file_linker_system_v1_manager_proto_msgTypes = make([]protoimpl.MessageInfo,
 var file_linker_system_v1_manager_proto_goTypes = []any{
 	(*TerminateRequest)(nil),   // 0: linker.system.v1.TerminateRequest
 	(*TerminateResponse)(nil),  // 1: linker.system.v1.TerminateResponse
-	(*SysInformRequest)(nil),   // 2: linker.system.v1.SysInformRequest
-	(*SysInformResponse)(nil),  // 3: linker.system.v1.SysInformResponse
+	(*SysHealthRequest)(nil),   // 2: linker.system.v1.SysHealthRequest
+	(*SysHealthResponse)(nil),  // 3: linker.system.v1.SysHealthResponse
 	(*SysStartRequest)(nil),    // 4: linker.system.v1.SysStartRequest
 	(*SysStartResponse)(nil),   // 5: linker.system.v1.SysStartResponse
 	(*SysStopRequest)(nil),     // 6: linker.system.v1.SysStopRequest
@@ -530,35 +557,39 @@ var file_linker_system_v1_manager_proto_goTypes = []any{
 	(*SysRestartResponse)(nil), // 9: linker.system.v1.SysRestartResponse
 	(*SystemQuery)(nil),        // 10: linker.system.v1.SystemQuery
 	(*SystemReply)(nil),        // 11: linker.system.v1.SystemReply
-	(*SystemHealth)(nil),       // 12: linker.system.v1.SystemHealth
+	(*SystemMetrics)(nil),      // 12: linker.system.v1.SystemMetrics
 	(*SystemConfig)(nil),       // 13: linker.system.v1.SystemConfig
+	(*SystemSetup)(nil),        // 14: linker.system.v1.SystemSetup
 }
 var file_linker_system_v1_manager_proto_depIdxs = []int32{
 	10, // 0: linker.system.v1.TerminateRequest.query:type_name -> linker.system.v1.SystemQuery
 	11, // 1: linker.system.v1.TerminateResponse.reply:type_name -> linker.system.v1.SystemReply
-	10, // 2: linker.system.v1.SysInformRequest.query:type_name -> linker.system.v1.SystemQuery
-	12, // 3: linker.system.v1.SysInformResponse.reply:type_name -> linker.system.v1.SystemHealth
-	13, // 4: linker.system.v1.SysStartRequest.config:type_name -> linker.system.v1.SystemConfig
-	11, // 5: linker.system.v1.SysStartResponse.reply:type_name -> linker.system.v1.SystemReply
-	10, // 6: linker.system.v1.SysStopRequest.query:type_name -> linker.system.v1.SystemQuery
-	11, // 7: linker.system.v1.SysStopResponse.reply:type_name -> linker.system.v1.SystemReply
-	13, // 8: linker.system.v1.SysRestartRequest.config:type_name -> linker.system.v1.SystemConfig
-	11, // 9: linker.system.v1.SysRestartResponse.reply:type_name -> linker.system.v1.SystemReply
-	0,  // 10: linker.system.v1.SystemManagerService.Terminate:input_type -> linker.system.v1.TerminateRequest
-	2,  // 11: linker.system.v1.SystemManagerService.SysInform:input_type -> linker.system.v1.SysInformRequest
-	4,  // 12: linker.system.v1.SystemManagerService.SysStart:input_type -> linker.system.v1.SysStartRequest
-	6,  // 13: linker.system.v1.SystemManagerService.SysStop:input_type -> linker.system.v1.SysStopRequest
-	8,  // 14: linker.system.v1.SystemManagerService.SysRestart:input_type -> linker.system.v1.SysRestartRequest
-	1,  // 15: linker.system.v1.SystemManagerService.Terminate:output_type -> linker.system.v1.TerminateResponse
-	3,  // 16: linker.system.v1.SystemManagerService.SysInform:output_type -> linker.system.v1.SysInformResponse
-	5,  // 17: linker.system.v1.SystemManagerService.SysStart:output_type -> linker.system.v1.SysStartResponse
-	7,  // 18: linker.system.v1.SystemManagerService.SysStop:output_type -> linker.system.v1.SysStopResponse
-	9,  // 19: linker.system.v1.SystemManagerService.SysRestart:output_type -> linker.system.v1.SysRestartResponse
-	15, // [15:20] is the sub-list for method output_type
-	10, // [10:15] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	10, // 2: linker.system.v1.SysHealthRequest.query:type_name -> linker.system.v1.SystemQuery
+	11, // 3: linker.system.v1.SysHealthResponse.reply:type_name -> linker.system.v1.SystemReply
+	12, // 4: linker.system.v1.SysHealthResponse.metrics:type_name -> linker.system.v1.SystemMetrics
+	13, // 5: linker.system.v1.SysStartRequest.config:type_name -> linker.system.v1.SystemConfig
+	11, // 6: linker.system.v1.SysStartResponse.reply:type_name -> linker.system.v1.SystemReply
+	14, // 7: linker.system.v1.SysStartResponse.setup:type_name -> linker.system.v1.SystemSetup
+	10, // 8: linker.system.v1.SysStopRequest.query:type_name -> linker.system.v1.SystemQuery
+	11, // 9: linker.system.v1.SysStopResponse.reply:type_name -> linker.system.v1.SystemReply
+	13, // 10: linker.system.v1.SysRestartRequest.config:type_name -> linker.system.v1.SystemConfig
+	11, // 11: linker.system.v1.SysRestartResponse.reply:type_name -> linker.system.v1.SystemReply
+	14, // 12: linker.system.v1.SysRestartResponse.setup:type_name -> linker.system.v1.SystemSetup
+	0,  // 13: linker.system.v1.SystemManagerService.Terminate:input_type -> linker.system.v1.TerminateRequest
+	2,  // 14: linker.system.v1.SystemManagerService.SysHealth:input_type -> linker.system.v1.SysHealthRequest
+	4,  // 15: linker.system.v1.SystemManagerService.SysStart:input_type -> linker.system.v1.SysStartRequest
+	6,  // 16: linker.system.v1.SystemManagerService.SysStop:input_type -> linker.system.v1.SysStopRequest
+	8,  // 17: linker.system.v1.SystemManagerService.SysRestart:input_type -> linker.system.v1.SysRestartRequest
+	1,  // 18: linker.system.v1.SystemManagerService.Terminate:output_type -> linker.system.v1.TerminateResponse
+	3,  // 19: linker.system.v1.SystemManagerService.SysHealth:output_type -> linker.system.v1.SysHealthResponse
+	5,  // 20: linker.system.v1.SystemManagerService.SysStart:output_type -> linker.system.v1.SysStartResponse
+	7,  // 21: linker.system.v1.SystemManagerService.SysStop:output_type -> linker.system.v1.SysStopResponse
+	9,  // 22: linker.system.v1.SystemManagerService.SysRestart:output_type -> linker.system.v1.SysRestartResponse
+	18, // [18:23] is the sub-list for method output_type
+	13, // [13:18] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_linker_system_v1_manager_proto_init() }

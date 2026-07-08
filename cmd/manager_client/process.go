@@ -21,7 +21,7 @@ func ProcessTest(ctx context.Context, log *slog.Logger, cli *manager.ManagerClie
 	if err != nil {
 		return err
 	}
-	err = ProcessSysInform(ctx, log, cli)
+	err = ProcessSysHealth(ctx, log, cli)
 	if err != nil {
 		return err
 	}
@@ -122,15 +122,15 @@ func ProcessTerminate(ctx context.Context, log *slog.Logger, cli *manager.Manage
 	return nil
 }
 
-func ProcessSysInform(ctx context.Context, log *slog.Logger, cli *manager.ManagerClient) error {
+func ProcessSysHealth(ctx context.Context, log *slog.Logger, cli *manager.ManagerClient) error {
 	query := model.SystemQuery{
 		Device: testDevice,
 	}
-	reply, err := cli.SysInform(ctx, &query)
+	reply, err := cli.SysHealth(ctx, &query)
 	if err != nil {
 		return fmt.Errorf("system inform error: %w", err)
 	}
-	log.Info("Processing SysInform", "query", query, "reply", reply)
+	log.Info("Processing SysHealth", "query", query, "reply", reply)
 
 	return nil
 }

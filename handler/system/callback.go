@@ -29,7 +29,7 @@ func (h *SystemCallback) Register(s grpc.ServiceRegistrar) {
 	srv.RegisterSystemCallbackServiceServer(s, h)
 }
 
-// SystemReply implements Notification about system reply
+// GreetingInfo implements Notification about system params
 func (h *SystemCallback) GreetingInfo(ctx context.Context, req *srv.GreetingInfoRequest) (*srv.GreetingInfoResponse, error) {
 	if req == nil {
 		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
@@ -38,12 +38,9 @@ func (h *SystemCallback) GreetingInfo(ctx context.Context, req *srv.GreetingInfo
 
 	data := req.GetData()
 	reply := model.GreetingInfo{
-		Device:      data.GetDevice(),
-		DevType:     model.DevTypeMask(data.GetDevType()),
-		GrpcPort:    data.GetGrpcPort(),
-		Supported:   model.DevScopeMask(data.GetSupported()),
-		Required:    model.DevScopeMask(data.GetRequired()),
-		Description: data.GetDescription(),
+		AppName:  data.GetAppName(),
+		DevName:  data.GetDevName(),
+		GrpcPort: data.GetGrpcPort(),
 	}
 	h.log.Debug("gRPC.GreetingInfo", slog.Any("reply", reply))
 
@@ -84,6 +81,42 @@ func (h *SystemCallback) SystemReply(ctx context.Context, req *srv.SystemReplyRe
 	return resp, err
 }
 
+// SystemDevice implements Notification about system settings
+func (h *SystemCallback) SystemDevice(ctx context.Context, req *srv.SystemDeviceRequest) (*srv.SystemDeviceResponse, error) {
+	if req == nil {
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SystemDeviceRequest is nil"))
+	}
+
+	data := req.GetData()
+	setup := req.GetSetup()
+	reply := model.SystemDevice{
+		Reply: model.SystemReply{
+			Device:   data.GetDevice(),
+			Command:  data.GetCommand(),
+			Message:  data.GetMessage(),
+			SysError: model.SysError(data.GetSysError()),
+			SysState: model.SysState(data.GetSysState()),
+		},
+		Setup: model.SystemSetup{
+			DevType:     model.DevTypeMask(setup.GetDevType()),
+			Supported:   model.DevScopeMask(setup.GetSupported()),
+			Required:    model.DevScopeMask(setup.GetRequired()),
+			Description: setup.GetDescription(),
+		},
+	}
+	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
+
+	err := h.api.SystemDevice(ctx, &reply)
+	if err != nil {
+		h.log.Error("gRPC.SystemDevice failed", slog.Any("error", err))
+	}
+
+	resp := &srv.SystemDeviceResponse{}
+
+	return resp, err
+}
+
 // SystemHealth implements Notification about system health
 func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealthRequest) (*srv.SystemHealthResponse, error) {
 	if req == nil {
@@ -92,11 +125,21 @@ func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealth
 	}
 
 	data := req.GetData()
+	metrics := req.GetMetrics()
 	reply := model.SystemHealth{
-		Device:   data.GetDevice(),
-		Moment:   data.GetMoment(),
-		SysError: model.SysError(data.GetSysError()),
-		SysState: model.SysState(data.GetSysState()),
+		Reply: model.SystemReply{
+			Device:   data.GetDevice(),
+			Command:  data.GetCommand(),
+			Message:  data.GetMessage(),
+			SysError: model.SysError(data.GetSysError()),
+			SysState: model.SysState(data.GetSysState()),
+		},
+		Metrics: model.SystemMetrics{
+			Uptime:   metrics.GetUptime(),
+			Moment:   metrics.GetMoment(),
+			DevError: model.DevError(metrics.GetDevError()),
+			DevState: model.DevState(metrics.GetDevState()),
+		},
 	}
 	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
 

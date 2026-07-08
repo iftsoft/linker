@@ -185,17 +185,108 @@ func (*SystemReplyResponse) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{3}
 }
 
+// Defines the message structure for an system device request
+type SystemDeviceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *SystemReply           `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SystemDeviceRequest) Reset() {
+	*x = SystemDeviceRequest{}
+	mi := &file_linker_system_v1_callback_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SystemDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemDeviceRequest) ProtoMessage() {}
+
+func (x *SystemDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_system_v1_callback_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemDeviceRequest.ProtoReflect.Descriptor instead.
+func (*SystemDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SystemDeviceRequest) GetData() *SystemReply {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *SystemDeviceRequest) GetSetup() *SystemSetup {
+	if x != nil {
+		return x.Setup
+	}
+	return nil
+}
+
+// Defines the message structure for an system device response
+type SystemDeviceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SystemDeviceResponse) Reset() {
+	*x = SystemDeviceResponse{}
+	mi := &file_linker_system_v1_callback_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SystemDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemDeviceResponse) ProtoMessage() {}
+
+func (x *SystemDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_system_v1_callback_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemDeviceResponse.ProtoReflect.Descriptor instead.
+func (*SystemDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{5}
+}
+
 // Defines the message structure for an system health request
 type SystemHealthRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *SystemHealth          `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Data          *SystemReply           `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Metrics       *SystemMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SystemHealthRequest) Reset() {
 	*x = SystemHealthRequest{}
-	mi := &file_linker_system_v1_callback_proto_msgTypes[4]
+	mi := &file_linker_system_v1_callback_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -207,7 +298,7 @@ func (x *SystemHealthRequest) String() string {
 func (*SystemHealthRequest) ProtoMessage() {}
 
 func (x *SystemHealthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_callback_proto_msgTypes[4]
+	mi := &file_linker_system_v1_callback_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -220,12 +311,19 @@ func (x *SystemHealthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemHealthRequest.ProtoReflect.Descriptor instead.
 func (*SystemHealthRequest) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{4}
+	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *SystemHealthRequest) GetData() *SystemHealth {
+func (x *SystemHealthRequest) GetData() *SystemReply {
 	if x != nil {
 		return x.Data
+	}
+	return nil
+}
+
+func (x *SystemHealthRequest) GetMetrics() *SystemMetrics {
+	if x != nil {
+		return x.Metrics
 	}
 	return nil
 }
@@ -239,7 +337,7 @@ type SystemHealthResponse struct {
 
 func (x *SystemHealthResponse) Reset() {
 	*x = SystemHealthResponse{}
-	mi := &file_linker_system_v1_callback_proto_msgTypes[5]
+	mi := &file_linker_system_v1_callback_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -251,7 +349,7 @@ func (x *SystemHealthResponse) String() string {
 func (*SystemHealthResponse) ProtoMessage() {}
 
 func (x *SystemHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_callback_proto_msgTypes[5]
+	mi := &file_linker_system_v1_callback_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +362,7 @@ func (x *SystemHealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemHealthResponse.ProtoReflect.Descriptor instead.
 func (*SystemHealthResponse) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{5}
+	return file_linker_system_v1_callback_proto_rawDescGZIP(), []int{7}
 }
 
 var File_linker_system_v1_callback_proto protoreflect.FileDescriptor
@@ -277,13 +375,19 @@ const file_linker_system_v1_callback_proto_rawDesc = "" +
 	"\x14GreetingInfoResponse\"G\n" +
 	"\x12SystemReplyRequest\x121\n" +
 	"\x04data\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x04data\"\x15\n" +
-	"\x13SystemReplyResponse\"I\n" +
-	"\x13SystemHealthRequest\x122\n" +
-	"\x04data\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemHealthR\x04data\"\x16\n" +
-	"\x14SystemHealthResponse2\xb7\x02\n" +
+	"\x13SystemReplyResponse\"}\n" +
+	"\x13SystemDeviceRequest\x121\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x04data\x123\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup\"\x16\n" +
+	"\x14SystemDeviceResponse\"\x83\x01\n" +
+	"\x13SystemHealthRequest\x121\n" +
+	"\x04data\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x04data\x129\n" +
+	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\x16\n" +
+	"\x14SystemHealthResponse2\x98\x03\n" +
 	"\x15SystemCallbackService\x12_\n" +
 	"\fGreetingInfo\x12%.linker.system.v1.GreetingInfoRequest\x1a&.linker.system.v1.GreetingInfoResponse\"\x00\x12\\\n" +
 	"\vSystemReply\x12$.linker.system.v1.SystemReplyRequest\x1a%.linker.system.v1.SystemReplyResponse\"\x00\x12_\n" +
+	"\fSystemDevice\x12%.linker.system.v1.SystemDeviceRequest\x1a&.linker.system.v1.SystemDeviceResponse\"\x00\x12_\n" +
 	"\fSystemHealth\x12%.linker.system.v1.SystemHealthRequest\x1a&.linker.system.v1.SystemHealthResponse\"\x00B\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
 
 var (
@@ -298,33 +402,41 @@ func file_linker_system_v1_callback_proto_rawDescGZIP() []byte {
 	return file_linker_system_v1_callback_proto_rawDescData
 }
 
-var file_linker_system_v1_callback_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_linker_system_v1_callback_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_linker_system_v1_callback_proto_goTypes = []any{
 	(*GreetingInfoRequest)(nil),  // 0: linker.system.v1.GreetingInfoRequest
 	(*GreetingInfoResponse)(nil), // 1: linker.system.v1.GreetingInfoResponse
 	(*SystemReplyRequest)(nil),   // 2: linker.system.v1.SystemReplyRequest
 	(*SystemReplyResponse)(nil),  // 3: linker.system.v1.SystemReplyResponse
-	(*SystemHealthRequest)(nil),  // 4: linker.system.v1.SystemHealthRequest
-	(*SystemHealthResponse)(nil), // 5: linker.system.v1.SystemHealthResponse
-	(*GreetingInfo)(nil),         // 6: linker.system.v1.GreetingInfo
-	(*SystemReply)(nil),          // 7: linker.system.v1.SystemReply
-	(*SystemHealth)(nil),         // 8: linker.system.v1.SystemHealth
+	(*SystemDeviceRequest)(nil),  // 4: linker.system.v1.SystemDeviceRequest
+	(*SystemDeviceResponse)(nil), // 5: linker.system.v1.SystemDeviceResponse
+	(*SystemHealthRequest)(nil),  // 6: linker.system.v1.SystemHealthRequest
+	(*SystemHealthResponse)(nil), // 7: linker.system.v1.SystemHealthResponse
+	(*GreetingInfo)(nil),         // 8: linker.system.v1.GreetingInfo
+	(*SystemReply)(nil),          // 9: linker.system.v1.SystemReply
+	(*SystemSetup)(nil),          // 10: linker.system.v1.SystemSetup
+	(*SystemMetrics)(nil),        // 11: linker.system.v1.SystemMetrics
 }
 var file_linker_system_v1_callback_proto_depIdxs = []int32{
-	6, // 0: linker.system.v1.GreetingInfoRequest.data:type_name -> linker.system.v1.GreetingInfo
-	7, // 1: linker.system.v1.SystemReplyRequest.data:type_name -> linker.system.v1.SystemReply
-	8, // 2: linker.system.v1.SystemHealthRequest.data:type_name -> linker.system.v1.SystemHealth
-	0, // 3: linker.system.v1.SystemCallbackService.GreetingInfo:input_type -> linker.system.v1.GreetingInfoRequest
-	2, // 4: linker.system.v1.SystemCallbackService.SystemReply:input_type -> linker.system.v1.SystemReplyRequest
-	4, // 5: linker.system.v1.SystemCallbackService.SystemHealth:input_type -> linker.system.v1.SystemHealthRequest
-	1, // 6: linker.system.v1.SystemCallbackService.GreetingInfo:output_type -> linker.system.v1.GreetingInfoResponse
-	3, // 7: linker.system.v1.SystemCallbackService.SystemReply:output_type -> linker.system.v1.SystemReplyResponse
-	5, // 8: linker.system.v1.SystemCallbackService.SystemHealth:output_type -> linker.system.v1.SystemHealthResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	8,  // 0: linker.system.v1.GreetingInfoRequest.data:type_name -> linker.system.v1.GreetingInfo
+	9,  // 1: linker.system.v1.SystemReplyRequest.data:type_name -> linker.system.v1.SystemReply
+	9,  // 2: linker.system.v1.SystemDeviceRequest.data:type_name -> linker.system.v1.SystemReply
+	10, // 3: linker.system.v1.SystemDeviceRequest.setup:type_name -> linker.system.v1.SystemSetup
+	9,  // 4: linker.system.v1.SystemHealthRequest.data:type_name -> linker.system.v1.SystemReply
+	11, // 5: linker.system.v1.SystemHealthRequest.metrics:type_name -> linker.system.v1.SystemMetrics
+	0,  // 6: linker.system.v1.SystemCallbackService.GreetingInfo:input_type -> linker.system.v1.GreetingInfoRequest
+	2,  // 7: linker.system.v1.SystemCallbackService.SystemReply:input_type -> linker.system.v1.SystemReplyRequest
+	4,  // 8: linker.system.v1.SystemCallbackService.SystemDevice:input_type -> linker.system.v1.SystemDeviceRequest
+	6,  // 9: linker.system.v1.SystemCallbackService.SystemHealth:input_type -> linker.system.v1.SystemHealthRequest
+	1,  // 10: linker.system.v1.SystemCallbackService.GreetingInfo:output_type -> linker.system.v1.GreetingInfoResponse
+	3,  // 11: linker.system.v1.SystemCallbackService.SystemReply:output_type -> linker.system.v1.SystemReplyResponse
+	5,  // 12: linker.system.v1.SystemCallbackService.SystemDevice:output_type -> linker.system.v1.SystemDeviceResponse
+	7,  // 13: linker.system.v1.SystemCallbackService.SystemHealth:output_type -> linker.system.v1.SystemHealthResponse
+	10, // [10:14] is the sub-list for method output_type
+	6,  // [6:10] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_linker_system_v1_callback_proto_init() }
@@ -339,7 +451,7 @@ func file_linker_system_v1_callback_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linker_system_v1_callback_proto_rawDesc), len(file_linker_system_v1_callback_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

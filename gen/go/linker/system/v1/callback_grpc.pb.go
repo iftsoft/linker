@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	SystemCallbackService_GreetingInfo_FullMethodName = "/linker.system.v1.SystemCallbackService/GreetingInfo"
 	SystemCallbackService_SystemReply_FullMethodName  = "/linker.system.v1.SystemCallbackService/SystemReply"
+	SystemCallbackService_SystemDevice_FullMethodName = "/linker.system.v1.SystemCallbackService/SystemDevice"
 	SystemCallbackService_SystemHealth_FullMethodName = "/linker.system.v1.SystemCallbackService/SystemHealth"
 )
 
@@ -34,6 +35,8 @@ type SystemCallbackServiceClient interface {
 	GreetingInfo(ctx context.Context, in *GreetingInfoRequest, opts ...grpc.CallOption) (*GreetingInfoResponse, error)
 	// Notification about system reply
 	SystemReply(ctx context.Context, in *SystemReplyRequest, opts ...grpc.CallOption) (*SystemReplyResponse, error)
+	// Notification about system device
+	SystemDevice(ctx context.Context, in *SystemDeviceRequest, opts ...grpc.CallOption) (*SystemDeviceResponse, error)
 	// Notification about system health
 	SystemHealth(ctx context.Context, in *SystemHealthRequest, opts ...grpc.CallOption) (*SystemHealthResponse, error)
 }
@@ -66,6 +69,16 @@ func (c *systemCallbackServiceClient) SystemReply(ctx context.Context, in *Syste
 	return out, nil
 }
 
+func (c *systemCallbackServiceClient) SystemDevice(ctx context.Context, in *SystemDeviceRequest, opts ...grpc.CallOption) (*SystemDeviceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SystemDeviceResponse)
+	err := c.cc.Invoke(ctx, SystemCallbackService_SystemDevice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *systemCallbackServiceClient) SystemHealth(ctx context.Context, in *SystemHealthRequest, opts ...grpc.CallOption) (*SystemHealthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SystemHealthResponse)
@@ -86,6 +99,8 @@ type SystemCallbackServiceServer interface {
 	GreetingInfo(context.Context, *GreetingInfoRequest) (*GreetingInfoResponse, error)
 	// Notification about system reply
 	SystemReply(context.Context, *SystemReplyRequest) (*SystemReplyResponse, error)
+	// Notification about system device
+	SystemDevice(context.Context, *SystemDeviceRequest) (*SystemDeviceResponse, error)
 	// Notification about system health
 	SystemHealth(context.Context, *SystemHealthRequest) (*SystemHealthResponse, error)
 	mustEmbedUnimplementedSystemCallbackServiceServer()
@@ -103,6 +118,9 @@ func (UnimplementedSystemCallbackServiceServer) GreetingInfo(context.Context, *G
 }
 func (UnimplementedSystemCallbackServiceServer) SystemReply(context.Context, *SystemReplyRequest) (*SystemReplyResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SystemReply not implemented")
+}
+func (UnimplementedSystemCallbackServiceServer) SystemDevice(context.Context, *SystemDeviceRequest) (*SystemDeviceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SystemDevice not implemented")
 }
 func (UnimplementedSystemCallbackServiceServer) SystemHealth(context.Context, *SystemHealthRequest) (*SystemHealthResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SystemHealth not implemented")
@@ -164,6 +182,24 @@ func _SystemCallbackService_SystemReply_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SystemCallbackService_SystemDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SystemDeviceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SystemCallbackServiceServer).SystemDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SystemCallbackService_SystemDevice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SystemCallbackServiceServer).SystemDevice(ctx, req.(*SystemDeviceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SystemCallbackService_SystemHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SystemHealthRequest)
 	if err := dec(in); err != nil {
@@ -196,6 +232,10 @@ var SystemCallbackService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SystemReply",
 			Handler:    _SystemCallbackService_SystemReply_Handler,
+		},
+		{
+			MethodName: "SystemDevice",
+			Handler:    _SystemCallbackService_SystemDevice_Handler,
 		},
 		{
 			MethodName: "SystemHealth",

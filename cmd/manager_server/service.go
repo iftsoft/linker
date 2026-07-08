@@ -38,33 +38,34 @@ func (ms *ManagerService) Terminate(ctx context.Context, query *model.SystemQuer
 	return &reply, nil
 }
 
-// SysInform returns health of device application
-func (ms *ManagerService) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
+// SysHealth returns health of device application
+func (ms *ManagerService) SysHealth(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
 	if query == nil {
 		return nil, errEmptyQuery
 	}
 	reply := model.SystemHealth{
-		Device:   query.Device,
-		Moment:   time.Now().Unix(),
-		SysState: ms.SysState,
-		SysError: model.SysErrSuccess,
+		Reply: ms.getSystemReply(query.Device),
 		Metrics: model.SystemMetrics{
+			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,
 			DevState: ms.DevState,
 		},
 	}
-	ms.log.Info("ManagerService.SysInform", "query", *query, "reply", reply)
+	ms.log.Info("ManagerService.SysHealth", "query", *query, "reply", reply)
 	return &reply, nil
 }
 
 // SysStart turns device driver to initial state
-func (ms *ManagerService) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (ms *ManagerService) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	if query == nil {
 		return nil, errEmptyQuery
 	}
 	ms.SysState = model.SysStateRunning
-	reply := ms.getSystemReply(query.Device)
+	reply := model.SystemDevice{
+		Reply: ms.getSystemReply(query.Device),
+		Setup: model.SystemSetup{},
+	}
 	ms.log.Info("ManagerService.SysStart", "query", *query, "reply", reply)
 	return &reply, nil
 }
@@ -81,12 +82,15 @@ func (ms *ManagerService) SysStop(ctx context.Context, query *model.SystemQuery)
 }
 
 // SysRestart reactivates device driver with new config
-func (ms *ManagerService) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (ms *ManagerService) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	if query == nil {
 		return nil, errEmptyQuery
 	}
 	ms.SysState = model.SysStateRunning
-	reply := ms.getSystemReply(query.Device)
+	reply := model.SystemDevice{
+		Reply: ms.getSystemReply(query.Device),
+		Setup: model.SystemSetup{},
+	}
 	ms.log.Info("ManagerService.SysRestart", "query", *query, "reply", reply)
 	return &reply, nil
 }

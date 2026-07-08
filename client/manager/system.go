@@ -36,27 +36,31 @@ func (c *SystemManagerClient) Terminate(ctx context.Context, query *model.System
 	}
 
 	reply := convertSystemReply(resp.GetReply())
-	return reply, nil
+	return &reply, nil
 }
 
-// SysInform returns health of device application
-func (c *SystemManagerClient) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
-	c.log.Debug("ManagerClient.SysInform - grpc", slog.String("device", query.Device))
+// SysHealth returns health of device application
+func (c *SystemManagerClient) SysHealth(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
+	c.log.Debug("ManagerClient.SysHealth - grpc", slog.String("device", query.Device))
 
-	input := &system.SysInformRequest{
+	input := &system.SysHealthRequest{
 		Query: convertSystemQuery(query),
 	}
-	resp, err := c.system.SysInform(ctx, input)
+	resp, err := c.system.SysHealth(ctx, input)
 	if err != nil {
-		return nil, fmt.Errorf("commant SysInform for %s failed: %w", query.Device, err)
+		return nil, fmt.Errorf("commant SysHealth for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertSystemHealth(resp.GetReply())
+	reply := &model.SystemHealth{
+		Reply:   convertSystemReply(resp.GetReply()),
+		Metrics: convertSystemMetrics(resp.GetMetrics()),
+	}
+
 	return reply, nil
 }
 
 // SysStart turns device driver to initial state
-func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	c.log.Debug("ManagerClient.SysStart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysStartRequest{
@@ -67,7 +71,10 @@ func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemC
 		return nil, fmt.Errorf("commant SysStart for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertSystemReply(resp.GetReply())
+	reply := &model.SystemDevice{
+		Reply: convertSystemReply(resp.GetReply()),
+		Setup: convertSystemSetup(resp.GetSetup()),
+	}
 	return reply, nil
 }
 
@@ -84,11 +91,11 @@ func (c *SystemManagerClient) SysStop(ctx context.Context, query *model.SystemQu
 	}
 
 	reply := convertSystemReply(resp.GetReply())
-	return reply, nil
+	return &reply, nil
 }
 
 // SysRestart reactivates device driver with new config
-func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	c.log.Debug("ManagerClient.SysRestart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysRestartRequest{
@@ -99,7 +106,10 @@ func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.Syste
 		return nil, fmt.Errorf("commant SysRestart for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertSystemReply(resp.GetReply())
+	reply := &model.SystemDevice{
+		Reply: convertSystemReply(resp.GetReply()),
+		Setup: convertSystemSetup(resp.GetSetup()),
+	}
 	return reply, nil
 }
 
@@ -127,11 +137,24 @@ func convertSystemConfig(value *model.SystemConfig) *system.SystemConfig {
 	return data
 }
 
-func convertSystemReply(value *system.SystemReply) *model.SystemReply {
+func convertSystemSetup(value *system.SystemSetup) model.SystemSetup {
 	if value == nil {
-		return nil
+		return model.SystemSetup{}
 	}
-	data := &model.SystemReply{
+	data := model.SystemSetup{
+		DevType:     model.DevTypeMask(value.DevType),
+		Description: value.Description,
+		Supported:   model.DevScopeMask(value.Supported),
+		Required:    model.DevScopeMask(value.Required),
+	}
+	return data
+}
+
+func convertSystemReply(value *system.SystemReply) model.SystemReply {
+	if value == nil {
+		return model.SystemReply{}
+	}
+	data := model.SystemReply{
 		Device:   value.Device,
 		Command:  value.Command,
 		Message:  value.Message,
@@ -141,15 +164,15 @@ func convertSystemReply(value *system.SystemReply) *model.SystemReply {
 	return data
 }
 
-func convertSystemHealth(value *system.SystemHealth) *model.SystemHealth {
+func convertSystemMetrics(value *system.SystemMetrics) model.SystemMetrics {
 	if value == nil {
-		return nil
+		return model.SystemMetrics{}
 	}
-	data := &model.SystemHealth{
-		Device:   value.Device,
+	data := model.SystemMetrics{
+		Uptime:   value.Uptime,
 		Moment:   value.Moment,
-		SysError: model.SysError(value.SysError),
-		SysState: model.SysState(value.SysState),
+		DevError: model.DevError(value.DevError),
+		DevState: model.DevState(value.DevState),
 	}
 	return data
 }

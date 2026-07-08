@@ -10,8 +10,8 @@ import "linker/system/v1/system.proto";
 service SystemManagerService {
   // Terminate
   rpc Terminate(TerminateRequest) returns (TerminateResponse) {}
-  // SysInform
-  rpc SysInform(SysInformRequest) returns (SysInformResponse) {}
+  // SysHealth
+  rpc SysHealth(SysHealthRequest) returns (SysHealthResponse) {}
   // SysStart
   rpc SysStart(SysStartRequest) returns (SysStartResponse) {}
   // SysStop
@@ -31,13 +31,14 @@ message TerminateResponse {
 }
 
 // Defines the message structure for a inform request
-message SysInformRequest {
+message SysHealthRequest {
   SystemQuery query = 1;
 }
 
 // Defines the message structure for the inform response
-message SysInformResponse {
-  SystemHealth reply = 1;
+message SysHealthResponse {
+  SystemReply reply = 1;
+  SystemMetrics metrics = 2;
 }
 
 // Defines the message structure for a system start request
@@ -48,6 +49,7 @@ message SysStartRequest {
 // Defines the message structure for the system start response
 message SysStartResponse {
   SystemReply reply = 1;
+  SystemSetup setup = 2;
 }
 
 // Defines the message structure for a system stop request
@@ -68,5 +70,6 @@ message SysRestartRequest {
 // Defines the message structure for the system restart response
 message SysRestartResponse {
   SystemReply reply = 1;
+  SystemSetup setup = 2;
 }
 

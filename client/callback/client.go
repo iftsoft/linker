@@ -55,7 +55,7 @@ func (c *CallbackClient) GreetingInfo(ctx context.Context, reply *model.Greeting
 	return c.system.GreetingInfo(ctx, reply)
 }
 
-// SystemReply sends notification about device reply
+// SystemReply sends notification about system reply
 func (c *CallbackClient) SystemReply(ctx context.Context, reply *model.SystemReply) error {
 	if c.system == nil {
 		return ErrNotInitialized
@@ -65,7 +65,17 @@ func (c *CallbackClient) SystemReply(ctx context.Context, reply *model.SystemRep
 	return c.system.SystemReply(ctx, reply)
 }
 
-// SystemHealth sends notification about device reply
+// SystemDevice sends notification about device settings
+func (c *CallbackClient) SystemDevice(ctx context.Context, reply *model.SystemDevice) error {
+	if c.system == nil {
+		return ErrNotInitialized
+	}
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.system.SystemDevice(ctx, reply)
+}
+
+// SystemHealth sends notification about device health
 func (c *CallbackClient) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
 	if c.system == nil {
 		return ErrNotInitialized

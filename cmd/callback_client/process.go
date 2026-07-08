@@ -87,12 +87,8 @@ func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackCl
 
 func ProcessGreetingInfo(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	reply := model.GreetingInfo{
-		Device:      testDevice,
-		GrpcPort:    9098,
-		DevType:     model.DevTypeCustom,
-		Supported:   model.ScopeFlagSystem,
-		Required:    model.ScopeFlagSystem,
-		Description: "Device description",
+		DevName:  testDevice,
+		GrpcPort: 9098,
 	}
 	log.Info("Processing GreetingInfo", "reply", reply)
 	err := cli.GreetingInfo(ctx, &reply)
@@ -106,7 +102,7 @@ func ProcessGreetingInfo(ctx context.Context, log *slog.Logger, cli *callback.Ca
 func ProcessSystemReply(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	reply := model.SystemReply{
 		Device:   testDevice,
-		Command:  model.CmdSystemInform,
+		Command:  model.CmdSystemHealth,
 		Message:  "Ok",
 		SysState: model.SysStateRunning,
 		SysError: model.SysErrSuccess,
@@ -120,19 +116,45 @@ func ProcessSystemReply(ctx context.Context, log *slog.Logger, cli *callback.Cal
 	return nil
 }
 
+func ProcessSystemDevice(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	reply := model.SystemDevice{
+		Reply: model.SystemReply{
+			Device:   testDevice,
+			Command:  model.CmdSystemDevice,
+			Message:  "Ok",
+			SysState: model.SysStateRunning,
+			SysError: model.SysErrSuccess,
+		},
+		Setup: model.SystemSetup{
+			DevType:     model.DevTypeCustom,
+			Supported:   model.ScopeFlagSystem,
+			Required:    model.ScopeFlagSystem,
+			Description: "Device description",
+		},
+	}
+	log.Info("Processing SystemDevice", "reply", reply)
+	err := cli.SystemDevice(ctx, &reply)
+	if err != nil {
+		return fmt.Errorf("system device error: %w", err)
+	}
+
+	return nil
+}
+
 func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	health := model.SystemHealth{
-		Device:   testDevice,
-		Moment:   time.Now().Unix(),
-		SysState: model.SysStateRunning,
-		SysError: model.SysErrSuccess,
+		Reply: model.SystemReply{
+			Device:   testDevice,
+			Command:  model.CmdSystemHealth,
+			Message:  "Ok",
+			SysState: model.SysStateRunning,
+			SysError: model.SysErrSuccess,
+		},
 		Metrics: model.SystemMetrics{
+			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,
 			DevState: model.DevStateWorking,
-			Counts:   make(map[string]uint32),
-			Totals:   make(map[string]float32),
-			Topics:   make(map[string]string),
 		},
 	}
 	log.Info("Processing SystemHealth", "health", health)

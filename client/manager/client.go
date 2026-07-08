@@ -55,18 +55,18 @@ func (c *ManagerClient) Terminate(ctx context.Context, query *model.SystemQuery)
 	return c.system.Terminate(ctx, query)
 }
 
-// SysInform returns health of device application
-func (c *ManagerClient) SysInform(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
+// SysHealth returns health of device application
+func (c *ManagerClient) SysHealth(ctx context.Context, query *model.SystemQuery) (*model.SystemHealth, error) {
 	if c.system == nil {
 		return nil, ErrNotInitialized
 	}
 	c.mux.Lock()
 	defer c.mux.Unlock()
-	return c.system.SysInform(ctx, query)
+	return c.system.SysHealth(ctx, query)
 }
 
 // SysStart turns device driver to initial state
-func (c *ManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (c *ManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	if c.system == nil {
 		return nil, ErrNotInitialized
 	}
@@ -86,7 +86,7 @@ func (c *ManagerClient) SysStop(ctx context.Context, query *model.SystemQuery) (
 }
 
 // SysRestart reactivates device driver with new config
-func (c *ManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemReply, error) {
+func (c *ManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
 	if c.system == nil {
 		return nil, ErrNotInitialized
 	}

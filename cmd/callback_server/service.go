@@ -29,6 +29,12 @@ func (cs *CallbackService) SystemReply(ctx context.Context, reply *model.SystemR
 	return nil
 }
 
+// SystemDevice sends notification about device settings
+func (cs *CallbackService) SystemDevice(ctx context.Context, reply *model.SystemDevice) error {
+	cs.log.Info("CallbackService.SystemDevice", "reply", reply)
+	return nil
+}
+
 // SystemHealth sends notification about device reply
 func (cs *CallbackService) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
 	cs.log.Info("CallbackService.SystemHealth", "reply", reply)

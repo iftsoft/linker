@@ -51,23 +51,24 @@ func (h *SystemManager) Terminate(ctx context.Context, req *srv.TerminateRequest
 	return resp, err
 }
 
-// SysInform returns system health information
-func (h *SystemManager) SysInform(ctx context.Context, req *srv.SysInformRequest) (*srv.SysInformResponse, error) {
+// SysHealth returns system health information
+func (h *SystemManager) SysHealth(ctx context.Context, req *srv.SysHealthRequest) (*srv.SysHealthResponse, error) {
 	if req == nil {
 		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
-			errors.New("SysInformRequest is nil"))
+			errors.New("SysHealthRequest is nil"))
 	}
 
 	query := SystemQueryToModel(req.GetQuery())
-	h.log.Debug("gRPC.SysInform", slog.Any("query", query))
+	h.log.Debug("gRPC.SysHealth", slog.Any("query", query))
 
-	reply, err := h.api.SysInform(ctx, query)
+	reply, err := h.api.SysHealth(ctx, query)
 	if err != nil {
-		h.log.Error("gRPC.SysInform failed", slog.Any("error", err))
+		h.log.Error("gRPC.SysHealth failed", slog.Any("error", err))
 	}
 
-	resp := &srv.SysInformResponse{
-		Reply: SystemHealthToProto(reply),
+	resp := &srv.SysHealthResponse{
+		Reply:   SystemReplyToProto(&reply.Reply),
+		Metrics: SystemMetricsToProto(&reply.Metrics),
 	}
 
 	return resp, err
@@ -89,7 +90,8 @@ func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) 
 	}
 
 	resp := &srv.SysStartResponse{
-		Reply: SystemReplyToProto(reply),
+		Reply: SystemReplyToProto(&reply.Reply),
+		Setup: SystemSetupToProto(&reply.Setup),
 	}
 
 	return resp, err
@@ -133,7 +135,8 @@ func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartReque
 	}
 
 	resp := &srv.SysRestartResponse{
-		Reply: SystemReplyToProto(reply),
+		Reply: SystemReplyToProto(&reply.Reply),
+		Setup: SystemSetupToProto(&reply.Setup),
 	}
 
 	return resp, err
@@ -168,13 +171,22 @@ func SystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
 	return reply
 }
 
-func SystemHealthToProto(data *model.SystemHealth) *srv.SystemHealth {
-	reply := &srv.SystemHealth{
-		Device:   data.Device,
+func SystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
+	reply := &srv.SystemSetup{
+		DevType:     uint64(data.DevType),
+		Supported:   uint64(data.Supported),
+		Required:    uint64(data.Required),
+		Description: data.Description,
+	}
+	return reply
+}
+
+func SystemMetricsToProto(data *model.SystemMetrics) *srv.SystemMetrics {
+	reply := &srv.SystemMetrics{
+		Uptime:   data.Uptime,
 		Moment:   data.Moment,
-		SysError: uint32(data.SysError),
-		SysState: uint32(data.SysState),
-		Metrics:  &srv.SystemMetrics{},
+		DevError: uint32(data.DevError),
+		DevState: uint32(data.DevState),
 	}
 	return reply
 }

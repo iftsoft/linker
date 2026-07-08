@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	SystemManagerService_Terminate_FullMethodName  = "/linker.system.v1.SystemManagerService/Terminate"
-	SystemManagerService_SysInform_FullMethodName  = "/linker.system.v1.SystemManagerService/SysInform"
+	SystemManagerService_SysHealth_FullMethodName  = "/linker.system.v1.SystemManagerService/SysHealth"
 	SystemManagerService_SysStart_FullMethodName   = "/linker.system.v1.SystemManagerService/SysStart"
 	SystemManagerService_SysStop_FullMethodName    = "/linker.system.v1.SystemManagerService/SysStop"
 	SystemManagerService_SysRestart_FullMethodName = "/linker.system.v1.SystemManagerService/SysRestart"
@@ -34,8 +34,8 @@ const (
 type SystemManagerServiceClient interface {
 	// Terminate
 	Terminate(ctx context.Context, in *TerminateRequest, opts ...grpc.CallOption) (*TerminateResponse, error)
-	// SysInform
-	SysInform(ctx context.Context, in *SysInformRequest, opts ...grpc.CallOption) (*SysInformResponse, error)
+	// SysHealth
+	SysHealth(ctx context.Context, in *SysHealthRequest, opts ...grpc.CallOption) (*SysHealthResponse, error)
 	// SysStart
 	SysStart(ctx context.Context, in *SysStartRequest, opts ...grpc.CallOption) (*SysStartResponse, error)
 	// SysStop
@@ -62,10 +62,10 @@ func (c *systemManagerServiceClient) Terminate(ctx context.Context, in *Terminat
 	return out, nil
 }
 
-func (c *systemManagerServiceClient) SysInform(ctx context.Context, in *SysInformRequest, opts ...grpc.CallOption) (*SysInformResponse, error) {
+func (c *systemManagerServiceClient) SysHealth(ctx context.Context, in *SysHealthRequest, opts ...grpc.CallOption) (*SysHealthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SysInformResponse)
-	err := c.cc.Invoke(ctx, SystemManagerService_SysInform_FullMethodName, in, out, cOpts...)
+	out := new(SysHealthResponse)
+	err := c.cc.Invoke(ctx, SystemManagerService_SysHealth_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -110,8 +110,8 @@ func (c *systemManagerServiceClient) SysRestart(ctx context.Context, in *SysRest
 type SystemManagerServiceServer interface {
 	// Terminate
 	Terminate(context.Context, *TerminateRequest) (*TerminateResponse, error)
-	// SysInform
-	SysInform(context.Context, *SysInformRequest) (*SysInformResponse, error)
+	// SysHealth
+	SysHealth(context.Context, *SysHealthRequest) (*SysHealthResponse, error)
 	// SysStart
 	SysStart(context.Context, *SysStartRequest) (*SysStartResponse, error)
 	// SysStop
@@ -131,8 +131,8 @@ type UnimplementedSystemManagerServiceServer struct{}
 func (UnimplementedSystemManagerServiceServer) Terminate(context.Context, *TerminateRequest) (*TerminateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Terminate not implemented")
 }
-func (UnimplementedSystemManagerServiceServer) SysInform(context.Context, *SysInformRequest) (*SysInformResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SysInform not implemented")
+func (UnimplementedSystemManagerServiceServer) SysHealth(context.Context, *SysHealthRequest) (*SysHealthResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SysHealth not implemented")
 }
 func (UnimplementedSystemManagerServiceServer) SysStart(context.Context, *SysStartRequest) (*SysStartResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SysStart not implemented")
@@ -182,20 +182,20 @@ func _SystemManagerService_Terminate_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SystemManagerService_SysInform_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SysInformRequest)
+func _SystemManagerService_SysHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysHealthRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SystemManagerServiceServer).SysInform(ctx, in)
+		return srv.(SystemManagerServiceServer).SysHealth(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SystemManagerService_SysInform_FullMethodName,
+		FullMethod: SystemManagerService_SysHealth_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SystemManagerServiceServer).SysInform(ctx, req.(*SysInformRequest))
+		return srv.(SystemManagerServiceServer).SysHealth(ctx, req.(*SysHealthRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -266,8 +266,8 @@ var SystemManagerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SystemManagerService_Terminate_Handler,
 		},
 		{
-			MethodName: "SysInform",
-			Handler:    _SystemManagerService_SysInform_Handler,
+			MethodName: "SysHealth",
+			Handler:    _SystemManagerService_SysHealth_Handler,
 		},
 		{
 			MethodName: "SysStart",

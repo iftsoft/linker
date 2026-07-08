@@ -8,8 +8,8 @@ import (
 const (
 	CmdSystemReply     = "SystemReply"
 	CmdSystemHealth    = "SystemHealth"
+	CmdSystemDevice    = "SystemDevice"
 	CmdSystemTerminate = "Terminate"
-	CmdSystemInform    = "SysInform"
 	CmdSystemStart     = "SysStart"
 	CmdSystemStop      = "SysStop"
 	CmdSystemRestart   = "SysRestart"
@@ -19,14 +19,14 @@ const (
 type SystemManager interface {
 	// Terminate gracefully terminates running device application
 	Terminate(ctx context.Context, query *SystemQuery) (*SystemReply, error)
-	// SysInform returns health of device application
-	SysInform(ctx context.Context, query *SystemQuery) (*SystemHealth, error)
+	// SysHealth returns health of device application
+	SysHealth(ctx context.Context, query *SystemQuery) (*SystemHealth, error)
 	// SysStart turns device driver to initial state
-	SysStart(ctx context.Context, query *SystemConfig) (*SystemReply, error)
+	SysStart(ctx context.Context, query *SystemConfig) (*SystemDevice, error)
 	// SysStop gracefully deactivates device driver
 	SysStop(ctx context.Context, query *SystemQuery) (*SystemReply, error)
 	// SysRestart reactivates device driver with new config
-	SysRestart(ctx context.Context, query *SystemConfig) (*SystemReply, error)
+	SysRestart(ctx context.Context, query *SystemConfig) (*SystemDevice, error)
 }
 
 // SystemCallback is the client API for SystemCallbackService.
@@ -35,17 +35,16 @@ type SystemCallback interface {
 	GreetingInfo(ctx context.Context, query *GreetingInfo) error
 	// SystemReply sends notification about system reply
 	SystemReply(ctx context.Context, reply *SystemReply) error
+	// SystemDevice sends notification about system device
+	SystemDevice(ctx context.Context, reply *SystemDevice) error
 	// SystemHealth sends notification about execute error
 	SystemHealth(ctx context.Context, value *SystemHealth) error
 }
 
 type GreetingInfo struct {
-	Device      string       `json:"device"`      // Name of device
-	GrpcPort    uint32       `json:"grpc_port"`   // gRPC port for device management
-	DevType     DevTypeMask  `json:"dev_type"`    // Implemented device types
-	Supported   DevScopeMask `json:"supported"`   // Manager interfaces that driver supported
-	Required    DevScopeMask `json:"required"`    // Callback interfaces that driver required
-	Description string       `json:"description"` // Description of device purpose
+	AppName  string `json:"app_name"`  // Name of application
+	DevName  string `json:"dev_name"`  // Name of device
+	GrpcPort uint32 `json:"grpc_port"` // gRPC port for device management
 }
 
 type SystemQuery struct {
@@ -94,13 +93,24 @@ func (sys *SystemReply) String() string {
 	return str
 }
 
+type SystemSetup struct {
+	DevType     DevTypeMask  `json:"dev_type"`    // Implemented device types
+	Supported   DevScopeMask `json:"supported"`   // Manager interfaces that driver supported
+	Required    DevScopeMask `json:"required"`    // Callback interfaces that driver required
+	Description string       `json:"description"` // Description of device purpose
+}
+
+type SystemDevice struct {
+	Reply SystemReply `json:"reply"`
+	Setup SystemSetup `json:"setup"`
+}
+
 type SystemMetrics struct {
-	Uptime   uint64             `json:"uptime"`
-	DevError DevError           `json:"dev_error"`
-	DevState DevState           `json:"dev_state"`
-	Counts   map[string]uint32  `json:"counts"`
-	Totals   map[string]float32 `json:"totals"`
-	Topics   map[string]string  `json:"topics"`
+	Moment   int64          `json:"moment"`
+	Uptime   uint64         `json:"uptime"`
+	DevError DevError       `json:"dev_error"`
+	DevState DevState       `json:"dev_state"`
+	Content  map[string]any `json:"content"`
 }
 
 func (sys *SystemMetrics) String() string {
@@ -113,36 +123,6 @@ func (sys *SystemMetrics) String() string {
 }
 
 type SystemHealth struct {
-	Device   string        `json:"device"`
-	Moment   int64         `json:"moment"`
-	SysError SysError      `json:"error"`
-	SysState SysState      `json:"state"`
-	Metrics  SystemMetrics `json:"metrics"`
-}
-
-func (sys *SystemHealth) String() string {
-	if sys == nil {
-		return ""
-	}
-	str := fmt.Sprintf("Device = %s, Moment = %d, SysError = %s, SysState = %s, Metrics = (%s)",
-		sys.Device, sys.Moment, sys.SysError.String(), sys.SysState.String(), sys.Metrics.String())
-	return str
-}
-
-func NewSystemHealth(dev string) *SystemHealth {
-	sh := &SystemHealth{
-		Device:   dev,
-		Moment:   0,
-		SysError: 0,
-		SysState: 0,
-		Metrics: SystemMetrics{
-			Uptime:   0,
-			DevError: 0,
-			DevState: 0,
-			Counts:   make(map[string]uint32),
-			Totals:   make(map[string]float32),
-			Topics:   make(map[string]string),
-		},
-	}
-	return sh
+	Reply   SystemReply   `json:"reply"`
+	Metrics SystemMetrics `json:"metrics"`
 }

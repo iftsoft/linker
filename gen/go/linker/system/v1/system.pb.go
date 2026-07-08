@@ -9,6 +9,7 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,6 +22,67 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Defines the message structure for a greeting info
+type GreetingInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AppName       string                 `protobuf:"bytes,1,opt,name=app_name,json=appName,proto3" json:"app_name,omitempty"`
+	DevName       string                 `protobuf:"bytes,2,opt,name=dev_name,json=devName,proto3" json:"dev_name,omitempty"`
+	GrpcPort      uint32                 `protobuf:"varint,3,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GreetingInfo) Reset() {
+	*x = GreetingInfo{}
+	mi := &file_linker_system_v1_system_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GreetingInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GreetingInfo) ProtoMessage() {}
+
+func (x *GreetingInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_system_v1_system_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GreetingInfo.ProtoReflect.Descriptor instead.
+func (*GreetingInfo) Descriptor() ([]byte, []int) {
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *GreetingInfo) GetAppName() string {
+	if x != nil {
+		return x.AppName
+	}
+	return ""
+}
+
+func (x *GreetingInfo) GetDevName() string {
+	if x != nil {
+		return x.DevName
+	}
+	return ""
+}
+
+func (x *GreetingInfo) GetGrpcPort() uint32 {
+	if x != nil {
+		return x.GrpcPort
+	}
+	return 0
+}
+
 // Defines the message structure for a system query
 type SystemQuery struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -31,7 +93,7 @@ type SystemQuery struct {
 
 func (x *SystemQuery) Reset() {
 	*x = SystemQuery{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[0]
+	mi := &file_linker_system_v1_system_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +105,7 @@ func (x *SystemQuery) String() string {
 func (*SystemQuery) ProtoMessage() {}
 
 func (x *SystemQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[0]
+	mi := &file_linker_system_v1_system_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +118,7 @@ func (x *SystemQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemQuery.ProtoReflect.Descriptor instead.
 func (*SystemQuery) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{0}
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SystemQuery) GetDevice() string {
@@ -80,7 +142,7 @@ type SystemConfig struct {
 
 func (x *SystemConfig) Reset() {
 	*x = SystemConfig{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[1]
+	mi := &file_linker_system_v1_system_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -92,7 +154,7 @@ func (x *SystemConfig) String() string {
 func (*SystemConfig) ProtoMessage() {}
 
 func (x *SystemConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[1]
+	mi := &file_linker_system_v1_system_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,7 +167,7 @@ func (x *SystemConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemConfig.ProtoReflect.Descriptor instead.
 func (*SystemConfig) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{1}
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SystemConfig) GetDevice() string {
@@ -157,7 +219,7 @@ type SystemReply struct {
 
 func (x *SystemReply) Reset() {
 	*x = SystemReply{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[2]
+	mi := &file_linker_system_v1_system_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -169,7 +231,7 @@ func (x *SystemReply) String() string {
 func (*SystemReply) ProtoMessage() {}
 
 func (x *SystemReply) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[2]
+	mi := &file_linker_system_v1_system_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -182,7 +244,7 @@ func (x *SystemReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemReply.ProtoReflect.Descriptor instead.
 func (*SystemReply) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{2}
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SystemReply) GetDevice() string {
@@ -220,19 +282,90 @@ func (x *SystemReply) GetSysState() uint32 {
 	return 0
 }
 
+// Defines the message structure for a system device
+type SystemSetup struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DevType       uint64                 `protobuf:"varint,1,opt,name=dev_type,json=devType,proto3" json:"dev_type,omitempty"`
+	Supported     uint64                 `protobuf:"varint,2,opt,name=supported,proto3" json:"supported,omitempty"`
+	Required      uint64                 `protobuf:"varint,3,opt,name=required,proto3" json:"required,omitempty"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SystemSetup) Reset() {
+	*x = SystemSetup{}
+	mi := &file_linker_system_v1_system_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SystemSetup) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemSetup) ProtoMessage() {}
+
+func (x *SystemSetup) ProtoReflect() protoreflect.Message {
+	mi := &file_linker_system_v1_system_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemSetup.ProtoReflect.Descriptor instead.
+func (*SystemSetup) Descriptor() ([]byte, []int) {
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SystemSetup) GetDevType() uint64 {
+	if x != nil {
+		return x.DevType
+	}
+	return 0
+}
+
+func (x *SystemSetup) GetSupported() uint64 {
+	if x != nil {
+		return x.Supported
+	}
+	return 0
+}
+
+func (x *SystemSetup) GetRequired() uint64 {
+	if x != nil {
+		return x.Required
+	}
+	return 0
+}
+
+func (x *SystemSetup) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
 // Defines the message structure for a system metrics
 type SystemMetrics struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uptime        uint64                 `protobuf:"varint,1,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	DevError      uint32                 `protobuf:"varint,2,opt,name=dev_error,json=devError,proto3" json:"dev_error,omitempty"`
-	DevState      uint32                 `protobuf:"varint,3,opt,name=dev_state,json=devState,proto3" json:"dev_state,omitempty"`
+	Moment        int64                  `protobuf:"varint,1,opt,name=moment,proto3" json:"moment,omitempty"`
+	Uptime        uint64                 `protobuf:"varint,2,opt,name=uptime,proto3" json:"uptime,omitempty"`
+	DevError      uint32                 `protobuf:"varint,3,opt,name=dev_error,json=devError,proto3" json:"dev_error,omitempty"`
+	DevState      uint32                 `protobuf:"varint,4,opt,name=dev_state,json=devState,proto3" json:"dev_state,omitempty"`
+	Content       *structpb.Struct       `protobuf:"bytes,7,opt,name=content,proto3" json:"content,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SystemMetrics) Reset() {
 	*x = SystemMetrics{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[3]
+	mi := &file_linker_system_v1_system_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -244,7 +377,7 @@ func (x *SystemMetrics) String() string {
 func (*SystemMetrics) ProtoMessage() {}
 
 func (x *SystemMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[3]
+	mi := &file_linker_system_v1_system_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +390,14 @@ func (x *SystemMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemMetrics.ProtoReflect.Descriptor instead.
 func (*SystemMetrics) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{3}
+	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SystemMetrics) GetMoment() int64 {
+	if x != nil {
+		return x.Moment
+	}
+	return 0
 }
 
 func (x *SystemMetrics) GetUptime() uint64 {
@@ -281,173 +421,22 @@ func (x *SystemMetrics) GetDevState() uint32 {
 	return 0
 }
 
-// Defines the message structure for a system health
-type SystemHealth struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	Moment        int64                  `protobuf:"varint,2,opt,name=moment,proto3" json:"moment,omitempty"`
-	SysError      uint32                 `protobuf:"varint,3,opt,name=sys_error,json=sysError,proto3" json:"sys_error,omitempty"`
-	SysState      uint32                 `protobuf:"varint,4,opt,name=sys_state,json=sysState,proto3" json:"sys_state,omitempty"`
-	Metrics       *SystemMetrics         `protobuf:"bytes,5,opt,name=metrics,proto3" json:"metrics,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SystemHealth) Reset() {
-	*x = SystemHealth{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemHealth) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemHealth) ProtoMessage() {}
-
-func (x *SystemHealth) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[4]
+func (x *SystemMetrics) GetContent() *structpb.Struct {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemHealth.ProtoReflect.Descriptor instead.
-func (*SystemHealth) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *SystemHealth) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *SystemHealth) GetMoment() int64 {
-	if x != nil {
-		return x.Moment
-	}
-	return 0
-}
-
-func (x *SystemHealth) GetSysError() uint32 {
-	if x != nil {
-		return x.SysError
-	}
-	return 0
-}
-
-func (x *SystemHealth) GetSysState() uint32 {
-	if x != nil {
-		return x.SysState
-	}
-	return 0
-}
-
-func (x *SystemHealth) GetMetrics() *SystemMetrics {
-	if x != nil {
-		return x.Metrics
+		return x.Content
 	}
 	return nil
-}
-
-// Defines the message structure for a system health
-type GreetingInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	GrpcPort      uint32                 `protobuf:"varint,2,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
-	DevType       uint64                 `protobuf:"varint,3,opt,name=dev_type,json=devType,proto3" json:"dev_type,omitempty"`
-	Supported     uint64                 `protobuf:"varint,4,opt,name=supported,proto3" json:"supported,omitempty"`
-	Required      uint64                 `protobuf:"varint,5,opt,name=required,proto3" json:"required,omitempty"`
-	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GreetingInfo) Reset() {
-	*x = GreetingInfo{}
-	mi := &file_linker_system_v1_system_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GreetingInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GreetingInfo) ProtoMessage() {}
-
-func (x *GreetingInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_linker_system_v1_system_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GreetingInfo.ProtoReflect.Descriptor instead.
-func (*GreetingInfo) Descriptor() ([]byte, []int) {
-	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *GreetingInfo) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *GreetingInfo) GetGrpcPort() uint32 {
-	if x != nil {
-		return x.GrpcPort
-	}
-	return 0
-}
-
-func (x *GreetingInfo) GetDevType() uint64 {
-	if x != nil {
-		return x.DevType
-	}
-	return 0
-}
-
-func (x *GreetingInfo) GetSupported() uint64 {
-	if x != nil {
-		return x.Supported
-	}
-	return 0
-}
-
-func (x *GreetingInfo) GetRequired() uint64 {
-	if x != nil {
-		return x.Required
-	}
-	return 0
-}
-
-func (x *GreetingInfo) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
 }
 
 var File_linker_system_v1_system_proto protoreflect.FileDescriptor
 
 const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\n" +
-	"\x1dlinker/system/v1/system.proto\x12\x10linker.system.v1\"%\n" +
+	"\x1dlinker/system/v1/system.proto\x12\x10linker.system.v1\x1a\x1cgoogle/protobuf/struct.proto\"a\n" +
+	"\fGreetingInfo\x12\x19\n" +
+	"\bapp_name\x18\x01 \x01(\tR\aappName\x12\x19\n" +
+	"\bdev_name\x18\x02 \x01(\tR\adevName\x12\x1b\n" +
+	"\tgrpc_port\x18\x03 \x01(\rR\bgrpcPort\"%\n" +
 	"\vSystemQuery\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\"\x9c\x01\n" +
 	"\fSystemConfig\x12\x16\n" +
@@ -462,24 +451,18 @@ const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x18\n" +
 	"\amessage\x18\x03 \x01(\tR\amessage\x12\x1b\n" +
 	"\tsys_error\x18\x04 \x01(\rR\bsysError\x12\x1b\n" +
-	"\tsys_state\x18\x05 \x01(\rR\bsysState\"a\n" +
+	"\tsys_state\x18\x05 \x01(\rR\bsysState\"\x84\x01\n" +
+	"\vSystemSetup\x12\x19\n" +
+	"\bdev_type\x18\x01 \x01(\x04R\adevType\x12\x1c\n" +
+	"\tsupported\x18\x02 \x01(\x04R\tsupported\x12\x1a\n" +
+	"\brequired\x18\x03 \x01(\x04R\brequired\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\"\xac\x01\n" +
 	"\rSystemMetrics\x12\x16\n" +
-	"\x06uptime\x18\x01 \x01(\x04R\x06uptime\x12\x1b\n" +
-	"\tdev_error\x18\x02 \x01(\rR\bdevError\x12\x1b\n" +
-	"\tdev_state\x18\x03 \x01(\rR\bdevState\"\xb3\x01\n" +
-	"\fSystemHealth\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x16\n" +
-	"\x06moment\x18\x02 \x01(\x03R\x06moment\x12\x1b\n" +
-	"\tsys_error\x18\x03 \x01(\rR\bsysError\x12\x1b\n" +
-	"\tsys_state\x18\x04 \x01(\rR\bsysState\x129\n" +
-	"\ametrics\x18\x05 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\xba\x01\n" +
-	"\fGreetingInfo\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1b\n" +
-	"\tgrpc_port\x18\x02 \x01(\rR\bgrpcPort\x12\x19\n" +
-	"\bdev_type\x18\x03 \x01(\x04R\adevType\x12\x1c\n" +
-	"\tsupported\x18\x04 \x01(\x04R\tsupported\x12\x1a\n" +
-	"\brequired\x18\x05 \x01(\x04R\brequired\x12 \n" +
-	"\vdescription\x18\x06 \x01(\tR\vdescriptionB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
+	"\x06moment\x18\x01 \x01(\x03R\x06moment\x12\x16\n" +
+	"\x06uptime\x18\x02 \x01(\x04R\x06uptime\x12\x1b\n" +
+	"\tdev_error\x18\x03 \x01(\rR\bdevError\x12\x1b\n" +
+	"\tdev_state\x18\x04 \x01(\rR\bdevState\x121\n" +
+	"\acontent\x18\a \x01(\v2\x17.google.protobuf.StructR\acontentB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
 
 var (
 	file_linker_system_v1_system_proto_rawDescOnce sync.Once
@@ -495,15 +478,16 @@ func file_linker_system_v1_system_proto_rawDescGZIP() []byte {
 
 var file_linker_system_v1_system_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_linker_system_v1_system_proto_goTypes = []any{
-	(*SystemQuery)(nil),   // 0: linker.system.v1.SystemQuery
-	(*SystemConfig)(nil),  // 1: linker.system.v1.SystemConfig
-	(*SystemReply)(nil),   // 2: linker.system.v1.SystemReply
-	(*SystemMetrics)(nil), // 3: linker.system.v1.SystemMetrics
-	(*SystemHealth)(nil),  // 4: linker.system.v1.SystemHealth
-	(*GreetingInfo)(nil),  // 5: linker.system.v1.GreetingInfo
+	(*GreetingInfo)(nil),    // 0: linker.system.v1.GreetingInfo
+	(*SystemQuery)(nil),     // 1: linker.system.v1.SystemQuery
+	(*SystemConfig)(nil),    // 2: linker.system.v1.SystemConfig
+	(*SystemReply)(nil),     // 3: linker.system.v1.SystemReply
+	(*SystemSetup)(nil),     // 4: linker.system.v1.SystemSetup
+	(*SystemMetrics)(nil),   // 5: linker.system.v1.SystemMetrics
+	(*structpb.Struct)(nil), // 6: google.protobuf.Struct
 }
 var file_linker_system_v1_system_proto_depIdxs = []int32{
-	3, // 0: linker.system.v1.SystemHealth.metrics:type_name -> linker.system.v1.SystemMetrics
+	6, // 0: linker.system.v1.SystemMetrics.content:type_name -> google.protobuf.Struct
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
