@@ -17,7 +17,11 @@ const (
 func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	log.Info("Processing Test")
 	// System callback
-	err := ProcessSystemReply(ctx, log, cli)
+	err := ProcessGreetingInfo(ctx, log, cli)
+	if err != nil {
+		return err
+	}
+	err = ProcessSystemReply(ctx, log, cli)
 	if err != nil {
 		return err
 	}
@@ -76,6 +80,24 @@ func ProcessTest(ctx context.Context, log *slog.Logger, cli *callback.CallbackCl
 	err = ProcessValidatorStore(ctx, log, cli)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func ProcessGreetingInfo(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
+	reply := model.GreetingInfo{
+		Device:      testDevice,
+		GrpcPort:    9098,
+		DevType:     model.DevTypeCustom,
+		Supported:   model.ScopeFlagSystem,
+		Required:    model.ScopeFlagSystem,
+		Description: "Device description",
+	}
+	log.Info("Processing GreetingInfo", "reply", reply)
+	err := cli.GreetingInfo(ctx, &reply)
+	if err != nil {
+		return fmt.Errorf("greeting info error: %w", err)
 	}
 
 	return nil

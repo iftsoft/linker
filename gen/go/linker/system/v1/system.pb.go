@@ -366,6 +366,7 @@ type GreetingInfo struct {
 	DevType       uint64                 `protobuf:"varint,3,opt,name=dev_type,json=devType,proto3" json:"dev_type,omitempty"`
 	Supported     uint64                 `protobuf:"varint,4,opt,name=supported,proto3" json:"supported,omitempty"`
 	Required      uint64                 `protobuf:"varint,5,opt,name=required,proto3" json:"required,omitempty"`
+	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -435,6 +436,13 @@ func (x *GreetingInfo) GetRequired() uint64 {
 	return 0
 }
 
+func (x *GreetingInfo) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
 var File_linker_system_v1_system_proto protoreflect.FileDescriptor
 
 const file_linker_system_v1_system_proto_rawDesc = "" +
@@ -464,13 +472,14 @@ const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\x06moment\x18\x02 \x01(\x03R\x06moment\x12\x1b\n" +
 	"\tsys_error\x18\x03 \x01(\rR\bsysError\x12\x1b\n" +
 	"\tsys_state\x18\x04 \x01(\rR\bsysState\x129\n" +
-	"\ametrics\x18\x05 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\x98\x01\n" +
+	"\ametrics\x18\x05 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\xba\x01\n" +
 	"\fGreetingInfo\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1b\n" +
 	"\tgrpc_port\x18\x02 \x01(\rR\bgrpcPort\x12\x19\n" +
 	"\bdev_type\x18\x03 \x01(\x04R\adevType\x12\x1c\n" +
 	"\tsupported\x18\x04 \x01(\x04R\tsupported\x12\x1a\n" +
-	"\brequired\x18\x05 \x01(\x04R\brequiredB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
+	"\brequired\x18\x05 \x01(\x04R\brequired\x12 \n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescriptionB\x1bZ\x19./gen/go/linker/system/v1b\x06proto3"
 
 var (
 	file_linker_system_v1_system_proto_rawDescOnce sync.Once

@@ -40,11 +40,12 @@ type SystemCallback interface {
 }
 
 type GreetingInfo struct {
-	Device    string       `json:"device"`    // Name of device
-	GrpcPort  uint32       `json:"grpc_port"` // gRPC port for device management
-	DevType   DevTypeMask  `json:"dev_type"`  // Implemented device types
-	Supported DevScopeMask `json:"supported"` // Manager interfaces that driver supported
-	Required  DevScopeMask `json:"required"`  // Callback interfaces that driver required
+	Device      string       `json:"device"`      // Name of device
+	GrpcPort    uint32       `json:"grpc_port"`   // gRPC port for device management
+	DevType     DevTypeMask  `json:"dev_type"`    // Implemented device types
+	Supported   DevScopeMask `json:"supported"`   // Manager interfaces that driver supported
+	Required    DevScopeMask `json:"required"`    // Callback interfaces that driver required
+	Description string       `json:"description"` // Description of device purpose
 }
 
 type SystemQuery struct {

@@ -76,11 +76,12 @@ func convertGreetingInfo(value *model.GreetingInfo) *system.GreetingInfo {
 		return nil
 	}
 	data := &system.GreetingInfo{
-		Device:    value.Device,
-		GrpcPort:  value.GrpcPort,
-		DevType:   uint64(value.DevType),
-		Supported: uint64(value.Supported),
-		Required:  uint64(value.Required),
+		Device:      value.Device,
+		GrpcPort:    value.GrpcPort,
+		DevType:     uint64(value.DevType),
+		Supported:   uint64(value.Supported),
+		Required:    uint64(value.Required),
+		Description: value.Description,
 	}
 	return data
 }

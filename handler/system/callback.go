@@ -30,6 +30,34 @@ func (h *SystemCallback) Register(s grpc.ServiceRegistrar) {
 }
 
 // SystemReply implements Notification about system reply
+func (h *SystemCallback) GreetingInfo(ctx context.Context, req *srv.GreetingInfoRequest) (*srv.GreetingInfoResponse, error) {
+	if req == nil {
+		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
+			errors.New("SystemGreetingInfo is nil"))
+	}
+
+	data := req.GetData()
+	reply := model.GreetingInfo{
+		Device:      data.GetDevice(),
+		DevType:     model.DevTypeMask(data.GetDevType()),
+		GrpcPort:    data.GetGrpcPort(),
+		Supported:   model.DevScopeMask(data.GetSupported()),
+		Required:    model.DevScopeMask(data.GetRequired()),
+		Description: data.GetDescription(),
+	}
+	h.log.Debug("gRPC.GreetingInfo", slog.Any("reply", reply))
+
+	err := h.api.GreetingInfo(ctx, &reply)
+	if err != nil {
+		h.log.Error("gRPC.GreetingInfo failed", slog.Any("error", err))
+	}
+
+	resp := &srv.GreetingInfoResponse{}
+
+	return resp, err
+}
+
+// SystemReply implements Notification about system reply
 func (h *SystemCallback) SystemReply(ctx context.Context, req *srv.SystemReplyRequest) (*srv.SystemReplyResponse, error) {
 	if req == nil {
 		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,

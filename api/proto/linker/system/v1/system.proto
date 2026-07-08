@@ -50,5 +50,6 @@ message GreetingInfo {
   uint64 dev_type = 3;
   uint64 supported = 4;
   uint64 required = 5;
+  string description = 6;
 }
 
