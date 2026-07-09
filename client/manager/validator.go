@@ -28,15 +28,15 @@ func (c *ValidatorManagerClient) InitValidator(ctx context.Context, query *model
 	c.log.Debug("ManagerClient.InitValidator - grpc", slog.String("device", query.Device))
 
 	input := &device.InitValidatorRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.InitValidator(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command InitValidator for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // DoValidate starts accepting cash from user
@@ -44,15 +44,15 @@ func (c *ValidatorManagerClient) DoValidate(ctx context.Context, query *model.Va
 	c.log.Debug("ManagerClient.DoValidate - grpc", slog.String("device", query.Device))
 
 	input := &device.DoValidateRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.DoValidate(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command DoValidate for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // AcceptNote puts the validated note to the cassette
@@ -60,15 +60,15 @@ func (c *ValidatorManagerClient) AcceptNote(ctx context.Context, query *model.Va
 	c.log.Debug("ManagerClient.AcceptNote - grpc", slog.String("device", query.Device))
 
 	input := &device.AcceptNoteRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.AcceptNote(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command AcceptNote for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // ReturnNote returns the validated note to the user
@@ -76,15 +76,15 @@ func (c *ValidatorManagerClient) ReturnNote(ctx context.Context, query *model.Va
 	c.log.Debug("ManagerClient.ReturnNote - grpc", slog.String("device", query.Device))
 
 	input := &device.ReturnNoteRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.ReturnNote(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command ReturnNote for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // StopValidate disables accepting new notes by validator
@@ -92,15 +92,15 @@ func (c *ValidatorManagerClient) StopValidate(ctx context.Context, query *model.
 	c.log.Debug("ManagerClient.StopValidate - grpc", slog.String("device", query.Device))
 
 	input := &device.StopValidateRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.StopValidate(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command StopValidate for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // CheckValidator returns current cassette state
@@ -108,14 +108,17 @@ func (c *ValidatorManagerClient) CheckValidator(ctx context.Context, query *mode
 	c.log.Debug("ManagerClient.CheckValidator - grpc", slog.String("device", query.Device))
 
 	input := &device.CheckValidatorRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.CheckValidator(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command CheckValidator for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertValidatorStore(resp.GetReply(), resp.GetBatch())
+	reply := &model.ValidatorStore{
+		DeviceReply:    convertDeviceReplyToModel(resp.GetReply()),
+		ValidatorBatch: convertValidatorBatchToModel(resp.GetBatch()),
+	}
 	return reply, nil
 }
 
@@ -124,18 +127,21 @@ func (c *ValidatorManagerClient) ClearValidator(ctx context.Context, query *mode
 	c.log.Debug("ManagerClient.ClearValidator - grpc", slog.String("device", query.Device))
 
 	input := &device.ClearValidatorRequest{
-		Query: convertValidatorQuery(query),
+		Query: convertValidatorQueryToProto(query),
 	}
 	resp, err := c.device.ClearValidator(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command ClearValidator for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertValidatorStore(resp.GetReply(), resp.GetBatch())
+	reply := &model.ValidatorStore{
+		DeviceReply:    convertDeviceReplyToModel(resp.GetReply()),
+		ValidatorBatch: convertValidatorBatchToModel(resp.GetBatch()),
+	}
 	return reply, nil
 }
 
-func convertValidatorQuery(value *model.ValidatorQuery) *device.ValidatorQuery {
+func convertValidatorQueryToProto(value *model.ValidatorQuery) *device.ValidatorQuery {
 	if value == nil {
 		return nil
 	}
@@ -147,19 +153,11 @@ func convertValidatorQuery(value *model.ValidatorQuery) *device.ValidatorQuery {
 	return data
 }
 
-func convertValidatorStore(reply *device.DeviceReply, batch *device.ValidatorBatch) *model.ValidatorStore {
-	data := &model.ValidatorStore{
-		Reply: convertDeviceReply(reply),
-		Batch: convertValidatorBatch(batch),
-	}
-	return data
-}
-
-func convertValidatorBatch(value *device.ValidatorBatch) *model.ValidatorBatch {
+func convertValidatorBatchToModel(value *device.ValidatorBatch) model.ValidatorBatch {
 	if value == nil {
-		return nil
+		return model.ValidatorBatch{}
 	}
-	data := &model.ValidatorBatch{
+	data := model.ValidatorBatch{
 		Device:  value.GetDevice(),
 		BatchId: value.GetBatchId(),
 		State:   model.BatchState(value.GetState()),

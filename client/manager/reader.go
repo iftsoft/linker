@@ -28,15 +28,15 @@ func (c *ReaderManagerClient) EnterCard(ctx context.Context, query *model.Device
 	c.log.Debug("ManagerClient.EnterCard - grpc", slog.String("device", query.Device))
 
 	input := &device.EnterCardRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.EnterCard(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command EnterCard for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // EjectCard trys to reject card from card reader device
@@ -44,15 +44,15 @@ func (c *ReaderManagerClient) EjectCard(ctx context.Context, query *model.Device
 	c.log.Debug("ManagerClient.EjectCard - grpc", slog.String("device", query.Device))
 
 	input := &device.EjectCardRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.EjectCard(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command EjectCard for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // CaptureCard trys to capture card inside card reader device
@@ -60,15 +60,15 @@ func (c *ReaderManagerClient) CaptureCard(ctx context.Context, query *model.Devi
 	c.log.Debug("ManagerClient.CaptureCard - grpc", slog.String("device", query.Device))
 
 	input := &device.CaptureCardRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.CaptureCard(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command CaptureCard for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // ReadCard trys to read card information from card
@@ -76,7 +76,7 @@ func (c *ReaderManagerClient) ReadCard(ctx context.Context, query *model.DeviceQ
 	c.log.Debug("ManagerClient.ReadCard - grpc", slog.String("device", query.Device))
 
 	input := &device.ReadCardRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.ReadCard(ctx, input)
 	if err != nil {
@@ -89,17 +89,17 @@ func (c *ReaderManagerClient) ReadCard(ctx context.Context, query *model.DeviceQ
 
 func convertReadCardReply(reply *device.DeviceReply, card *device.CardDescription) *model.ReadCardReply {
 	data := &model.ReadCardReply{
-		Reply: convertDeviceReply(reply),
-		Card:  convertCardDescription(card),
+		DeviceReply:     convertDeviceReplyToModel(reply),
+		CardDescription: convertCardDescription(card),
 	}
 	return data
 }
 
-func convertCardDescription(value *device.CardDescription) *model.CardDescription {
+func convertCardDescription(value *device.CardDescription) model.CardDescription {
 	if value == nil {
-		return nil
+		return model.CardDescription{}
 	}
-	data := &model.CardDescription{
+	data := model.CardDescription{
 		Device:  value.Device,
 		CardPan: model.CardPAN(value.CardPan),
 		ExpDate: value.ExpDate,

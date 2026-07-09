@@ -29,7 +29,7 @@ func (c *SystemCallbackClient) GreetingInfo(ctx context.Context, reply *model.Gr
 		slog.String("device", reply.DevName), slog.Uint64("GrpcPort", uint64(reply.GrpcPort)))
 
 	input := &system.GreetingInfoRequest{
-		Data: convertGreetingInfo(reply),
+		Data: convertGreetingInfoToProto(reply),
 	}
 	_, err := c.system.GreetingInfo(ctx, input)
 	if err != nil {
@@ -45,7 +45,7 @@ func (c *SystemCallbackClient) SystemReply(ctx context.Context, reply *model.Sys
 		slog.String("device", reply.Device), slog.String("command", reply.Command))
 
 	input := &system.SystemReplyRequest{
-		Data: convertSystemReply(reply),
+		Data: convertSystemReplyToProto(reply),
 	}
 	_, err := c.system.SystemReply(ctx, input)
 	if err != nil {
@@ -58,15 +58,15 @@ func (c *SystemCallbackClient) SystemReply(ctx context.Context, reply *model.Sys
 // SystemDevice sends notification about device settings
 func (c *SystemCallbackClient) SystemDevice(ctx context.Context, reply *model.SystemDevice) error {
 	c.log.Debug("CallbackClient.SystemDevice - grpc",
-		slog.String("device", reply.Reply.Device))
+		slog.String("device", reply.Device))
 
 	input := &system.SystemDeviceRequest{
-		Data:  convertSystemReply(&reply.Reply),
-		Setup: convertSystemSetup(&reply.Setup),
+		Data:  convertSystemReplyToProto(&reply.SystemReply),
+		Setup: convertSystemSetupToProto(&reply.SystemSetup),
 	}
 	_, err := c.system.SystemDevice(ctx, input)
 	if err != nil {
-		return fmt.Errorf("callback SystemDevice for %s failed: %w", reply.Reply.Device, err)
+		return fmt.Errorf("callback SystemDevice for %s failed: %w", reply.Device, err)
 	}
 
 	return nil
@@ -75,21 +75,21 @@ func (c *SystemCallbackClient) SystemDevice(ctx context.Context, reply *model.Sy
 // SystemHealth sends notification about device reply
 func (c *SystemCallbackClient) SystemHealth(ctx context.Context, reply *model.SystemHealth) error {
 	c.log.Debug("CallbackClient.SystemHealth - grpc",
-		slog.String("device", reply.Reply.Device))
+		slog.String("device", reply.Device))
 
 	input := &system.SystemHealthRequest{
-		Data:    convertSystemReply(&reply.Reply),
-		Metrics: convertSystemMetrics(&reply.Metrics),
+		Data:    convertSystemReplyToProto(&reply.SystemReply),
+		Metrics: convertSystemMetricsToProto(&reply.SystemMetrics),
 	}
 	_, err := c.system.SystemHealth(ctx, input)
 	if err != nil {
-		return fmt.Errorf("callback SystemHealth for %s failed: %w", reply.Reply.Device, err)
+		return fmt.Errorf("callback SystemHealth for %s failed: %w", reply.Device, err)
 	}
 
 	return nil
 }
 
-func convertGreetingInfo(value *model.GreetingInfo) *system.GreetingInfo {
+func convertGreetingInfoToProto(value *model.GreetingInfo) *system.GreetingInfo {
 	if value == nil {
 		return nil
 	}
@@ -101,20 +101,7 @@ func convertGreetingInfo(value *model.GreetingInfo) *system.GreetingInfo {
 	return data
 }
 
-func convertSystemSetup(value *model.SystemSetup) *system.SystemSetup {
-	if value == nil {
-		return nil
-	}
-	data := &system.SystemSetup{
-		DevType:     uint64(value.DevType),
-		Supported:   uint64(value.Supported),
-		Required:    uint64(value.Required),
-		Description: value.Description,
-	}
-	return data
-}
-
-func convertSystemReply(value *model.SystemReply) *system.SystemReply {
+func convertSystemReplyToProto(value *model.SystemReply) *system.SystemReply {
 	if value == nil {
 		return nil
 	}
@@ -128,7 +115,20 @@ func convertSystemReply(value *model.SystemReply) *system.SystemReply {
 	return data
 }
 
-func convertSystemMetrics(value *model.SystemMetrics) *system.SystemMetrics {
+func convertSystemSetupToProto(value *model.SystemSetup) *system.SystemSetup {
+	if value == nil {
+		return nil
+	}
+	data := &system.SystemSetup{
+		DevType:     uint64(value.DevType),
+		Supported:   uint64(value.Supported),
+		Required:    uint64(value.Required),
+		Description: value.Description,
+	}
+	return data
+}
+
+func convertSystemMetricsToProto(value *model.SystemMetrics) *system.SystemMetrics {
 	if value == nil {
 		return nil
 	}

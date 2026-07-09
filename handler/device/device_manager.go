@@ -36,7 +36,7 @@ func (h *DeviceManager) Cancel(ctx context.Context, req *srv.CancelRequest) (*sr
 			errors.New("CancelRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.Cancel", slog.Any("query", query))
 
 	reply, err := h.api.Cancel(ctx, query)
@@ -45,7 +45,7 @@ func (h *DeviceManager) Cancel(ctx context.Context, req *srv.CancelRequest) (*sr
 	}
 
 	resp := &srv.CancelResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -58,7 +58,7 @@ func (h *DeviceManager) Reset(ctx context.Context, req *srv.ResetRequest) (*srv.
 			errors.New("ResetRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.Reset", slog.Any("query", query))
 
 	reply, err := h.api.Reset(ctx, query)
@@ -67,7 +67,7 @@ func (h *DeviceManager) Reset(ctx context.Context, req *srv.ResetRequest) (*srv.
 	}
 
 	resp := &srv.ResetResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -80,7 +80,7 @@ func (h *DeviceManager) Status(ctx context.Context, req *srv.StatusRequest) (*sr
 			errors.New("StatusRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.Status", slog.Any("query", query))
 
 	reply, err := h.api.Status(ctx, query)
@@ -89,7 +89,7 @@ func (h *DeviceManager) Status(ctx context.Context, req *srv.StatusRequest) (*sr
 	}
 
 	resp := &srv.StatusResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -102,7 +102,7 @@ func (h *DeviceManager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*
 			errors.New("ExecuteRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.Execute", slog.Any("query", query))
 
 	reply, err := h.api.Execute(ctx, query)
@@ -111,25 +111,23 @@ func (h *DeviceManager) Execute(ctx context.Context, req *srv.ExecuteRequest) (*
 	}
 
 	resp := &srv.ExecuteResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
 }
 
-func DeviceQueryToModel(data *srv.DeviceQuery) *model.DeviceQuery {
+func convertDeviceQueryToModel(data *srv.DeviceQuery) *model.DeviceQuery {
 	if data == nil {
 		return nil
 	}
 	query := &model.DeviceQuery{
-		Device:  data.GetDevice(),
-		Timeout: data.GetTimeout(),
-		Offline: data.GetOffline(),
+		Device: data.GetDevice(),
 	}
 	return query
 }
 
-func DeviceReplyToProto(data *model.DeviceReply) *srv.DeviceReply {
+func convertDeviceReplyToProto(data *model.DeviceReply) *srv.DeviceReply {
 	if data == nil {
 		return nil
 	}

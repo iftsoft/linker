@@ -29,7 +29,7 @@ func (c *PrinterCallbackClient) PrinterProgress(ctx context.Context, reply *mode
 		slog.String("device", reply.Device), slog.String("document", reply.DocName))
 
 	input := &device.PrinterProgressRequest{
-		Data: convertPrinterProgress(reply),
+		Data: convertPrinterProgressToProto(reply),
 	}
 	_, err := c.device.PrinterProgress(ctx, input)
 	if err != nil {
@@ -39,7 +39,7 @@ func (c *PrinterCallbackClient) PrinterProgress(ctx context.Context, reply *mode
 	return nil
 }
 
-func convertPrinterProgress(value *model.PrinterProgress) *device.PrinterProgress {
+func convertPrinterProgressToProto(value *model.PrinterProgress) *device.PrinterProgress {
 	if value == nil {
 		return nil
 	}

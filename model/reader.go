@@ -56,8 +56,8 @@ type CardDescription struct {
 }
 
 type ReadCardReply struct {
-	Reply *DeviceReply     `json:"reply"`
-	Card  *CardDescription `json:"card"`
+	DeviceReply
+	CardDescription
 }
 
 func (pan CardPAN) String() string {

@@ -21,12 +21,10 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Defines the message structure for a device query
+// DeviceQuery defines the message structure for a device query
 type DeviceQuery struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	Timeout       int64                  `protobuf:"varint,2,opt,name=timeout,proto3" json:"timeout,omitempty"`
-	Offline       bool                   `protobuf:"varint,3,opt,name=offline,proto3" json:"offline,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,21 +66,7 @@ func (x *DeviceQuery) GetDevice() string {
 	return ""
 }
 
-func (x *DeviceQuery) GetTimeout() int64 {
-	if x != nil {
-		return x.Timeout
-	}
-	return 0
-}
-
-func (x *DeviceQuery) GetOffline() bool {
-	if x != nil {
-		return x.Offline
-	}
-	return false
-}
-
-// Defines the message structure for a command reply
+// DeviceReply defines the message structure for a command reply
 type DeviceReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
@@ -167,7 +151,7 @@ func (x *DeviceReply) GetErrText() string {
 	return ""
 }
 
-// DeviceState the message structure for a state change
+// DeviceState defines the message structure for a state change
 type DeviceState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
@@ -236,7 +220,7 @@ func (x *DeviceState) GetOldState() uint32 {
 	return 0
 }
 
-// DeviceState the message structure for a state change
+// DevicePrompt defines the message structure for user prompt
 type DevicePrompt struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
@@ -297,7 +281,7 @@ func (x *DevicePrompt) GetPrompt() uint32 {
 	return 0
 }
 
-// DeviceState the message structure for a state change
+// DeviceInform defines the message structure for reader return
 type DeviceInform struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
@@ -362,11 +346,9 @@ var File_linker_device_v1_device_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_device_proto_rawDesc = "" +
 	"\n" +
-	"\x1dlinker/device/v1/device.proto\x12\x10linker.device.v1\"Y\n" +
+	"\x1dlinker/device/v1/device.proto\x12\x10linker.device.v1\"%\n" +
 	"\vDeviceQuery\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
-	"\atimeout\x18\x02 \x01(\x03R\atimeout\x12\x18\n" +
-	"\aoffline\x18\x03 \x01(\bR\aoffline\"\xa3\x01\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\"\xa3\x01\n" +
 	"\vDeviceReply\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x16\n" +

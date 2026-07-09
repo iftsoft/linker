@@ -36,7 +36,7 @@ func (h *ValidatorManager) InitValidator(ctx context.Context, req *srv.InitValid
 			errors.New("InitValidatorRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.InitValidator", slog.Any("query", query))
 
 	reply, err := h.api.InitValidator(ctx, query)
@@ -45,7 +45,7 @@ func (h *ValidatorManager) InitValidator(ctx context.Context, req *srv.InitValid
 	}
 
 	resp := &srv.InitValidatorResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -58,7 +58,7 @@ func (h *ValidatorManager) DoValidate(ctx context.Context, req *srv.DoValidateRe
 			errors.New("DoValidateRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.DoValidate", slog.Any("query", query))
 
 	reply, err := h.api.DoValidate(ctx, query)
@@ -67,7 +67,7 @@ func (h *ValidatorManager) DoValidate(ctx context.Context, req *srv.DoValidateRe
 	}
 
 	resp := &srv.DoValidateResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -80,7 +80,7 @@ func (h *ValidatorManager) AcceptNote(ctx context.Context, req *srv.AcceptNoteRe
 			errors.New("AcceptNoteRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.AcceptNote", slog.Any("query", query))
 
 	reply, err := h.api.AcceptNote(ctx, query)
@@ -89,7 +89,7 @@ func (h *ValidatorManager) AcceptNote(ctx context.Context, req *srv.AcceptNoteRe
 	}
 
 	resp := &srv.AcceptNoteResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -102,7 +102,7 @@ func (h *ValidatorManager) ReturnNote(ctx context.Context, req *srv.ReturnNoteRe
 			errors.New("ReturnNoteRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.ReturnNote", slog.Any("query", query))
 
 	reply, err := h.api.ReturnNote(ctx, query)
@@ -111,7 +111,7 @@ func (h *ValidatorManager) ReturnNote(ctx context.Context, req *srv.ReturnNoteRe
 	}
 
 	resp := &srv.ReturnNoteResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -124,7 +124,7 @@ func (h *ValidatorManager) StopValidate(ctx context.Context, req *srv.StopValida
 			errors.New("StopValidateRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.StopValidate", slog.Any("query", query))
 
 	reply, err := h.api.StopValidate(ctx, query)
@@ -133,7 +133,7 @@ func (h *ValidatorManager) StopValidate(ctx context.Context, req *srv.StopValida
 	}
 
 	resp := &srv.StopValidateResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -146,7 +146,7 @@ func (h *ValidatorManager) CheckValidator(ctx context.Context, req *srv.CheckVal
 			errors.New("CheckValidatorRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.CheckValidator", slog.Any("query", query))
 
 	store, err := h.api.CheckValidator(ctx, query)
@@ -155,8 +155,8 @@ func (h *ValidatorManager) CheckValidator(ctx context.Context, req *srv.CheckVal
 	}
 
 	resp := &srv.CheckValidatorResponse{
-		Reply: DeviceReplyToProto(store.Reply),
-		Batch: ValidatorBatchToProto(store.Batch),
+		Reply: convertDeviceReplyToProto(&store.DeviceReply),
+		Batch: convertValidatorBatchToProto(&store.ValidatorBatch),
 	}
 
 	return resp, err
@@ -169,7 +169,7 @@ func (h *ValidatorManager) ClearValidator(ctx context.Context, req *srv.ClearVal
 			errors.New("ClearValidatorRequest is nil"))
 	}
 
-	query := ValidatorQueryToModel(req.GetQuery())
+	query := convertValidatorQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.ClearValidator", slog.Any("query", query))
 
 	store, err := h.api.ClearValidator(ctx, query)
@@ -178,14 +178,14 @@ func (h *ValidatorManager) ClearValidator(ctx context.Context, req *srv.ClearVal
 	}
 
 	resp := &srv.ClearValidatorResponse{
-		Reply: DeviceReplyToProto(store.Reply),
-		Batch: ValidatorBatchToProto(store.Batch),
+		Reply: convertDeviceReplyToProto(&store.DeviceReply),
+		Batch: convertValidatorBatchToProto(&store.ValidatorBatch),
 	}
 
 	return resp, err
 }
 
-func ValidatorQueryToModel(data *srv.ValidatorQuery) *model.ValidatorQuery {
+func convertValidatorQueryToModel(data *srv.ValidatorQuery) *model.ValidatorQuery {
 	if data == nil {
 		return nil
 	}
@@ -197,7 +197,7 @@ func ValidatorQueryToModel(data *srv.ValidatorQuery) *model.ValidatorQuery {
 	return query
 }
 
-func ValidatorNoteToProto(note model.ValidatorNote) *srv.ValidatorNote {
+func convertValidatorNoteToProto(note model.ValidatorNote) *srv.ValidatorNote {
 	reply := &srv.ValidatorNote{
 		Currency: uint32(note.Currency),
 		Nominal:  int64(note.Nominal),
@@ -207,7 +207,7 @@ func ValidatorNoteToProto(note model.ValidatorNote) *srv.ValidatorNote {
 	return reply
 }
 
-func ValidatorBatchToProto(data *model.ValidatorBatch) *srv.ValidatorBatch {
+func convertValidatorBatchToProto(data *model.ValidatorBatch) *srv.ValidatorBatch {
 	if data == nil {
 		return nil
 	}
@@ -219,7 +219,7 @@ func ValidatorBatchToProto(data *model.ValidatorBatch) *srv.ValidatorBatch {
 		Notes:   make([]*srv.ValidatorNote, len(data.Notes)),
 	}
 	for _, note := range data.Notes {
-		item := ValidatorNoteToProto(note)
+		item := convertValidatorNoteToProto(note)
 		reply.Notes = append(reply.Notes, item)
 	}
 	return reply

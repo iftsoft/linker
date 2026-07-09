@@ -39,7 +39,7 @@ func (h *ValidatorCallback) NoteAccepted(ctx context.Context, req *srv.NoteAccep
 	data := req.GetData()
 	reply := model.ValidatorAccept{
 		Device: data.GetDevice(),
-		Note:   ValidatorNoteToModel(data.GetNote()),
+		Note:   convertValidatorNoteToModel(data.GetNote()),
 	}
 	h.log.Debug("gRPC.NoteAccepted", slog.Any("reply", reply))
 
@@ -63,7 +63,7 @@ func (h *ValidatorCallback) CashIsStored(ctx context.Context, req *srv.CashIsSto
 	data := req.GetData()
 	reply := model.ValidatorAccept{
 		Device: data.GetDevice(),
-		Note:   ValidatorNoteToModel(data.GetNote()),
+		Note:   convertValidatorNoteToModel(data.GetNote()),
 	}
 	h.log.Debug("gRPC.CashIsStored", slog.Any("reply", reply))
 
@@ -87,7 +87,7 @@ func (h *ValidatorCallback) CashReturned(ctx context.Context, req *srv.CashRetur
 	data := req.GetData()
 	reply := model.ValidatorAccept{
 		Device: data.GetDevice(),
-		Note:   ValidatorNoteToModel(data.GetNote()),
+		Note:   convertValidatorNoteToModel(data.GetNote()),
 	}
 	h.log.Debug("gRPC.CashReturned", slog.Any("reply", reply))
 
@@ -108,7 +108,7 @@ func (h *ValidatorCallback) ValidatorStore(ctx context.Context, req *srv.Validat
 			errors.New("ValidatorStoreRequest is nil"))
 	}
 
-	reply := ValidatorBatchToModel(req.GetData())
+	reply := convertValidatorBatchToModel(req.GetData())
 	h.log.Debug("gRPC.ValidatorStore", slog.Any("reply", reply))
 
 	err := h.api.ValidatorStore(ctx, &reply)
@@ -121,7 +121,7 @@ func (h *ValidatorCallback) ValidatorStore(ctx context.Context, req *srv.Validat
 	return resp, err
 }
 
-func ValidatorNoteToModel(note *srv.ValidatorNote) model.ValidatorNote {
+func convertValidatorNoteToModel(note *srv.ValidatorNote) model.ValidatorNote {
 	return model.ValidatorNote{
 		Currency: model.Currency(note.GetCurrency()),
 		Nominal:  model.Amount(note.GetNominal()),
@@ -130,7 +130,7 @@ func ValidatorNoteToModel(note *srv.ValidatorNote) model.ValidatorNote {
 	}
 }
 
-func ValidatorBatchToModel(data *srv.ValidatorBatch) model.ValidatorBatch {
+func convertValidatorBatchToModel(data *srv.ValidatorBatch) model.ValidatorBatch {
 	batch := model.ValidatorBatch{
 		Device:  data.GetDevice(),
 		BatchId: data.GetBatchId(),
@@ -138,7 +138,7 @@ func ValidatorBatchToModel(data *srv.ValidatorBatch) model.ValidatorBatch {
 		Details: data.GetDetails(),
 	}
 	for _, note := range data.GetNotes() {
-		batch.Notes = append(batch.Notes, ValidatorNoteToModel(note))
+		batch.Notes = append(batch.Notes, convertValidatorNoteToModel(note))
 	}
 	return batch
 }

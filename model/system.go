@@ -101,8 +101,8 @@ type SystemSetup struct {
 }
 
 type SystemDevice struct {
-	Reply SystemReply `json:"reply"`
-	Setup SystemSetup `json:"setup"`
+	SystemReply
+	SystemSetup
 }
 
 type SystemMetrics struct {
@@ -123,6 +123,6 @@ func (sys *SystemMetrics) String() string {
 }
 
 type SystemHealth struct {
-	Reply   SystemReply   `json:"reply"`
-	Metrics SystemMetrics `json:"metrics"`
+	SystemReply
+	SystemMetrics
 }

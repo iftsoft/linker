@@ -45,16 +45,13 @@ type DeviceCallback interface {
 }
 
 type DeviceQuery struct {
-	Device  string `json:"device"`
-	Timeout int64  `json:"timeout"`
-	Offline bool   `json:"offline"`
+	Device string `json:"device"`
 }
 
-func (dev DeviceQuery) String() string {
-	str := fmt.Sprintf("Device:%s, Timeout:%d, Offline:%t",
-		dev.Device, dev.Timeout, dev.Offline)
-	return str
-}
+//func (dev DeviceQuery) String() string {
+//	str := fmt.Sprintf("Device:%s", dev.Device)
+//	return str
+//}
 
 type DeviceReply struct {
 	Device  string    `json:"device"`

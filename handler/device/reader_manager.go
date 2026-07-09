@@ -36,7 +36,7 @@ func (h *ReaderManager) EnterCard(ctx context.Context, req *srv.EnterCardRequest
 			errors.New("EnterCardRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.EnterCard", slog.Any("query", query))
 
 	reply, err := h.api.EnterCard(ctx, query)
@@ -45,7 +45,7 @@ func (h *ReaderManager) EnterCard(ctx context.Context, req *srv.EnterCardRequest
 	}
 
 	resp := &srv.EnterCardResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -58,7 +58,7 @@ func (h *ReaderManager) EjectCard(ctx context.Context, req *srv.EjectCardRequest
 			errors.New("EjectCardRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.EjectCard", slog.Any("query", query))
 
 	reply, err := h.api.EjectCard(ctx, query)
@@ -67,7 +67,7 @@ func (h *ReaderManager) EjectCard(ctx context.Context, req *srv.EjectCardRequest
 	}
 
 	resp := &srv.EjectCardResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -80,7 +80,7 @@ func (h *ReaderManager) CaptureCard(ctx context.Context, req *srv.CaptureCardReq
 			errors.New("CaptureCardRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.CaptureCard", slog.Any("query", query))
 
 	reply, err := h.api.CaptureCard(ctx, query)
@@ -89,7 +89,7 @@ func (h *ReaderManager) CaptureCard(ctx context.Context, req *srv.CaptureCardReq
 	}
 
 	resp := &srv.CaptureCardResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -102,7 +102,7 @@ func (h *ReaderManager) ReadCard(ctx context.Context, req *srv.ReadCardRequest) 
 			errors.New("ReadCardRequest is nil"))
 	}
 
-	query := DeviceQueryToModel(req.GetQuery())
+	query := convertDeviceQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.ReadCard", slog.Any("query", query))
 
 	back, err := h.api.ReadCard(ctx, query)
@@ -111,8 +111,8 @@ func (h *ReaderManager) ReadCard(ctx context.Context, req *srv.ReadCardRequest) 
 	}
 
 	resp := &srv.ReadCardResponse{
-		Reply: DeviceReplyToProto(back.Reply),
-		Card:  CardDescriptionToProto(back.Card),
+		Reply: convertDeviceReplyToProto(&back.DeviceReply),
+		Card:  CardDescriptionToProto(&back.CardDescription),
 	}
 
 	return resp, err

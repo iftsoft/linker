@@ -29,7 +29,7 @@ func (c *ReaderCallbackClient) CardPosition(ctx context.Context, reply *model.Ca
 		slog.String("device", reply.Device), slog.Int("position", int(reply.Position)))
 
 	input := &device.CardPositionRequest{
-		Data: convertCardPosition(reply),
+		Data: convertCardPositionToProto(reply),
 	}
 	_, err := c.device.CardPosition(ctx, input)
 	if err != nil {
@@ -45,7 +45,7 @@ func (c *ReaderCallbackClient) CardDescription(ctx context.Context, reply *model
 		slog.String("device", reply.Device), slog.String("PAN", reply.CardPan.String()))
 
 	input := &device.CardDescriptionRequest{
-		Data: convertCardDescription(reply),
+		Data: convertCardDescriptionToProto(reply),
 	}
 	_, err := c.device.CardDescription(ctx, input)
 	if err != nil {
@@ -55,7 +55,7 @@ func (c *ReaderCallbackClient) CardDescription(ctx context.Context, reply *model
 	return nil
 }
 
-func convertCardPosition(value *model.CardPosition) *device.CardPosition {
+func convertCardPositionToProto(value *model.CardPosition) *device.CardPosition {
 	if value == nil {
 		return nil
 	}
@@ -66,7 +66,7 @@ func convertCardPosition(value *model.CardPosition) *device.CardPosition {
 	return data
 }
 
-func convertCardDescription(value *model.CardDescription) *device.CardDescription {
+func convertCardDescriptionToProto(value *model.CardDescription) *device.CardDescription {
 	if value == nil {
 		return nil
 	}

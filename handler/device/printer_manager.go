@@ -36,7 +36,7 @@ func (h *PrinterManager) InitPrinter(ctx context.Context, req *srv.InitPrinterRe
 			errors.New("InitPrinterRequest is nil"))
 	}
 
-	query := PrinterSetupToModel(req.GetQuery())
+	query := convertPrinterSetupToModel(req.GetQuery())
 	h.log.Debug("gRPC.InitPrinter", slog.Any("query", query))
 
 	reply, err := h.api.InitPrinter(ctx, query)
@@ -45,7 +45,7 @@ func (h *PrinterManager) InitPrinter(ctx context.Context, req *srv.InitPrinterRe
 	}
 
 	resp := &srv.InitPrinterResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
@@ -58,7 +58,7 @@ func (h *PrinterManager) PrintPage(ctx context.Context, req *srv.PrintPageReques
 			errors.New("PrintPageRequest is nil"))
 	}
 
-	query := PrinterQueryToModel(req.GetQuery())
+	query := convertPrinterQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.PrintPage", slog.Any("query", query))
 
 	reply, err := h.api.PrintPage(ctx, query)
@@ -67,13 +67,13 @@ func (h *PrinterManager) PrintPage(ctx context.Context, req *srv.PrintPageReques
 	}
 
 	resp := &srv.PrintPageResponse{
-		Reply: DeviceReplyToProto(reply),
+		Reply: convertDeviceReplyToProto(reply),
 	}
 
 	return resp, err
 }
 
-func PrinterSetupToModel(data *srv.PrinterSetup) *model.PrinterSetup {
+func convertPrinterSetupToModel(data *srv.PrinterSetup) *model.PrinterSetup {
 	query := &model.PrinterSetup{
 		Device:    data.GetDevice(),
 		PaperPath: data.GetPaperPath(),
@@ -83,7 +83,7 @@ func PrinterSetupToModel(data *srv.PrinterSetup) *model.PrinterSetup {
 	return query
 }
 
-func PrinterQueryToModel(data *srv.PrinterQuery) *model.PrinterQuery {
+func convertPrinterQueryToModel(data *srv.PrinterQuery) *model.PrinterQuery {
 	query := &model.PrinterQuery{
 		Device: data.GetDevice(),
 		Text:   data.GetText(),

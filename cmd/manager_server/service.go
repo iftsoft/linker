@@ -44,8 +44,8 @@ func (ms *ManagerService) SysHealth(ctx context.Context, query *model.SystemQuer
 		return nil, errEmptyQuery
 	}
 	reply := model.SystemHealth{
-		Reply: ms.getSystemReply(query.Device),
-		Metrics: model.SystemMetrics{
+		SystemReply: ms.getSystemReply(query.Device),
+		SystemMetrics: model.SystemMetrics{
 			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,
@@ -63,8 +63,12 @@ func (ms *ManagerService) SysStart(ctx context.Context, query *model.SystemConfi
 	}
 	ms.SysState = model.SysStateRunning
 	reply := model.SystemDevice{
-		Reply: ms.getSystemReply(query.Device),
-		Setup: model.SystemSetup{},
+		SystemReply: ms.getSystemReply(query.Device),
+		SystemSetup: model.SystemSetup{
+			DevType:   model.DevTypePrinter,
+			Supported: model.ScopeFlagSystem,
+			Required:  model.ScopeFlagSystem,
+		},
 	}
 	ms.log.Info("ManagerService.SysStart", "query", *query, "reply", reply)
 	return &reply, nil
@@ -88,8 +92,12 @@ func (ms *ManagerService) SysRestart(ctx context.Context, query *model.SystemCon
 	}
 	ms.SysState = model.SysStateRunning
 	reply := model.SystemDevice{
-		Reply: ms.getSystemReply(query.Device),
-		Setup: model.SystemSetup{},
+		SystemReply: ms.getSystemReply(query.Device),
+		SystemSetup: model.SystemSetup{
+			DevType:   model.DevTypePrinter,
+			Supported: model.ScopeFlagSystem,
+			Required:  model.ScopeFlagSystem,
+		},
 	}
 	ms.log.Info("ManagerService.SysRestart", "query", *query, "reply", reply)
 	return &reply, nil
@@ -192,10 +200,9 @@ func (ms *ManagerService) ReadCard(ctx context.Context, query *model.DeviceQuery
 	if query == nil {
 		return nil, errEmptyQuery
 	}
-	devRep := ms.getDeviceReply(query.Device)
 	reply := model.ReadCardReply{
-		Reply: &devRep,
-		Card: &model.CardDescription{
+		DeviceReply: ms.getDeviceReply(query.Device),
+		CardDescription: model.CardDescription{
 			Device: query.Device,
 		},
 	}
@@ -258,10 +265,9 @@ func (ms *ManagerService) CheckValidator(ctx context.Context, query *model.Valid
 	if query == nil {
 		return nil, errEmptyQuery
 	}
-	devRep := ms.getDeviceReply(query.Device)
 	reply := model.ValidatorStore{
-		Reply: &devRep,
-		Batch: &model.ValidatorBatch{
+		DeviceReply: ms.getDeviceReply(query.Device),
+		ValidatorBatch: model.ValidatorBatch{
 			Device:  query.Device,
 			BatchId: 123,
 			State:   model.StateCorrect,
@@ -291,10 +297,9 @@ func (ms *ManagerService) ClearValidator(ctx context.Context, query *model.Valid
 	if query == nil {
 		return nil, errEmptyQuery
 	}
-	devRep := ms.getDeviceReply(query.Device)
 	reply := model.ValidatorStore{
-		Reply: &devRep,
-		Batch: &model.ValidatorBatch{
+		DeviceReply: ms.getDeviceReply(query.Device),
+		ValidatorBatch: model.ValidatorBatch{
 			Device:  query.Device,
 			BatchId: 123,
 			State:   model.StateCorrect,

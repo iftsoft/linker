@@ -28,15 +28,15 @@ func (c *PrinterManagerClient) InitPrinter(ctx context.Context, query *model.Pri
 	c.log.Debug("ManagerClient.InitPrinter - grpc", slog.String("device", query.Device))
 
 	input := &device.InitPrinterRequest{
-		Query: convertPrinterSetup(query),
+		Query: convertPrinterSetupToProto(query),
 	}
 	resp, err := c.device.InitPrinter(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command InitPrinter for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // PrintPage trys to print given text on the printer
@@ -44,18 +44,18 @@ func (c *PrinterManagerClient) PrintPage(ctx context.Context, query *model.Print
 	c.log.Debug("ManagerClient.PrintPage - grpc", slog.String("device", query.Device))
 
 	input := &device.PrintPageRequest{
-		Query: convertPrinterQuery(query),
+		Query: convertPrinterQueryToProto(query),
 	}
 	resp, err := c.device.PrintPage(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command PrintPage for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
-func convertPrinterSetup(value *model.PrinterSetup) *device.PrinterSetup {
+func convertPrinterSetupToProto(value *model.PrinterSetup) *device.PrinterSetup {
 	if value == nil {
 		return nil
 	}
@@ -68,7 +68,7 @@ func convertPrinterSetup(value *model.PrinterSetup) *device.PrinterSetup {
 	return data
 }
 
-func convertPrinterQuery(value *model.PrinterQuery) *device.PrinterQuery {
+func convertPrinterQueryToProto(value *model.PrinterQuery) *device.PrinterQuery {
 	if value == nil {
 		return nil
 	}

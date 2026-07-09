@@ -78,21 +78,21 @@ func (vb ValidatorBatch) String() string {
 }
 
 type ValidatorStore struct {
-	Reply *DeviceReply    `json:"reply"`
-	Batch *ValidatorBatch `json:"batch"`
+	DeviceReply
+	ValidatorBatch
 }
 
-func (vs ValidatorStore) String() string {
-	var reply, batch string
-	if vs.Reply != nil {
-		reply = vs.Reply.String()
-	}
-	if vs.Batch != nil {
-		batch = vs.Batch.String()
-	}
-	str := fmt.Sprintf("Reply:{%s} Batch:{%s}", reply, batch)
-	return str
-}
+//func (vs ValidatorStore) String() string {
+//	var reply, batch string
+//	if vs.Reply != nil {
+//		reply = vs.Reply.String()
+//	}
+//	if vs.Batch != nil {
+//		batch = vs.Batch.String()
+//	}
+//	str := fmt.Sprintf("Reply:{%s} Batch:{%s}", reply, batch)
+//	return str
+//}
 
 type ValidatorAccept struct {
 	Device string        `json:"device"`

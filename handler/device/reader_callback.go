@@ -36,11 +36,7 @@ func (h *ReaderCallback) CardPosition(ctx context.Context, req *srv.CardPosition
 			errors.New("CardPositionRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.CardPosition{
-		Device:   data.GetDevice(),
-		Position: data.GetPosition(),
-	}
+	reply := convertCardPositionToModel(req.GetData())
 	h.log.Debug("gRPC.CardPosition", slog.Any("reply", reply))
 
 	err := h.api.CardPosition(ctx, &reply)
@@ -60,16 +56,7 @@ func (h *ReaderCallback) CardDescription(ctx context.Context, req *srv.CardDescr
 			errors.New("CardDescriptionRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.CardDescription{
-		Device:  data.GetDevice(),
-		CardPan: model.CardPAN(data.GetCardPan()),
-		ExpDate: data.GetExpDate(),
-		Holder:  data.GetHolder(),
-		Track1:  model.Track(data.GetTrack1()),
-		Track2:  model.Track(data.GetTrack2()),
-		Track3:  model.Track(data.GetTrack3()),
-	}
+	reply := convertCardDescriptionToModel(req.GetData())
 	h.log.Debug("gRPC.CardDescription", slog.Any("reply", reply))
 
 	err := h.api.CardDescription(ctx, &reply)
@@ -80,4 +67,31 @@ func (h *ReaderCallback) CardDescription(ctx context.Context, req *srv.CardDescr
 	resp := &srv.CardDescriptionResponse{}
 
 	return resp, err
+}
+
+func convertCardPositionToModel(value *srv.CardPosition) model.CardPosition {
+	if value == nil {
+		return model.CardPosition{}
+	}
+	data := model.CardPosition{
+		Device:   value.GetDevice(),
+		Position: value.GetPosition(),
+	}
+	return data
+}
+
+func convertCardDescriptionToModel(value *srv.CardDescription) model.CardDescription {
+	if value == nil {
+		return model.CardDescription{}
+	}
+	data := model.CardDescription{
+		Device:  value.GetDevice(),
+		CardPan: model.CardPAN(value.GetCardPan()),
+		ExpDate: value.GetExpDate(),
+		Holder:  value.GetHolder(),
+		Track1:  model.Track(value.GetTrack1()),
+		Track2:  model.Track(value.GetTrack2()),
+		Track3:  model.Track(value.GetTrack3()),
+	}
+	return data
 }

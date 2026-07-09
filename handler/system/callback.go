@@ -61,14 +61,7 @@ func (h *SystemCallback) SystemReply(ctx context.Context, req *srv.SystemReplyRe
 			errors.New("SystemReplyRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.SystemReply{
-		Device:   data.GetDevice(),
-		Command:  data.GetCommand(),
-		Message:  data.GetMessage(),
-		SysError: model.SysError(data.GetSysError()),
-		SysState: model.SysState(data.GetSysState()),
-	}
+	reply := convertSystemReplyToModel(req.GetData())
 	h.log.Debug("gRPC.SystemReply", slog.Any("reply", reply))
 
 	err := h.api.SystemReply(ctx, &reply)
@@ -88,22 +81,9 @@ func (h *SystemCallback) SystemDevice(ctx context.Context, req *srv.SystemDevice
 			errors.New("SystemDeviceRequest is nil"))
 	}
 
-	data := req.GetData()
-	setup := req.GetSetup()
 	reply := model.SystemDevice{
-		Reply: model.SystemReply{
-			Device:   data.GetDevice(),
-			Command:  data.GetCommand(),
-			Message:  data.GetMessage(),
-			SysError: model.SysError(data.GetSysError()),
-			SysState: model.SysState(data.GetSysState()),
-		},
-		Setup: model.SystemSetup{
-			DevType:     model.DevTypeMask(setup.GetDevType()),
-			Supported:   model.DevScopeMask(setup.GetSupported()),
-			Required:    model.DevScopeMask(setup.GetRequired()),
-			Description: setup.GetDescription(),
-		},
+		SystemReply: convertSystemReplyToModel(req.GetData()),
+		SystemSetup: convertSystemSetupToModel(req.GetSetup()),
 	}
 	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
 
@@ -124,22 +104,9 @@ func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealth
 			errors.New("SystemHealthRequest is nil"))
 	}
 
-	data := req.GetData()
-	metrics := req.GetMetrics()
 	reply := model.SystemHealth{
-		Reply: model.SystemReply{
-			Device:   data.GetDevice(),
-			Command:  data.GetCommand(),
-			Message:  data.GetMessage(),
-			SysError: model.SysError(data.GetSysError()),
-			SysState: model.SysState(data.GetSysState()),
-		},
-		Metrics: model.SystemMetrics{
-			Uptime:   metrics.GetUptime(),
-			Moment:   metrics.GetMoment(),
-			DevError: model.DevError(metrics.GetDevError()),
-			DevState: model.DevState(metrics.GetDevState()),
-		},
+		SystemReply:   convertSystemReplyToModel(req.GetData()),
+		SystemMetrics: convertSystemMetricsToModel(req.GetMetrics()),
 	}
 	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
 
@@ -151,4 +118,41 @@ func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealth
 	resp := &srv.SystemHealthResponse{}
 
 	return resp, err
+}
+
+func convertSystemReplyToModel(value *srv.SystemReply) model.SystemReply {
+	if value == nil {
+		return model.SystemReply{}
+	}
+	return model.SystemReply{
+		Device:   value.GetDevice(),
+		Command:  value.GetCommand(),
+		Message:  value.GetMessage(),
+		SysError: model.SysError(value.GetSysError()),
+		SysState: model.SysState(value.GetSysState()),
+	}
+}
+
+func convertSystemSetupToModel(value *srv.SystemSetup) model.SystemSetup {
+	if value == nil {
+		return model.SystemSetup{}
+	}
+	return model.SystemSetup{
+		DevType:     model.DevTypeMask(value.GetDevType()),
+		Supported:   model.DevScopeMask(value.GetSupported()),
+		Required:    model.DevScopeMask(value.GetRequired()),
+		Description: value.GetDescription(),
+	}
+}
+
+func convertSystemMetricsToModel(value *srv.SystemMetrics) model.SystemMetrics {
+	if value == nil {
+		return model.SystemMetrics{}
+	}
+	return model.SystemMetrics{
+		Uptime:   value.GetUptime(),
+		Moment:   value.GetMoment(),
+		DevError: model.DevError(value.GetDevError()),
+		DevState: model.DevState(value.GetDevState()),
+	}
 }

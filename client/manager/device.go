@@ -28,15 +28,15 @@ func (c *DeviceManagerClient) Cancel(ctx context.Context, query *model.DeviceQue
 	c.log.Debug("ManagerClient.Cancel - grpc", slog.String("device", query.Device))
 
 	input := &device.CancelRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.Cancel(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command Cancel for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // Reset initializes device to initial state
@@ -44,15 +44,15 @@ func (c *DeviceManagerClient) Reset(ctx context.Context, query *model.DeviceQuer
 	c.log.Debug("ManagerClient.Reset - grpc", slog.String("device", query.Device))
 
 	input := &device.ResetRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.Reset(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command Reset for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // Status returns current status of device
@@ -60,15 +60,15 @@ func (c *DeviceManagerClient) Status(ctx context.Context, query *model.DeviceQue
 	c.log.Debug("ManagerClient.Status - grpc", slog.String("device", query.Device))
 
 	input := &device.StatusRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.Status(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command Status for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
 // Execute returns result of command execution
@@ -76,34 +76,32 @@ func (c *DeviceManagerClient) Execute(ctx context.Context, query *model.DeviceQu
 	c.log.Debug("ManagerClient.Execute - grpc", slog.String("device", query.Device))
 
 	input := &device.ExecuteRequest{
-		Query: convertDeviceQuery(query),
+		Query: convertDeviceQueryToProto(query),
 	}
 	resp, err := c.device.Execute(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("command Status for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertDeviceReply(resp.GetReply())
-	return reply, nil
+	reply := convertDeviceReplyToModel(resp.GetReply())
+	return &reply, nil
 }
 
-func convertDeviceQuery(value *model.DeviceQuery) *device.DeviceQuery {
+func convertDeviceQueryToProto(value *model.DeviceQuery) *device.DeviceQuery {
 	if value == nil {
 		return nil
 	}
 	data := &device.DeviceQuery{
-		Device:  value.Device,
-		Timeout: value.Timeout,
-		Offline: value.Offline,
+		Device: value.Device,
 	}
 	return data
 }
 
-func convertDeviceReply(value *device.DeviceReply) *model.DeviceReply {
+func convertDeviceReplyToModel(value *device.DeviceReply) model.DeviceReply {
 	if value == nil {
-		return nil
+		return model.DeviceReply{}
 	}
-	data := &model.DeviceReply{
+	data := model.DeviceReply{
 		Device:  value.GetDevice(),
 		Command: value.GetCommand(),
 		Action:  model.DevAction(value.GetAction()),

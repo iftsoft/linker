@@ -36,7 +36,7 @@ func (h *SystemManager) Terminate(ctx context.Context, req *srv.TerminateRequest
 			errors.New("TerminateRequest is nil"))
 	}
 
-	query := SystemQueryToModel(req.GetQuery())
+	query := convertSystemQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.Terminate", slog.Any("query", query))
 
 	reply, err := h.api.Terminate(ctx, query)
@@ -45,7 +45,7 @@ func (h *SystemManager) Terminate(ctx context.Context, req *srv.TerminateRequest
 	}
 
 	resp := &srv.TerminateResponse{
-		Reply: SystemReplyToProto(reply),
+		Reply: convertSystemReplyToProto(reply),
 	}
 
 	return resp, err
@@ -58,7 +58,7 @@ func (h *SystemManager) SysHealth(ctx context.Context, req *srv.SysHealthRequest
 			errors.New("SysHealthRequest is nil"))
 	}
 
-	query := SystemQueryToModel(req.GetQuery())
+	query := convertSystemQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.SysHealth", slog.Any("query", query))
 
 	reply, err := h.api.SysHealth(ctx, query)
@@ -67,8 +67,8 @@ func (h *SystemManager) SysHealth(ctx context.Context, req *srv.SysHealthRequest
 	}
 
 	resp := &srv.SysHealthResponse{
-		Reply:   SystemReplyToProto(&reply.Reply),
-		Metrics: SystemMetricsToProto(&reply.Metrics),
+		Reply:   convertSystemReplyToProto(&reply.SystemReply),
+		Metrics: convertSystemMetricsToProto(&reply.SystemMetrics),
 	}
 
 	return resp, err
@@ -81,7 +81,7 @@ func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) 
 			errors.New("SysStartRequest is nil"))
 	}
 
-	config := SystemConfigToModel(req.GetConfig())
+	config := convertSystemConfigToModel(req.GetConfig())
 	h.log.Debug("gRPC.SysStart", slog.Any("config", config))
 
 	reply, err := h.api.SysStart(ctx, config)
@@ -90,8 +90,8 @@ func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) 
 	}
 
 	resp := &srv.SysStartResponse{
-		Reply: SystemReplyToProto(&reply.Reply),
-		Setup: SystemSetupToProto(&reply.Setup),
+		Reply: convertSystemReplyToProto(&reply.SystemReply),
+		Setup: convertSystemSetupToProto(&reply.SystemSetup),
 	}
 
 	return resp, err
@@ -104,7 +104,7 @@ func (h *SystemManager) SysStop(ctx context.Context, req *srv.SysStopRequest) (*
 			errors.New("SysStopRequest is nil"))
 	}
 
-	query := SystemQueryToModel(req.GetQuery())
+	query := convertSystemQueryToModel(req.GetQuery())
 	h.log.Debug("gRPC.SysStop", slog.Any("query", query))
 
 	reply, err := h.api.SysStop(ctx, query)
@@ -113,7 +113,7 @@ func (h *SystemManager) SysStop(ctx context.Context, req *srv.SysStopRequest) (*
 	}
 
 	resp := &srv.SysStopResponse{
-		Reply: SystemReplyToProto(reply),
+		Reply: convertSystemReplyToProto(reply),
 	}
 
 	return resp, err
@@ -126,7 +126,7 @@ func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartReque
 			errors.New("SysRestartRequest is nil"))
 	}
 
-	config := SystemConfigToModel(req.GetConfig())
+	config := convertSystemConfigToModel(req.GetConfig())
 	h.log.Debug("gRPC.SysRestart", slog.Any("config", config))
 
 	reply, err := h.api.SysRestart(ctx, config)
@@ -135,21 +135,21 @@ func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartReque
 	}
 
 	resp := &srv.SysRestartResponse{
-		Reply: SystemReplyToProto(&reply.Reply),
-		Setup: SystemSetupToProto(&reply.Setup),
+		Reply: convertSystemReplyToProto(&reply.SystemReply),
+		Setup: convertSystemSetupToProto(&reply.SystemSetup),
 	}
 
 	return resp, err
 }
 
-func SystemQueryToModel(data *srv.SystemQuery) *model.SystemQuery {
+func convertSystemQueryToModel(data *srv.SystemQuery) *model.SystemQuery {
 	query := &model.SystemQuery{
 		Device: data.GetDevice(),
 	}
 	return query
 }
 
-func SystemConfigToModel(data *srv.SystemConfig) *model.SystemConfig {
+func convertSystemConfigToModel(data *srv.SystemConfig) *model.SystemConfig {
 	config := &model.SystemConfig{
 		Device:    data.GetDevice(),
 		LinkType:  data.GetLinkType(),
@@ -160,7 +160,7 @@ func SystemConfigToModel(data *srv.SystemConfig) *model.SystemConfig {
 	return config
 }
 
-func SystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
+func convertSystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
 	reply := &srv.SystemReply{
 		Device:   data.Device,
 		Command:  data.Command,
@@ -171,7 +171,7 @@ func SystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
 	return reply
 }
 
-func SystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
+func convertSystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
 	reply := &srv.SystemSetup{
 		DevType:     uint64(data.DevType),
 		Supported:   uint64(data.Supported),
@@ -181,7 +181,7 @@ func SystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
 	return reply
 }
 
-func SystemMetricsToProto(data *model.SystemMetrics) *srv.SystemMetrics {
+func convertSystemMetricsToProto(data *model.SystemMetrics) *srv.SystemMetrics {
 	reply := &srv.SystemMetrics{
 		Uptime:   data.Uptime,
 		Moment:   data.Moment,

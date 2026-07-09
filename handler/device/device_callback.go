@@ -64,15 +64,7 @@ func (h *DeviceCallback) ExecuteError(ctx context.Context, req *srv.ExecuteError
 			errors.New("ExecuteErrorRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.DeviceReply{
-		Device:  data.GetDevice(),
-		Command: data.GetCommand(),
-		Action:  model.DevAction(data.GetAction()),
-		State:   model.DevState(data.GetState()),
-		ErrCode: model.DevError(data.GetErrCode()),
-		ErrText: data.GetErrText(),
-	}
+	reply := convertDeviceReplyToModel(req.GetData())
 	h.log.Debug("gRPC.ExecuteError", slog.Any("reply", reply))
 
 	err := h.api.ExecuteError(ctx, &reply)
@@ -92,13 +84,7 @@ func (h *DeviceCallback) StateChanged(ctx context.Context, req *srv.StateChanged
 			errors.New("StateChangedRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.DeviceState{
-		Device:   data.GetDevice(),
-		Action:   model.DevAction(data.GetAction()),
-		NewState: model.DevState(data.GetNewState()),
-		OldState: model.DevState(data.GetOldState()),
-	}
+	reply := convertDeviceStateToModel(req.GetData())
 	h.log.Debug("gRPC.StateChanged", slog.Any("reply", reply))
 
 	err := h.api.StateChanged(ctx, &reply)
@@ -118,12 +104,7 @@ func (h *DeviceCallback) ActionPrompt(ctx context.Context, req *srv.ActionPrompt
 			errors.New("ActionPromptRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.DevicePrompt{
-		Device: data.GetDevice(),
-		Action: model.DevAction(data.GetAction()),
-		Prompt: model.DevPrompt(data.GetPrompt()),
-	}
+	reply := convertDevicePromptToModel(req.GetData())
 	h.log.Debug("gRPC.ActionPrompt", slog.Any("reply", reply))
 
 	err := h.api.ActionPrompt(ctx, &reply)
@@ -143,12 +124,7 @@ func (h *DeviceCallback) ReaderReturn(ctx context.Context, req *srv.ReaderReturn
 			errors.New("ReaderReturnRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.DeviceInform{
-		Device: data.GetDevice(),
-		Action: model.DevAction(data.GetAction()),
-		Inform: data.GetInform(),
-	}
+	reply := convertDeviceInformToModel(req.GetData())
 	h.log.Debug("gRPC.ReaderReturn", slog.Any("reply", reply))
 
 	err := h.api.ReaderReturn(ctx, &reply)
@@ -159,4 +135,56 @@ func (h *DeviceCallback) ReaderReturn(ctx context.Context, req *srv.ReaderReturn
 	resp := &srv.ReaderReturnResponse{}
 
 	return resp, err
+}
+
+func convertDeviceReplyToModel(value *srv.DeviceReply) model.DeviceReply {
+	if value == nil {
+		return model.DeviceReply{}
+	}
+	data := model.DeviceReply{
+		Device:  value.GetDevice(),
+		Command: value.GetCommand(),
+		Action:  model.DevAction(value.GetAction()),
+		State:   model.DevState(value.GetState()),
+		ErrCode: model.DevError(value.GetErrCode()),
+		ErrText: value.GetErrText(),
+	}
+	return data
+}
+
+func convertDeviceStateToModel(value *srv.DeviceState) model.DeviceState {
+	if value == nil {
+		return model.DeviceState{}
+	}
+	data := model.DeviceState{
+		Device:   value.GetDevice(),
+		Action:   model.DevAction(value.GetAction()),
+		NewState: model.DevState(value.GetNewState()),
+		OldState: model.DevState(value.GetOldState()),
+	}
+	return data
+}
+
+func convertDevicePromptToModel(value *srv.DevicePrompt) model.DevicePrompt {
+	if value == nil {
+		return model.DevicePrompt{}
+	}
+	data := model.DevicePrompt{
+		Device: value.GetDevice(),
+		Action: model.DevAction(value.GetAction()),
+		Prompt: model.DevPrompt(value.GetPrompt()),
+	}
+	return data
+}
+
+func convertDeviceInformToModel(value *srv.DeviceInform) model.DeviceInform {
+	if value == nil {
+		return model.DeviceInform{}
+	}
+	data := model.DeviceInform{
+		Device: value.GetDevice(),
+		Action: model.DevAction(value.GetAction()),
+		Inform: value.GetInform(),
+	}
+	return data
 }

@@ -28,14 +28,14 @@ func (c *SystemManagerClient) Terminate(ctx context.Context, query *model.System
 	c.log.Debug("ManagerClient.Terminate - grpc", slog.String("device", query.Device))
 
 	input := &system.TerminateRequest{
-		Query: convertSystemQuery(query),
+		Query: convertSystemQueryToProto(query),
 	}
 	resp, err := c.system.Terminate(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("commant Terminate for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertSystemReply(resp.GetReply())
+	reply := convertSystemReplyToModel(resp.GetReply())
 	return &reply, nil
 }
 
@@ -44,7 +44,7 @@ func (c *SystemManagerClient) SysHealth(ctx context.Context, query *model.System
 	c.log.Debug("ManagerClient.SysHealth - grpc", slog.String("device", query.Device))
 
 	input := &system.SysHealthRequest{
-		Query: convertSystemQuery(query),
+		Query: convertSystemQueryToProto(query),
 	}
 	resp, err := c.system.SysHealth(ctx, input)
 	if err != nil {
@@ -52,8 +52,8 @@ func (c *SystemManagerClient) SysHealth(ctx context.Context, query *model.System
 	}
 
 	reply := &model.SystemHealth{
-		Reply:   convertSystemReply(resp.GetReply()),
-		Metrics: convertSystemMetrics(resp.GetMetrics()),
+		SystemReply:   convertSystemReplyToModel(resp.GetReply()),
+		SystemMetrics: convertSystemMetricsToModel(resp.GetMetrics()),
 	}
 
 	return reply, nil
@@ -64,7 +64,7 @@ func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemC
 	c.log.Debug("ManagerClient.SysStart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysStartRequest{
-		Config: convertSystemConfig(query),
+		Config: convertSystemConfigToProto(query),
 	}
 	resp, err := c.system.SysStart(ctx, input)
 	if err != nil {
@@ -72,8 +72,8 @@ func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemC
 	}
 
 	reply := &model.SystemDevice{
-		Reply: convertSystemReply(resp.GetReply()),
-		Setup: convertSystemSetup(resp.GetSetup()),
+		SystemReply: convertSystemReplyToModel(resp.GetReply()),
+		SystemSetup: convertSystemSetupToModel(resp.GetSetup()),
 	}
 	return reply, nil
 }
@@ -83,14 +83,14 @@ func (c *SystemManagerClient) SysStop(ctx context.Context, query *model.SystemQu
 	c.log.Debug("ManagerClient.SysStop - grpc", slog.String("device", query.Device))
 
 	input := &system.SysStopRequest{
-		Query: convertSystemQuery(query),
+		Query: convertSystemQueryToProto(query),
 	}
 	resp, err := c.system.SysStop(ctx, input)
 	if err != nil {
 		return nil, fmt.Errorf("commant SysStop for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertSystemReply(resp.GetReply())
+	reply := convertSystemReplyToModel(resp.GetReply())
 	return &reply, nil
 }
 
@@ -99,7 +99,7 @@ func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.Syste
 	c.log.Debug("ManagerClient.SysRestart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysRestartRequest{
-		Config: convertSystemConfig(query),
+		Config: convertSystemConfigToProto(query),
 	}
 	resp, err := c.system.SysRestart(ctx, input)
 	if err != nil {
@@ -107,13 +107,13 @@ func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.Syste
 	}
 
 	reply := &model.SystemDevice{
-		Reply: convertSystemReply(resp.GetReply()),
-		Setup: convertSystemSetup(resp.GetSetup()),
+		SystemReply: convertSystemReplyToModel(resp.GetReply()),
+		SystemSetup: convertSystemSetupToModel(resp.GetSetup()),
 	}
 	return reply, nil
 }
 
-func convertSystemQuery(value *model.SystemQuery) *system.SystemQuery {
+func convertSystemQueryToProto(value *model.SystemQuery) *system.SystemQuery {
 	if value == nil {
 		return nil
 	}
@@ -123,7 +123,7 @@ func convertSystemQuery(value *model.SystemQuery) *system.SystemQuery {
 	return data
 }
 
-func convertSystemConfig(value *model.SystemConfig) *system.SystemConfig {
+func convertSystemConfigToProto(value *model.SystemConfig) *system.SystemConfig {
 	if value == nil {
 		return nil
 	}
@@ -137,7 +137,7 @@ func convertSystemConfig(value *model.SystemConfig) *system.SystemConfig {
 	return data
 }
 
-func convertSystemSetup(value *system.SystemSetup) model.SystemSetup {
+func convertSystemSetupToModel(value *system.SystemSetup) model.SystemSetup {
 	if value == nil {
 		return model.SystemSetup{}
 	}
@@ -150,7 +150,7 @@ func convertSystemSetup(value *system.SystemSetup) model.SystemSetup {
 	return data
 }
 
-func convertSystemReply(value *system.SystemReply) model.SystemReply {
+func convertSystemReplyToModel(value *system.SystemReply) model.SystemReply {
 	if value == nil {
 		return model.SystemReply{}
 	}
@@ -164,7 +164,7 @@ func convertSystemReply(value *system.SystemReply) model.SystemReply {
 	return data
 }
 
-func convertSystemMetrics(value *system.SystemMetrics) model.SystemMetrics {
+func convertSystemMetricsToModel(value *system.SystemMetrics) model.SystemMetrics {
 	if value == nil {
 		return model.SystemMetrics{}
 	}

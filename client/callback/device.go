@@ -29,7 +29,7 @@ func (c *DeviceCallbackClient) DeviceReply(ctx context.Context, reply *model.Dev
 		slog.String("device", reply.Device), slog.String("command", reply.Command))
 
 	input := &device.DeviceReplyRequest{
-		Data: convertDeviceReply(reply),
+		Data: convertDeviceReplyToProto(reply),
 	}
 	_, err := c.device.DeviceReply(ctx, input)
 	if err != nil {
@@ -45,7 +45,7 @@ func (c *DeviceCallbackClient) ExecuteError(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("command", value.Command))
 
 	input := &device.ExecuteErrorRequest{
-		Data: convertDeviceReply(value),
+		Data: convertDeviceReplyToProto(value),
 	}
 	_, err := c.device.ExecuteError(ctx, input)
 	if err != nil {
@@ -61,7 +61,7 @@ func (c *DeviceCallbackClient) StateChanged(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.StateChangedRequest{
-		Data: convertDeviceState(value),
+		Data: convertDeviceStateToProto(value),
 	}
 	_, err := c.device.StateChanged(ctx, input)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c *DeviceCallbackClient) ActionPrompt(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.ActionPromptRequest{
-		Data: convertDevicePrompt(value),
+		Data: convertDevicePromptToProto(value),
 	}
 	_, err := c.device.ActionPrompt(ctx, input)
 	if err != nil {
@@ -93,7 +93,7 @@ func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.ReaderReturnRequest{
-		Data: convertDeviceInform(value),
+		Data: convertDeviceInformToProto(value),
 	}
 	_, err := c.device.ReaderReturn(ctx, input)
 	if err != nil {
@@ -103,7 +103,7 @@ func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.De
 	return nil
 }
 
-func convertDeviceReply(value *model.DeviceReply) *device.DeviceReply {
+func convertDeviceReplyToProto(value *model.DeviceReply) *device.DeviceReply {
 	if value == nil {
 		return nil
 	}
@@ -118,7 +118,7 @@ func convertDeviceReply(value *model.DeviceReply) *device.DeviceReply {
 	return data
 }
 
-func convertDeviceState(value *model.DeviceState) *device.DeviceState {
+func convertDeviceStateToProto(value *model.DeviceState) *device.DeviceState {
 	if value == nil {
 		return nil
 	}
@@ -131,7 +131,7 @@ func convertDeviceState(value *model.DeviceState) *device.DeviceState {
 	return data
 }
 
-func convertDevicePrompt(value *model.DevicePrompt) *device.DevicePrompt {
+func convertDevicePromptToProto(value *model.DevicePrompt) *device.DevicePrompt {
 	if value == nil {
 		return nil
 	}
@@ -143,7 +143,7 @@ func convertDevicePrompt(value *model.DevicePrompt) *device.DevicePrompt {
 	return data
 }
 
-func convertDeviceInform(value *model.DeviceInform) *device.DeviceInform {
+func convertDeviceInformToProto(value *model.DeviceInform) *device.DeviceInform {
 	if value == nil {
 		return nil
 	}

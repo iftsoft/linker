@@ -23,7 +23,7 @@ func TestConvertDeviceReply(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := convertDeviceReply(tt.filters)
+			got := convertDeviceReplyToProto(tt.filters)
 			if !reflect.DeepEqual(got, tt.expected) {
 				t.Errorf("convertDeviceReply() = %v, want %v", got, tt.expected)
 			}

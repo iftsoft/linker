@@ -118,14 +118,14 @@ func ProcessSystemReply(ctx context.Context, log *slog.Logger, cli *callback.Cal
 
 func ProcessSystemDevice(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	reply := model.SystemDevice{
-		Reply: model.SystemReply{
+		SystemReply: model.SystemReply{
 			Device:   testDevice,
 			Command:  model.CmdSystemDevice,
 			Message:  "Ok",
 			SysState: model.SysStateRunning,
 			SysError: model.SysErrSuccess,
 		},
-		Setup: model.SystemSetup{
+		SystemSetup: model.SystemSetup{
 			DevType:     model.DevTypeCustom,
 			Supported:   model.ScopeFlagSystem,
 			Required:    model.ScopeFlagSystem,
@@ -143,14 +143,14 @@ func ProcessSystemDevice(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	health := model.SystemHealth{
-		Reply: model.SystemReply{
+		SystemReply: model.SystemReply{
 			Device:   testDevice,
 			Command:  model.CmdSystemHealth,
 			Message:  "Ok",
 			SysState: model.SysStateRunning,
 			SysError: model.SysErrSuccess,
 		},
-		Metrics: model.SystemMetrics{
+		SystemMetrics: model.SystemMetrics{
 			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,
