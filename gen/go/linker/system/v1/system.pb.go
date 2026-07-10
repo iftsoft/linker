@@ -27,7 +27,7 @@ type GreetingInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AppName       string                 `protobuf:"bytes,1,opt,name=app_name,json=appName,proto3" json:"app_name,omitempty"`
 	DevName       string                 `protobuf:"bytes,2,opt,name=dev_name,json=devName,proto3" json:"dev_name,omitempty"`
-	GrpcPort      uint32                 `protobuf:"varint,3,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
+	GrpcPort      int64                  `protobuf:"varint,3,opt,name=grpc_port,json=grpcPort,proto3" json:"grpc_port,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -76,7 +76,7 @@ func (x *GreetingInfo) GetDevName() string {
 	return ""
 }
 
-func (x *GreetingInfo) GetGrpcPort() uint32 {
+func (x *GreetingInfo) GetGrpcPort() int64 {
 	if x != nil {
 		return x.GrpcPort
 	}
@@ -129,31 +129,32 @@ func (x *SystemQuery) GetDevice() string {
 }
 
 // Defines the message structure for a system config
-type SystemConfig struct {
+type ConfigUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	LinkType      uint32                 `protobuf:"varint,2,opt,name=link_type,json=linkType,proto3" json:"link_type,omitempty"`    // 0-none, 1-COM, 2-USB
 	PortName      string                 `protobuf:"bytes,3,opt,name=port_name,json=portName,proto3" json:"port_name,omitempty"`     // Serial port name
 	VendorId      uint32                 `protobuf:"varint,4,opt,name=vendor_id,json=vendorId,proto3" json:"vendor_id,omitempty"`    // Device Vendor ID
 	ProductId     uint32                 `protobuf:"varint,5,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"` // Device Product ID
+	SerialNo      string                 `protobuf:"bytes,6,opt,name=serial_no,json=serialNo,proto3" json:"serial_no,omitempty"`     // Serial number
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SystemConfig) Reset() {
-	*x = SystemConfig{}
+func (x *ConfigUpdate) Reset() {
+	*x = ConfigUpdate{}
 	mi := &file_linker_system_v1_system_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SystemConfig) String() string {
+func (x *ConfigUpdate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SystemConfig) ProtoMessage() {}
+func (*ConfigUpdate) ProtoMessage() {}
 
-func (x *SystemConfig) ProtoReflect() protoreflect.Message {
+func (x *ConfigUpdate) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_system_v1_system_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -165,44 +166,51 @@ func (x *SystemConfig) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SystemConfig.ProtoReflect.Descriptor instead.
-func (*SystemConfig) Descriptor() ([]byte, []int) {
+// Deprecated: Use ConfigUpdate.ProtoReflect.Descriptor instead.
+func (*ConfigUpdate) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *SystemConfig) GetDevice() string {
+func (x *ConfigUpdate) GetDevice() string {
 	if x != nil {
 		return x.Device
 	}
 	return ""
 }
 
-func (x *SystemConfig) GetLinkType() uint32 {
+func (x *ConfigUpdate) GetLinkType() uint32 {
 	if x != nil {
 		return x.LinkType
 	}
 	return 0
 }
 
-func (x *SystemConfig) GetPortName() string {
+func (x *ConfigUpdate) GetPortName() string {
 	if x != nil {
 		return x.PortName
 	}
 	return ""
 }
 
-func (x *SystemConfig) GetVendorId() uint32 {
+func (x *ConfigUpdate) GetVendorId() uint32 {
 	if x != nil {
 		return x.VendorId
 	}
 	return 0
 }
 
-func (x *SystemConfig) GetProductId() uint32 {
+func (x *ConfigUpdate) GetProductId() uint32 {
 	if x != nil {
 		return x.ProductId
 	}
 	return 0
+}
+
+func (x *ConfigUpdate) GetSerialNo() string {
+	if x != nil {
+		return x.SerialNo
+	}
+	return ""
 }
 
 // Defines the message structure for a system reply
@@ -283,7 +291,7 @@ func (x *SystemReply) GetSysState() uint32 {
 }
 
 // Defines the message structure for a system device
-type SystemSetup struct {
+type DeviceSetup struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DevType       uint64                 `protobuf:"varint,1,opt,name=dev_type,json=devType,proto3" json:"dev_type,omitempty"`
 	Supported     uint64                 `protobuf:"varint,2,opt,name=supported,proto3" json:"supported,omitempty"`
@@ -293,20 +301,20 @@ type SystemSetup struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SystemSetup) Reset() {
-	*x = SystemSetup{}
+func (x *DeviceSetup) Reset() {
+	*x = DeviceSetup{}
 	mi := &file_linker_system_v1_system_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SystemSetup) String() string {
+func (x *DeviceSetup) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SystemSetup) ProtoMessage() {}
+func (*DeviceSetup) ProtoMessage() {}
 
-func (x *SystemSetup) ProtoReflect() protoreflect.Message {
+func (x *DeviceSetup) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_system_v1_system_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -318,33 +326,33 @@ func (x *SystemSetup) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SystemSetup.ProtoReflect.Descriptor instead.
-func (*SystemSetup) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeviceSetup.ProtoReflect.Descriptor instead.
+func (*DeviceSetup) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *SystemSetup) GetDevType() uint64 {
+func (x *DeviceSetup) GetDevType() uint64 {
 	if x != nil {
 		return x.DevType
 	}
 	return 0
 }
 
-func (x *SystemSetup) GetSupported() uint64 {
+func (x *DeviceSetup) GetSupported() uint64 {
 	if x != nil {
 		return x.Supported
 	}
 	return 0
 }
 
-func (x *SystemSetup) GetRequired() uint64 {
+func (x *DeviceSetup) GetRequired() uint64 {
 	if x != nil {
 		return x.Required
 	}
 	return 0
 }
 
-func (x *SystemSetup) GetDescription() string {
+func (x *DeviceSetup) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
@@ -352,7 +360,7 @@ func (x *SystemSetup) GetDescription() string {
 }
 
 // Defines the message structure for a system metrics
-type SystemMetrics struct {
+type DeviceMetrics struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Moment        int64                  `protobuf:"varint,1,opt,name=moment,proto3" json:"moment,omitempty"`
 	Uptime        uint64                 `protobuf:"varint,2,opt,name=uptime,proto3" json:"uptime,omitempty"`
@@ -363,20 +371,20 @@ type SystemMetrics struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SystemMetrics) Reset() {
-	*x = SystemMetrics{}
+func (x *DeviceMetrics) Reset() {
+	*x = DeviceMetrics{}
 	mi := &file_linker_system_v1_system_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SystemMetrics) String() string {
+func (x *DeviceMetrics) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SystemMetrics) ProtoMessage() {}
+func (*DeviceMetrics) ProtoMessage() {}
 
-func (x *SystemMetrics) ProtoReflect() protoreflect.Message {
+func (x *DeviceMetrics) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_system_v1_system_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -388,40 +396,40 @@ func (x *SystemMetrics) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SystemMetrics.ProtoReflect.Descriptor instead.
-func (*SystemMetrics) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeviceMetrics.ProtoReflect.Descriptor instead.
+func (*DeviceMetrics) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_system_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *SystemMetrics) GetMoment() int64 {
+func (x *DeviceMetrics) GetMoment() int64 {
 	if x != nil {
 		return x.Moment
 	}
 	return 0
 }
 
-func (x *SystemMetrics) GetUptime() uint64 {
+func (x *DeviceMetrics) GetUptime() uint64 {
 	if x != nil {
 		return x.Uptime
 	}
 	return 0
 }
 
-func (x *SystemMetrics) GetDevError() uint32 {
+func (x *DeviceMetrics) GetDevError() uint32 {
 	if x != nil {
 		return x.DevError
 	}
 	return 0
 }
 
-func (x *SystemMetrics) GetDevState() uint32 {
+func (x *DeviceMetrics) GetDevState() uint32 {
 	if x != nil {
 		return x.DevState
 	}
 	return 0
 }
 
-func (x *SystemMetrics) GetContent() *structpb.Struct {
+func (x *DeviceMetrics) GetContent() *structpb.Struct {
 	if x != nil {
 		return x.Content
 	}
@@ -436,28 +444,29 @@ const file_linker_system_v1_system_proto_rawDesc = "" +
 	"\fGreetingInfo\x12\x19\n" +
 	"\bapp_name\x18\x01 \x01(\tR\aappName\x12\x19\n" +
 	"\bdev_name\x18\x02 \x01(\tR\adevName\x12\x1b\n" +
-	"\tgrpc_port\x18\x03 \x01(\rR\bgrpcPort\"%\n" +
+	"\tgrpc_port\x18\x03 \x01(\x03R\bgrpcPort\"%\n" +
 	"\vSystemQuery\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\"\x9c\x01\n" +
-	"\fSystemConfig\x12\x16\n" +
+	"\x06device\x18\x01 \x01(\tR\x06device\"\xb9\x01\n" +
+	"\fConfigUpdate\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1b\n" +
 	"\tlink_type\x18\x02 \x01(\rR\blinkType\x12\x1b\n" +
 	"\tport_name\x18\x03 \x01(\tR\bportName\x12\x1b\n" +
 	"\tvendor_id\x18\x04 \x01(\rR\bvendorId\x12\x1d\n" +
 	"\n" +
-	"product_id\x18\x05 \x01(\rR\tproductId\"\x93\x01\n" +
+	"product_id\x18\x05 \x01(\rR\tproductId\x12\x1b\n" +
+	"\tserial_no\x18\x06 \x01(\tR\bserialNo\"\x93\x01\n" +
 	"\vSystemReply\x12\x16\n" +
 	"\x06device\x18\x01 \x01(\tR\x06device\x12\x18\n" +
 	"\acommand\x18\x02 \x01(\tR\acommand\x12\x18\n" +
 	"\amessage\x18\x03 \x01(\tR\amessage\x12\x1b\n" +
 	"\tsys_error\x18\x04 \x01(\rR\bsysError\x12\x1b\n" +
 	"\tsys_state\x18\x05 \x01(\rR\bsysState\"\x84\x01\n" +
-	"\vSystemSetup\x12\x19\n" +
+	"\vDeviceSetup\x12\x19\n" +
 	"\bdev_type\x18\x01 \x01(\x04R\adevType\x12\x1c\n" +
 	"\tsupported\x18\x02 \x01(\x04R\tsupported\x12\x1a\n" +
 	"\brequired\x18\x03 \x01(\x04R\brequired\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\"\xac\x01\n" +
-	"\rSystemMetrics\x12\x16\n" +
+	"\rDeviceMetrics\x12\x16\n" +
 	"\x06moment\x18\x01 \x01(\x03R\x06moment\x12\x16\n" +
 	"\x06uptime\x18\x02 \x01(\x04R\x06uptime\x12\x1b\n" +
 	"\tdev_error\x18\x03 \x01(\rR\bdevError\x12\x1b\n" +
@@ -480,14 +489,14 @@ var file_linker_system_v1_system_proto_msgTypes = make([]protoimpl.MessageInfo, 
 var file_linker_system_v1_system_proto_goTypes = []any{
 	(*GreetingInfo)(nil),    // 0: linker.system.v1.GreetingInfo
 	(*SystemQuery)(nil),     // 1: linker.system.v1.SystemQuery
-	(*SystemConfig)(nil),    // 2: linker.system.v1.SystemConfig
+	(*ConfigUpdate)(nil),    // 2: linker.system.v1.ConfigUpdate
 	(*SystemReply)(nil),     // 3: linker.system.v1.SystemReply
-	(*SystemSetup)(nil),     // 4: linker.system.v1.SystemSetup
-	(*SystemMetrics)(nil),   // 5: linker.system.v1.SystemMetrics
+	(*DeviceSetup)(nil),     // 4: linker.system.v1.DeviceSetup
+	(*DeviceMetrics)(nil),   // 5: linker.system.v1.DeviceMetrics
 	(*structpb.Struct)(nil), // 6: google.protobuf.Struct
 }
 var file_linker_system_v1_system_proto_depIdxs = []int32{
-	6, // 0: linker.system.v1.SystemMetrics.content:type_name -> google.protobuf.Struct
+	6, // 0: linker.system.v1.DeviceMetrics.content:type_name -> google.protobuf.Struct
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

@@ -136,7 +136,7 @@ func ProcessSysHealth(ctx context.Context, log *slog.Logger, cli *manager.Manage
 }
 
 func ProcessSysStart(ctx context.Context, log *slog.Logger, cli *manager.ManagerClient) error {
-	query := model.SystemConfig{
+	query := model.ConfigUpdate{
 		Device:   testDevice,
 		LinkType: 0,
 		PortName: "usb",
@@ -164,7 +164,7 @@ func ProcessSysStop(ctx context.Context, log *slog.Logger, cli *manager.ManagerC
 }
 
 func ProcessSysRestart(ctx context.Context, log *slog.Logger, cli *manager.ManagerClient) error {
-	query := model.SystemConfig{
+	query := model.ConfigUpdate{
 		Device:   testDevice,
 		LinkType: 0,
 		PortName: "usb",

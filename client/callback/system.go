@@ -62,7 +62,7 @@ func (c *SystemCallbackClient) SystemDevice(ctx context.Context, reply *model.Sy
 
 	input := &system.SystemDeviceRequest{
 		Data:  convertSystemReplyToProto(&reply.SystemReply),
-		Setup: convertSystemSetupToProto(&reply.SystemSetup),
+		Setup: convertDeviceSetupToProto(&reply.DeviceSetup),
 	}
 	_, err := c.system.SystemDevice(ctx, input)
 	if err != nil {
@@ -79,7 +79,7 @@ func (c *SystemCallbackClient) SystemHealth(ctx context.Context, reply *model.Sy
 
 	input := &system.SystemHealthRequest{
 		Data:    convertSystemReplyToProto(&reply.SystemReply),
-		Metrics: convertSystemMetricsToProto(&reply.SystemMetrics),
+		Metrics: convertDeviceMetricsToProto(&reply.DeviceMetrics),
 	}
 	_, err := c.system.SystemHealth(ctx, input)
 	if err != nil {
@@ -115,11 +115,11 @@ func convertSystemReplyToProto(value *model.SystemReply) *system.SystemReply {
 	return data
 }
 
-func convertSystemSetupToProto(value *model.SystemSetup) *system.SystemSetup {
+func convertDeviceSetupToProto(value *model.DeviceSetup) *system.DeviceSetup {
 	if value == nil {
 		return nil
 	}
-	data := &system.SystemSetup{
+	data := &system.DeviceSetup{
 		DevType:     uint64(value.DevType),
 		Supported:   uint64(value.Supported),
 		Required:    uint64(value.Required),
@@ -128,11 +128,11 @@ func convertSystemSetupToProto(value *model.SystemSetup) *system.SystemSetup {
 	return data
 }
 
-func convertSystemMetricsToProto(value *model.SystemMetrics) *system.SystemMetrics {
+func convertDeviceMetricsToProto(value *model.DeviceMetrics) *system.DeviceMetrics {
 	if value == nil {
 		return nil
 	}
-	data := &system.SystemMetrics{
+	data := &system.DeviceMetrics{
 		Moment:   value.Moment,
 		Uptime:   value.Uptime,
 		DevError: uint32(value.DevError),

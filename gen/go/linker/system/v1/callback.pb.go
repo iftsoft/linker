@@ -189,7 +189,7 @@ func (*SystemReplyResponse) Descriptor() ([]byte, []int) {
 type SystemDeviceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Data          *SystemReply           `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
+	Setup         *DeviceSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -231,7 +231,7 @@ func (x *SystemDeviceRequest) GetData() *SystemReply {
 	return nil
 }
 
-func (x *SystemDeviceRequest) GetSetup() *SystemSetup {
+func (x *SystemDeviceRequest) GetSetup() *DeviceSetup {
 	if x != nil {
 		return x.Setup
 	}
@@ -279,7 +279,7 @@ func (*SystemDeviceResponse) Descriptor() ([]byte, []int) {
 type SystemHealthRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Data          *SystemReply           `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	Metrics       *SystemMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
+	Metrics       *DeviceMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -321,7 +321,7 @@ func (x *SystemHealthRequest) GetData() *SystemReply {
 	return nil
 }
 
-func (x *SystemHealthRequest) GetMetrics() *SystemMetrics {
+func (x *SystemHealthRequest) GetMetrics() *DeviceMetrics {
 	if x != nil {
 		return x.Metrics
 	}
@@ -378,11 +378,11 @@ const file_linker_system_v1_callback_proto_rawDesc = "" +
 	"\x13SystemReplyResponse\"}\n" +
 	"\x13SystemDeviceRequest\x121\n" +
 	"\x04data\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x04data\x123\n" +
-	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup\"\x16\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.DeviceSetupR\x05setup\"\x16\n" +
 	"\x14SystemDeviceResponse\"\x83\x01\n" +
 	"\x13SystemHealthRequest\x121\n" +
 	"\x04data\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x04data\x129\n" +
-	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"\x16\n" +
+	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.DeviceMetricsR\ametrics\"\x16\n" +
 	"\x14SystemHealthResponse2\x98\x03\n" +
 	"\x15SystemCallbackService\x12_\n" +
 	"\fGreetingInfo\x12%.linker.system.v1.GreetingInfoRequest\x1a&.linker.system.v1.GreetingInfoResponse\"\x00\x12\\\n" +
@@ -414,16 +414,16 @@ var file_linker_system_v1_callback_proto_goTypes = []any{
 	(*SystemHealthResponse)(nil), // 7: linker.system.v1.SystemHealthResponse
 	(*GreetingInfo)(nil),         // 8: linker.system.v1.GreetingInfo
 	(*SystemReply)(nil),          // 9: linker.system.v1.SystemReply
-	(*SystemSetup)(nil),          // 10: linker.system.v1.SystemSetup
-	(*SystemMetrics)(nil),        // 11: linker.system.v1.SystemMetrics
+	(*DeviceSetup)(nil),          // 10: linker.system.v1.DeviceSetup
+	(*DeviceMetrics)(nil),        // 11: linker.system.v1.DeviceMetrics
 }
 var file_linker_system_v1_callback_proto_depIdxs = []int32{
 	8,  // 0: linker.system.v1.GreetingInfoRequest.data:type_name -> linker.system.v1.GreetingInfo
 	9,  // 1: linker.system.v1.SystemReplyRequest.data:type_name -> linker.system.v1.SystemReply
 	9,  // 2: linker.system.v1.SystemDeviceRequest.data:type_name -> linker.system.v1.SystemReply
-	10, // 3: linker.system.v1.SystemDeviceRequest.setup:type_name -> linker.system.v1.SystemSetup
+	10, // 3: linker.system.v1.SystemDeviceRequest.setup:type_name -> linker.system.v1.DeviceSetup
 	9,  // 4: linker.system.v1.SystemHealthRequest.data:type_name -> linker.system.v1.SystemReply
-	11, // 5: linker.system.v1.SystemHealthRequest.metrics:type_name -> linker.system.v1.SystemMetrics
+	11, // 5: linker.system.v1.SystemHealthRequest.metrics:type_name -> linker.system.v1.DeviceMetrics
 	0,  // 6: linker.system.v1.SystemCallbackService.GreetingInfo:input_type -> linker.system.v1.GreetingInfoRequest
 	2,  // 7: linker.system.v1.SystemCallbackService.SystemReply:input_type -> linker.system.v1.SystemReplyRequest
 	4,  // 8: linker.system.v1.SystemCallbackService.SystemDevice:input_type -> linker.system.v1.SystemDeviceRequest

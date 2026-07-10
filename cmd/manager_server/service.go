@@ -45,7 +45,7 @@ func (ms *ManagerService) SysHealth(ctx context.Context, query *model.SystemQuer
 	}
 	reply := model.SystemHealth{
 		SystemReply: ms.getSystemReply(query.Device),
-		SystemMetrics: model.SystemMetrics{
+		DeviceMetrics: model.DeviceMetrics{
 			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,
@@ -57,14 +57,14 @@ func (ms *ManagerService) SysHealth(ctx context.Context, query *model.SystemQuer
 }
 
 // SysStart turns device driver to initial state
-func (ms *ManagerService) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (ms *ManagerService) SysStart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	if query == nil {
 		return nil, errEmptyQuery
 	}
 	ms.SysState = model.SysStateRunning
 	reply := model.SystemDevice{
 		SystemReply: ms.getSystemReply(query.Device),
-		SystemSetup: model.SystemSetup{
+		DeviceSetup: model.DeviceSetup{
 			DevType:   model.DevTypePrinter,
 			Supported: model.ScopeFlagSystem,
 			Required:  model.ScopeFlagSystem,
@@ -86,14 +86,14 @@ func (ms *ManagerService) SysStop(ctx context.Context, query *model.SystemQuery)
 }
 
 // SysRestart reactivates device driver with new config
-func (ms *ManagerService) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (ms *ManagerService) SysRestart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	if query == nil {
 		return nil, errEmptyQuery
 	}
 	ms.SysState = model.SysStateRunning
 	reply := model.SystemDevice{
 		SystemReply: ms.getSystemReply(query.Device),
-		SystemSetup: model.SystemSetup{
+		DeviceSetup: model.DeviceSetup{
 			DevType:   model.DevTypePrinter,
 			Supported: model.ScopeFlagSystem,
 			Required:  model.ScopeFlagSystem,

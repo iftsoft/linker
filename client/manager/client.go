@@ -41,8 +41,11 @@ func NewManagerClient(ctx context.Context, log *slog.Logger, address string) (*M
 }
 
 // Close gracefully terminates grpc connection
-func (c *ManagerClient) Close() error {
-	return c.client.Close()
+func (c *ManagerClient) Close() {
+	err := c.client.Close()
+	if err != nil {
+		c.log.Error("can't close client", "error", err)
+	}
 }
 
 // Terminate gracefully terminates running device application
@@ -66,7 +69,7 @@ func (c *ManagerClient) SysHealth(ctx context.Context, query *model.SystemQuery)
 }
 
 // SysStart turns device driver to initial state
-func (c *ManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (c *ManagerClient) SysStart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	if c.system == nil {
 		return nil, ErrNotInitialized
 	}
@@ -86,7 +89,7 @@ func (c *ManagerClient) SysStop(ctx context.Context, query *model.SystemQuery) (
 }
 
 // SysRestart reactivates device driver with new config
-func (c *ManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (c *ManagerClient) SysRestart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	if c.system == nil {
 		return nil, ErrNotInitialized
 	}

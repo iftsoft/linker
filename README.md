@@ -7,6 +7,11 @@ buf lint
 buf generate
 ```
 
+Run GO linter
+```shell
+golangci-lint run
+```
+
 Build executables
 ```shell
 go build -o manager-srv ./cmd/manager_server

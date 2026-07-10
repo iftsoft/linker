@@ -10,7 +10,7 @@ import "google/protobuf/struct.proto";
 message GreetingInfo {
   string app_name = 1;
   string dev_name = 2;
-  uint32 grpc_port = 3;
+  int64 grpc_port = 3;
 }
 
 // Defines the message structure for a system query
@@ -19,12 +19,13 @@ message SystemQuery {
 }
 
 // Defines the message structure for a system config
-message SystemConfig {
+message ConfigUpdate {
   string device = 1;
   uint32 link_type = 2;  // 0-none, 1-COM, 2-USB
   string port_name = 3;  // Serial port name
   uint32 vendor_id = 4;  // Device Vendor ID
   uint32 product_id = 5; // Device Product ID
+  string serial_no = 6;  // Serial number
 }
 
 // Defines the message structure for a system reply
@@ -37,7 +38,7 @@ message SystemReply {
 }
 
 // Defines the message structure for a system device
-message SystemSetup {
+message DeviceSetup {
   uint64 dev_type = 1;
   uint64 supported = 2;
   uint64 required = 3;
@@ -45,7 +46,7 @@ message SystemSetup {
 }
 
 // Defines the message structure for a system metrics
-message SystemMetrics {
+message DeviceMetrics {
   int64 moment = 1;
   uint64 uptime = 2;
   uint32 dev_error = 3;

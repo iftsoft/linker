@@ -125,7 +125,7 @@ func ProcessSystemDevice(ctx context.Context, log *slog.Logger, cli *callback.Ca
 			SysState: model.SysStateRunning,
 			SysError: model.SysErrSuccess,
 		},
-		SystemSetup: model.SystemSetup{
+		DeviceSetup: model.DeviceSetup{
 			DevType:     model.DevTypeCustom,
 			Supported:   model.ScopeFlagSystem,
 			Required:    model.ScopeFlagSystem,
@@ -150,7 +150,7 @@ func ProcessSystemHealth(ctx context.Context, log *slog.Logger, cli *callback.Ca
 			SysState: model.SysStateRunning,
 			SysError: model.SysErrSuccess,
 		},
-		SystemMetrics: model.SystemMetrics{
+		DeviceMetrics: model.DeviceMetrics{
 			Moment:   time.Now().Unix(),
 			Uptime:   1000,
 			DevError: model.DevErrorSuccess,

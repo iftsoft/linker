@@ -38,18 +38,18 @@ message SysHealthRequest {
 // Defines the message structure for the inform response
 message SysHealthResponse {
   SystemReply reply = 1;
-  SystemMetrics metrics = 2;
+  DeviceMetrics metrics = 2;
 }
 
 // Defines the message structure for a system start request
 message SysStartRequest {
-  SystemConfig config = 1;
+  ConfigUpdate config = 1;
 }
 
 // Defines the message structure for the system start response
 message SysStartResponse {
   SystemReply reply = 1;
-  SystemSetup setup = 2;
+  DeviceSetup setup = 2;
 }
 
 // Defines the message structure for a system stop request
@@ -64,12 +64,12 @@ message SysStopResponse {
 
 // Defines the message structure for a system restart request
 message SysRestartRequest {
-  SystemConfig config = 1;
+  ConfigUpdate config = 1;
 }
 
 // Defines the message structure for the system restart response
 message SysRestartResponse {
   SystemReply reply = 1;
-  SystemSetup setup = 2;
+  DeviceSetup setup = 2;
 }
 

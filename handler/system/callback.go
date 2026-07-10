@@ -83,7 +83,7 @@ func (h *SystemCallback) SystemDevice(ctx context.Context, req *srv.SystemDevice
 
 	reply := model.SystemDevice{
 		SystemReply: convertSystemReplyToModel(req.GetData()),
-		SystemSetup: convertSystemSetupToModel(req.GetSetup()),
+		DeviceSetup: convertDeviceSetupToModel(req.GetSetup()),
 	}
 	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
 
@@ -106,7 +106,7 @@ func (h *SystemCallback) SystemHealth(ctx context.Context, req *srv.SystemHealth
 
 	reply := model.SystemHealth{
 		SystemReply:   convertSystemReplyToModel(req.GetData()),
-		SystemMetrics: convertSystemMetricsToModel(req.GetMetrics()),
+		DeviceMetrics: convertDeviceMetricsToModel(req.GetMetrics()),
 	}
 	h.log.Debug("gRPC.SystemHealth", slog.Any("reply", reply))
 
@@ -133,11 +133,11 @@ func convertSystemReplyToModel(value *srv.SystemReply) model.SystemReply {
 	}
 }
 
-func convertSystemSetupToModel(value *srv.SystemSetup) model.SystemSetup {
+func convertDeviceSetupToModel(value *srv.DeviceSetup) model.DeviceSetup {
 	if value == nil {
-		return model.SystemSetup{}
+		return model.DeviceSetup{}
 	}
-	return model.SystemSetup{
+	return model.DeviceSetup{
 		DevType:     model.DevTypeMask(value.GetDevType()),
 		Supported:   model.DevScopeMask(value.GetSupported()),
 		Required:    model.DevScopeMask(value.GetRequired()),
@@ -145,11 +145,11 @@ func convertSystemSetupToModel(value *srv.SystemSetup) model.SystemSetup {
 	}
 }
 
-func convertSystemMetricsToModel(value *srv.SystemMetrics) model.SystemMetrics {
+func convertDeviceMetricsToModel(value *srv.DeviceMetrics) model.DeviceMetrics {
 	if value == nil {
-		return model.SystemMetrics{}
+		return model.DeviceMetrics{}
 	}
-	return model.SystemMetrics{
+	return model.DeviceMetrics{
 		Uptime:   value.GetUptime(),
 		Moment:   value.GetMoment(),
 		DevError: model.DevError(value.GetDevError()),

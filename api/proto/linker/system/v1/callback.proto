@@ -37,7 +37,7 @@ message SystemReplyResponse {}
 // Defines the message structure for an system device request
 message SystemDeviceRequest {
   SystemReply data = 1;
-  SystemSetup setup = 2;
+  DeviceSetup setup = 2;
 }
 
 // Defines the message structure for an system device response
@@ -46,7 +46,7 @@ message SystemDeviceResponse {}
 // Defines the message structure for an system health request
 message SystemHealthRequest {
   SystemReply data = 1;
-  SystemMetrics metrics = 2;
+  DeviceMetrics metrics = 2;
 }
 
 // Defines the message structure for an system health response

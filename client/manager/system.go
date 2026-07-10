@@ -53,18 +53,18 @@ func (c *SystemManagerClient) SysHealth(ctx context.Context, query *model.System
 
 	reply := &model.SystemHealth{
 		SystemReply:   convertSystemReplyToModel(resp.GetReply()),
-		SystemMetrics: convertSystemMetricsToModel(resp.GetMetrics()),
+		DeviceMetrics: convertDeviceMetricsToModel(resp.GetMetrics()),
 	}
 
 	return reply, nil
 }
 
 // SysStart turns device driver to initial state
-func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	c.log.Debug("ManagerClient.SysStart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysStartRequest{
-		Config: convertSystemConfigToProto(query),
+		Config: convertConfigUpdateToProto(query),
 	}
 	resp, err := c.system.SysStart(ctx, input)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *SystemManagerClient) SysStart(ctx context.Context, query *model.SystemC
 
 	reply := &model.SystemDevice{
 		SystemReply: convertSystemReplyToModel(resp.GetReply()),
-		SystemSetup: convertSystemSetupToModel(resp.GetSetup()),
+		DeviceSetup: convertDeviceSetupToModel(resp.GetSetup()),
 	}
 	return reply, nil
 }
@@ -95,11 +95,11 @@ func (c *SystemManagerClient) SysStop(ctx context.Context, query *model.SystemQu
 }
 
 // SysRestart reactivates device driver with new config
-func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.SystemConfig) (*model.SystemDevice, error) {
+func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.ConfigUpdate) (*model.SystemDevice, error) {
 	c.log.Debug("ManagerClient.SysRestart - grpc", slog.String("device", query.Device))
 
 	input := &system.SysRestartRequest{
-		Config: convertSystemConfigToProto(query),
+		Config: convertConfigUpdateToProto(query),
 	}
 	resp, err := c.system.SysRestart(ctx, input)
 	if err != nil {
@@ -108,7 +108,7 @@ func (c *SystemManagerClient) SysRestart(ctx context.Context, query *model.Syste
 
 	reply := &model.SystemDevice{
 		SystemReply: convertSystemReplyToModel(resp.GetReply()),
-		SystemSetup: convertSystemSetupToModel(resp.GetSetup()),
+		DeviceSetup: convertDeviceSetupToModel(resp.GetSetup()),
 	}
 	return reply, nil
 }
@@ -123,29 +123,17 @@ func convertSystemQueryToProto(value *model.SystemQuery) *system.SystemQuery {
 	return data
 }
 
-func convertSystemConfigToProto(value *model.SystemConfig) *system.SystemConfig {
+func convertConfigUpdateToProto(value *model.ConfigUpdate) *system.ConfigUpdate {
 	if value == nil {
 		return nil
 	}
-	data := &system.SystemConfig{
+	data := &system.ConfigUpdate{
 		Device:    value.Device,
 		LinkType:  value.LinkType,
 		PortName:  value.PortName,
 		VendorId:  value.VendorID,
 		ProductId: value.ProductID,
-	}
-	return data
-}
-
-func convertSystemSetupToModel(value *system.SystemSetup) model.SystemSetup {
-	if value == nil {
-		return model.SystemSetup{}
-	}
-	data := model.SystemSetup{
-		DevType:     model.DevTypeMask(value.DevType),
-		Description: value.Description,
-		Supported:   model.DevScopeMask(value.Supported),
-		Required:    model.DevScopeMask(value.Required),
+		SerialNo:  value.SerialNo,
 	}
 	return data
 }
@@ -164,11 +152,24 @@ func convertSystemReplyToModel(value *system.SystemReply) model.SystemReply {
 	return data
 }
 
-func convertSystemMetricsToModel(value *system.SystemMetrics) model.SystemMetrics {
+func convertDeviceSetupToModel(value *system.DeviceSetup) model.DeviceSetup {
 	if value == nil {
-		return model.SystemMetrics{}
+		return model.DeviceSetup{}
 	}
-	data := model.SystemMetrics{
+	data := model.DeviceSetup{
+		DevType:     model.DevTypeMask(value.DevType),
+		Description: value.Description,
+		Supported:   model.DevScopeMask(value.Supported),
+		Required:    model.DevScopeMask(value.Required),
+	}
+	return data
+}
+
+func convertDeviceMetricsToModel(value *system.DeviceMetrics) model.DeviceMetrics {
+	if value == nil {
+		return model.DeviceMetrics{}
+	}
+	data := model.DeviceMetrics{
 		Uptime:   value.Uptime,
 		Moment:   value.Moment,
 		DevError: model.DevError(value.DevError),

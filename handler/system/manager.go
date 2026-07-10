@@ -68,7 +68,7 @@ func (h *SystemManager) SysHealth(ctx context.Context, req *srv.SysHealthRequest
 
 	resp := &srv.SysHealthResponse{
 		Reply:   convertSystemReplyToProto(&reply.SystemReply),
-		Metrics: convertSystemMetricsToProto(&reply.SystemMetrics),
+		Metrics: convertDeviceMetricsToProto(&reply.DeviceMetrics),
 	}
 
 	return resp, err
@@ -81,7 +81,7 @@ func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) 
 			errors.New("SysStartRequest is nil"))
 	}
 
-	config := convertSystemConfigToModel(req.GetConfig())
+	config := convertConfigUpdateToModel(req.GetConfig())
 	h.log.Debug("gRPC.SysStart", slog.Any("config", config))
 
 	reply, err := h.api.SysStart(ctx, config)
@@ -91,7 +91,7 @@ func (h *SystemManager) SysStart(ctx context.Context, req *srv.SysStartRequest) 
 
 	resp := &srv.SysStartResponse{
 		Reply: convertSystemReplyToProto(&reply.SystemReply),
-		Setup: convertSystemSetupToProto(&reply.SystemSetup),
+		Setup: convertDeviceSetupToProto(&reply.DeviceSetup),
 	}
 
 	return resp, err
@@ -126,7 +126,7 @@ func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartReque
 			errors.New("SysRestartRequest is nil"))
 	}
 
-	config := convertSystemConfigToModel(req.GetConfig())
+	config := convertConfigUpdateToModel(req.GetConfig())
 	h.log.Debug("gRPC.SysRestart", slog.Any("config", config))
 
 	reply, err := h.api.SysRestart(ctx, config)
@@ -136,7 +136,7 @@ func (h *SystemManager) SysRestart(ctx context.Context, req *srv.SysRestartReque
 
 	resp := &srv.SysRestartResponse{
 		Reply: convertSystemReplyToProto(&reply.SystemReply),
-		Setup: convertSystemSetupToProto(&reply.SystemSetup),
+		Setup: convertDeviceSetupToProto(&reply.DeviceSetup),
 	}
 
 	return resp, err
@@ -149,13 +149,14 @@ func convertSystemQueryToModel(data *srv.SystemQuery) *model.SystemQuery {
 	return query
 }
 
-func convertSystemConfigToModel(data *srv.SystemConfig) *model.SystemConfig {
-	config := &model.SystemConfig{
+func convertConfigUpdateToModel(data *srv.ConfigUpdate) *model.ConfigUpdate {
+	config := &model.ConfigUpdate{
 		Device:    data.GetDevice(),
 		LinkType:  data.GetLinkType(),
 		PortName:  data.GetPortName(),
 		VendorID:  data.GetVendorId(),
 		ProductID: data.GetProductId(),
+		SerialNo:  data.GetSerialNo(),
 	}
 	return config
 }
@@ -171,8 +172,8 @@ func convertSystemReplyToProto(data *model.SystemReply) *srv.SystemReply {
 	return reply
 }
 
-func convertSystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
-	reply := &srv.SystemSetup{
+func convertDeviceSetupToProto(data *model.DeviceSetup) *srv.DeviceSetup {
+	reply := &srv.DeviceSetup{
 		DevType:     uint64(data.DevType),
 		Supported:   uint64(data.Supported),
 		Required:    uint64(data.Required),
@@ -181,8 +182,8 @@ func convertSystemSetupToProto(data *model.SystemSetup) *srv.SystemSetup {
 	return reply
 }
 
-func convertSystemMetricsToProto(data *model.SystemMetrics) *srv.SystemMetrics {
-	reply := &srv.SystemMetrics{
+func convertDeviceMetricsToProto(data *model.DeviceMetrics) *srv.DeviceMetrics {
+	reply := &srv.DeviceMetrics{
 		Uptime:   data.Uptime,
 		Moment:   data.Moment,
 		DevError: uint32(data.DevError),

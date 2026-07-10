@@ -41,8 +41,11 @@ func NewCallbackClient(ctx context.Context, log *slog.Logger, address string) (*
 }
 
 // Close gracefully terminates grpc connection
-func (c *CallbackClient) Close() error {
-	return c.client.Close()
+func (c *CallbackClient) Close() {
+	err := c.client.Close()
+	if err != nil {
+		c.log.Error("can't close client", "error", err)
+	}
 }
 
 // GreetingInfo sends notification about device application

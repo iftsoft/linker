@@ -160,7 +160,7 @@ func (x *SysHealthRequest) GetQuery() *SystemQuery {
 type SysHealthResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Metrics       *SystemMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
+	Metrics       *DeviceMetrics         `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -202,7 +202,7 @@ func (x *SysHealthResponse) GetReply() *SystemReply {
 	return nil
 }
 
-func (x *SysHealthResponse) GetMetrics() *SystemMetrics {
+func (x *SysHealthResponse) GetMetrics() *DeviceMetrics {
 	if x != nil {
 		return x.Metrics
 	}
@@ -212,7 +212,7 @@ func (x *SysHealthResponse) GetMetrics() *SystemMetrics {
 // Defines the message structure for a system start request
 type SysStartRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Config        *SystemConfig          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	Config        *ConfigUpdate          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -247,7 +247,7 @@ func (*SysStartRequest) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_manager_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *SysStartRequest) GetConfig() *SystemConfig {
+func (x *SysStartRequest) GetConfig() *ConfigUpdate {
 	if x != nil {
 		return x.Config
 	}
@@ -258,7 +258,7 @@ func (x *SysStartRequest) GetConfig() *SystemConfig {
 type SysStartResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
+	Setup         *DeviceSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -300,7 +300,7 @@ func (x *SysStartResponse) GetReply() *SystemReply {
 	return nil
 }
 
-func (x *SysStartResponse) GetSetup() *SystemSetup {
+func (x *SysStartResponse) GetSetup() *DeviceSetup {
 	if x != nil {
 		return x.Setup
 	}
@@ -400,7 +400,7 @@ func (x *SysStopResponse) GetReply() *SystemReply {
 // Defines the message structure for a system restart request
 type SysRestartRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Config        *SystemConfig          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	Config        *ConfigUpdate          `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -435,7 +435,7 @@ func (*SysRestartRequest) Descriptor() ([]byte, []int) {
 	return file_linker_system_v1_manager_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *SysRestartRequest) GetConfig() *SystemConfig {
+func (x *SysRestartRequest) GetConfig() *ConfigUpdate {
 	if x != nil {
 		return x.Config
 	}
@@ -446,7 +446,7 @@ func (x *SysRestartRequest) GetConfig() *SystemConfig {
 type SysRestartResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *SystemReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Setup         *SystemSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
+	Setup         *DeviceSetup           `protobuf:"bytes,2,opt,name=setup,proto3" json:"setup,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -488,7 +488,7 @@ func (x *SysRestartResponse) GetReply() *SystemReply {
 	return nil
 }
 
-func (x *SysRestartResponse) GetSetup() *SystemSetup {
+func (x *SysRestartResponse) GetSetup() *DeviceSetup {
 	if x != nil {
 		return x.Setup
 	}
@@ -508,21 +508,21 @@ const file_linker_system_v1_manager_proto_rawDesc = "" +
 	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"\x83\x01\n" +
 	"\x11SysHealthResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x129\n" +
-	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.SystemMetricsR\ametrics\"I\n" +
+	"\ametrics\x18\x02 \x01(\v2\x1f.linker.system.v1.DeviceMetricsR\ametrics\"I\n" +
 	"\x0fSysStartRequest\x126\n" +
-	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"|\n" +
+	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.ConfigUpdateR\x06config\"|\n" +
 	"\x10SysStartResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x123\n" +
-	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup\"E\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.DeviceSetupR\x05setup\"E\n" +
 	"\x0eSysStopRequest\x123\n" +
 	"\x05query\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemQueryR\x05query\"F\n" +
 	"\x0fSysStopResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\"K\n" +
 	"\x11SysRestartRequest\x126\n" +
-	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.SystemConfigR\x06config\"~\n" +
+	"\x06config\x18\x01 \x01(\v2\x1e.linker.system.v1.ConfigUpdateR\x06config\"~\n" +
 	"\x12SysRestartResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.system.v1.SystemReplyR\x05reply\x123\n" +
-	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.SystemSetupR\x05setup2\xc8\x03\n" +
+	"\x05setup\x18\x02 \x01(\v2\x1d.linker.system.v1.DeviceSetupR\x05setup2\xc8\x03\n" +
 	"\x14SystemManagerService\x12V\n" +
 	"\tTerminate\x12\".linker.system.v1.TerminateRequest\x1a#.linker.system.v1.TerminateResponse\"\x00\x12V\n" +
 	"\tSysHealth\x12\".linker.system.v1.SysHealthRequest\x1a#.linker.system.v1.SysHealthResponse\"\x00\x12S\n" +
@@ -557,24 +557,24 @@ var file_linker_system_v1_manager_proto_goTypes = []any{
 	(*SysRestartResponse)(nil), // 9: linker.system.v1.SysRestartResponse
 	(*SystemQuery)(nil),        // 10: linker.system.v1.SystemQuery
 	(*SystemReply)(nil),        // 11: linker.system.v1.SystemReply
-	(*SystemMetrics)(nil),      // 12: linker.system.v1.SystemMetrics
-	(*SystemConfig)(nil),       // 13: linker.system.v1.SystemConfig
-	(*SystemSetup)(nil),        // 14: linker.system.v1.SystemSetup
+	(*DeviceMetrics)(nil),      // 12: linker.system.v1.DeviceMetrics
+	(*ConfigUpdate)(nil),       // 13: linker.system.v1.ConfigUpdate
+	(*DeviceSetup)(nil),        // 14: linker.system.v1.DeviceSetup
 }
 var file_linker_system_v1_manager_proto_depIdxs = []int32{
 	10, // 0: linker.system.v1.TerminateRequest.query:type_name -> linker.system.v1.SystemQuery
 	11, // 1: linker.system.v1.TerminateResponse.reply:type_name -> linker.system.v1.SystemReply
 	10, // 2: linker.system.v1.SysHealthRequest.query:type_name -> linker.system.v1.SystemQuery
 	11, // 3: linker.system.v1.SysHealthResponse.reply:type_name -> linker.system.v1.SystemReply
-	12, // 4: linker.system.v1.SysHealthResponse.metrics:type_name -> linker.system.v1.SystemMetrics
-	13, // 5: linker.system.v1.SysStartRequest.config:type_name -> linker.system.v1.SystemConfig
+	12, // 4: linker.system.v1.SysHealthResponse.metrics:type_name -> linker.system.v1.DeviceMetrics
+	13, // 5: linker.system.v1.SysStartRequest.config:type_name -> linker.system.v1.ConfigUpdate
 	11, // 6: linker.system.v1.SysStartResponse.reply:type_name -> linker.system.v1.SystemReply
-	14, // 7: linker.system.v1.SysStartResponse.setup:type_name -> linker.system.v1.SystemSetup
+	14, // 7: linker.system.v1.SysStartResponse.setup:type_name -> linker.system.v1.DeviceSetup
 	10, // 8: linker.system.v1.SysStopRequest.query:type_name -> linker.system.v1.SystemQuery
 	11, // 9: linker.system.v1.SysStopResponse.reply:type_name -> linker.system.v1.SystemReply
-	13, // 10: linker.system.v1.SysRestartRequest.config:type_name -> linker.system.v1.SystemConfig
+	13, // 10: linker.system.v1.SysRestartRequest.config:type_name -> linker.system.v1.ConfigUpdate
 	11, // 11: linker.system.v1.SysRestartResponse.reply:type_name -> linker.system.v1.SystemReply
-	14, // 12: linker.system.v1.SysRestartResponse.setup:type_name -> linker.system.v1.SystemSetup
+	14, // 12: linker.system.v1.SysRestartResponse.setup:type_name -> linker.system.v1.DeviceSetup
 	0,  // 13: linker.system.v1.SystemManagerService.Terminate:input_type -> linker.system.v1.TerminateRequest
 	2,  // 14: linker.system.v1.SystemManagerService.SysHealth:input_type -> linker.system.v1.SysHealthRequest
 	4,  // 15: linker.system.v1.SystemManagerService.SysStart:input_type -> linker.system.v1.SysStartRequest
