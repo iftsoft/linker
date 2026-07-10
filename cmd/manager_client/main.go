@@ -38,6 +38,14 @@ func RunClient(ctx context.Context, log *slog.Logger) error {
 	}
 	defer grpcCli.Close()
 
+	// run manager client tests
+	err = ProcessTest(ctx, log, grpcCli)
+	if err != nil {
+		log.Warn("Manager client processing failed", slog.String("error", err.Error()))
+	} else {
+		log.Info("Manager client processing passed")
+	}
+
 	// start client loop
 	period := 30 * time.Second
 	timer := time.NewTimer(period)

@@ -340,7 +340,7 @@ func (x *ReadCardRequest) GetQuery() *DeviceQuery {
 type ReadCardResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *DeviceReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Card          *CardDescription       `protobuf:"bytes,2,opt,name=card,proto3" json:"card,omitempty"`
+	Card          *CardContent           `protobuf:"bytes,2,opt,name=card,proto3" json:"card,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -382,7 +382,7 @@ func (x *ReadCardResponse) GetReply() *DeviceReply {
 	return nil
 }
 
-func (x *ReadCardResponse) GetCard() *CardDescription {
+func (x *ReadCardResponse) GetCard() *CardContent {
 	if x != nil {
 		return x.Card
 	}
@@ -407,10 +407,10 @@ const file_linker_device_v1_reader_manager_proto_rawDesc = "" +
 	"\x13CaptureCardResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\"F\n" +
 	"\x0fReadCardRequest\x123\n" +
-	"\x05query\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceQueryR\x05query\"~\n" +
+	"\x05query\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceQueryR\x05query\"z\n" +
 	"\x10ReadCardResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x125\n" +
-	"\x04card\x18\x02 \x01(\v2!.linker.device.v1.CardDescriptionR\x04card2\xf9\x02\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x121\n" +
+	"\x04card\x18\x02 \x01(\v2\x1d.linker.device.v1.CardContentR\x04card2\xf9\x02\n" +
 	"\x14ReaderManagerService\x12V\n" +
 	"\tEnterCard\x12\".linker.device.v1.EnterCardRequest\x1a#.linker.device.v1.EnterCardResponse\"\x00\x12V\n" +
 	"\tEjectCard\x12\".linker.device.v1.EjectCardRequest\x1a#.linker.device.v1.EjectCardResponse\"\x00\x12\\\n" +
@@ -441,7 +441,7 @@ var file_linker_device_v1_reader_manager_proto_goTypes = []any{
 	(*ReadCardResponse)(nil),    // 7: linker.device.v1.ReadCardResponse
 	(*DeviceQuery)(nil),         // 8: linker.device.v1.DeviceQuery
 	(*DeviceReply)(nil),         // 9: linker.device.v1.DeviceReply
-	(*CardDescription)(nil),     // 10: linker.device.v1.CardDescription
+	(*CardContent)(nil),         // 10: linker.device.v1.CardContent
 }
 var file_linker_device_v1_reader_manager_proto_depIdxs = []int32{
 	8,  // 0: linker.device.v1.EnterCardRequest.query:type_name -> linker.device.v1.DeviceQuery
@@ -452,7 +452,7 @@ var file_linker_device_v1_reader_manager_proto_depIdxs = []int32{
 	9,  // 5: linker.device.v1.CaptureCardResponse.reply:type_name -> linker.device.v1.DeviceReply
 	8,  // 6: linker.device.v1.ReadCardRequest.query:type_name -> linker.device.v1.DeviceQuery
 	9,  // 7: linker.device.v1.ReadCardResponse.reply:type_name -> linker.device.v1.DeviceReply
-	10, // 8: linker.device.v1.ReadCardResponse.card:type_name -> linker.device.v1.CardDescription
+	10, // 8: linker.device.v1.ReadCardResponse.card:type_name -> linker.device.v1.CardContent
 	0,  // 9: linker.device.v1.ReaderManagerService.EnterCard:input_type -> linker.device.v1.EnterCardRequest
 	2,  // 10: linker.device.v1.ReaderManagerService.EjectCard:input_type -> linker.device.v1.EjectCardRequest
 	4,  // 11: linker.device.v1.ReaderManagerService.CaptureCard:input_type -> linker.device.v1.CaptureCardRequest

@@ -144,9 +144,8 @@ func (x *PrinterSetup) GetShowImage() uint32 {
 }
 
 // Defines the message structure for a printer progress
-type PrinterProgress struct {
+type ProgressNotify struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	DocName       string                 `protobuf:"bytes,2,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
 	PageDone      uint32                 `protobuf:"varint,3,opt,name=page_done,json=pageDone,proto3" json:"page_done,omitempty"`
 	PagesAll      uint32                 `protobuf:"varint,4,opt,name=pages_all,json=pagesAll,proto3" json:"pages_all,omitempty"`
@@ -154,20 +153,20 @@ type PrinterProgress struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PrinterProgress) Reset() {
-	*x = PrinterProgress{}
+func (x *ProgressNotify) Reset() {
+	*x = ProgressNotify{}
 	mi := &file_linker_device_v1_printer_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PrinterProgress) String() string {
+func (x *ProgressNotify) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PrinterProgress) ProtoMessage() {}
+func (*ProgressNotify) ProtoMessage() {}
 
-func (x *PrinterProgress) ProtoReflect() protoreflect.Message {
+func (x *ProgressNotify) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_printer_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -179,33 +178,26 @@ func (x *PrinterProgress) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PrinterProgress.ProtoReflect.Descriptor instead.
-func (*PrinterProgress) Descriptor() ([]byte, []int) {
+// Deprecated: Use ProgressNotify.ProtoReflect.Descriptor instead.
+func (*ProgressNotify) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_printer_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *PrinterProgress) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *PrinterProgress) GetDocName() string {
+func (x *ProgressNotify) GetDocName() string {
 	if x != nil {
 		return x.DocName
 	}
 	return ""
 }
 
-func (x *PrinterProgress) GetPageDone() uint32 {
+func (x *ProgressNotify) GetPageDone() uint32 {
 	if x != nil {
 		return x.PageDone
 	}
 	return 0
 }
 
-func (x *PrinterProgress) GetPagesAll() uint32 {
+func (x *ProgressNotify) GetPagesAll() uint32 {
 	if x != nil {
 		return x.PagesAll
 	}
@@ -226,9 +218,8 @@ const file_linker_device_v1_printer_proto_rawDesc = "" +
 	"paper_path\x18\x02 \x01(\rR\tpaperPath\x12\x1c\n" +
 	"\tlandscape\x18\x03 \x01(\bR\tlandscape\x12\x1d\n" +
 	"\n" +
-	"show_image\x18\x04 \x01(\rR\tshowImage\"~\n" +
-	"\x0fPrinterProgress\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x19\n" +
+	"show_image\x18\x04 \x01(\rR\tshowImage\"e\n" +
+	"\x0eProgressNotify\x12\x19\n" +
 	"\bdoc_name\x18\x02 \x01(\tR\adocName\x12\x1b\n" +
 	"\tpage_done\x18\x03 \x01(\rR\bpageDone\x12\x1b\n" +
 	"\tpages_all\x18\x04 \x01(\rR\bpagesAllB\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
@@ -247,9 +238,9 @@ func file_linker_device_v1_printer_proto_rawDescGZIP() []byte {
 
 var file_linker_device_v1_printer_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_linker_device_v1_printer_proto_goTypes = []any{
-	(*PrinterQuery)(nil),    // 0: linker.device.v1.PrinterQuery
-	(*PrinterSetup)(nil),    // 1: linker.device.v1.PrinterSetup
-	(*PrinterProgress)(nil), // 2: linker.device.v1.PrinterProgress
+	(*PrinterQuery)(nil),   // 0: linker.device.v1.PrinterQuery
+	(*PrinterSetup)(nil),   // 1: linker.device.v1.PrinterSetup
+	(*ProgressNotify)(nil), // 2: linker.device.v1.ProgressNotify
 }
 var file_linker_device_v1_printer_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

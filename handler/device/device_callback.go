@@ -84,10 +84,13 @@ func (h *DeviceCallback) StateChanged(ctx context.Context, req *srv.StateChanged
 			errors.New("StateChangedRequest is nil"))
 	}
 
-	reply := convertDeviceStateToModel(req.GetData())
-	h.log.Debug("gRPC.StateChanged", slog.Any("reply", reply))
+	value := model.DeviceState{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		StateNotify:  convertStateNotifyToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.StateChanged", slog.Any("value", value))
 
-	err := h.api.StateChanged(ctx, &reply)
+	err := h.api.StateChanged(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.StateChanged failed", slog.Any("error", err))
 	}
@@ -104,10 +107,13 @@ func (h *DeviceCallback) ActionPrompt(ctx context.Context, req *srv.ActionPrompt
 			errors.New("ActionPromptRequest is nil"))
 	}
 
-	reply := convertDevicePromptToModel(req.GetData())
-	h.log.Debug("gRPC.ActionPrompt", slog.Any("reply", reply))
+	value := model.DevicePrompt{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		PromptNotify: convertPromptNotifyToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.ActionPrompt", slog.Any("value", value))
 
-	err := h.api.ActionPrompt(ctx, &reply)
+	err := h.api.ActionPrompt(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.ActionPrompt failed", slog.Any("error", err))
 	}
@@ -124,10 +130,13 @@ func (h *DeviceCallback) ReaderReturn(ctx context.Context, req *srv.ReaderReturn
 			errors.New("ReaderReturnRequest is nil"))
 	}
 
-	reply := convertDeviceInformToModel(req.GetData())
-	h.log.Debug("gRPC.ReaderReturn", slog.Any("reply", reply))
+	value := model.DeviceInform{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		InformNotify: convertInformNotifyToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.ReaderReturn", slog.Any("value", value))
 
-	err := h.api.ReaderReturn(ctx, &reply)
+	err := h.api.ReaderReturn(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.ReaderReturn failed", slog.Any("error", err))
 	}
@@ -152,38 +161,43 @@ func convertDeviceReplyToModel(value *srv.DeviceReply) model.DeviceReply {
 	return data
 }
 
-func convertDeviceStateToModel(value *srv.DeviceState) model.DeviceState {
+func convertDeviceNotifyToModel(value *srv.DeviceNotify) model.DeviceNotify {
 	if value == nil {
-		return model.DeviceState{}
+		return model.DeviceNotify{}
 	}
-	data := model.DeviceState{
-		Device:   value.GetDevice(),
-		Action:   model.DevAction(value.GetAction()),
+	data := model.DeviceNotify{
+		Device: value.GetDevice(),
+		Action: model.DevAction(value.GetAction()),
+	}
+	return data
+}
+
+func convertStateNotifyToModel(value *srv.StateNotify) model.StateNotify {
+	if value == nil {
+		return model.StateNotify{}
+	}
+	data := model.StateNotify{
 		NewState: model.DevState(value.GetNewState()),
 		OldState: model.DevState(value.GetOldState()),
 	}
 	return data
 }
 
-func convertDevicePromptToModel(value *srv.DevicePrompt) model.DevicePrompt {
+func convertPromptNotifyToModel(value *srv.PromptNotify) model.PromptNotify {
 	if value == nil {
-		return model.DevicePrompt{}
+		return model.PromptNotify{}
 	}
-	data := model.DevicePrompt{
-		Device: value.GetDevice(),
-		Action: model.DevAction(value.GetAction()),
+	data := model.PromptNotify{
 		Prompt: model.DevPrompt(value.GetPrompt()),
 	}
 	return data
 }
 
-func convertDeviceInformToModel(value *srv.DeviceInform) model.DeviceInform {
+func convertInformNotifyToModel(value *srv.InformNotify) model.InformNotify {
 	if value == nil {
-		return model.DeviceInform{}
+		return model.InformNotify{}
 	}
-	data := model.DeviceInform{
-		Device: value.GetDevice(),
-		Action: model.DevAction(value.GetAction()),
+	data := model.InformNotify{
 		Inform: value.GetInform(),
 	}
 	return data

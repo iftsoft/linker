@@ -520,7 +520,7 @@ func (x *CheckValidatorRequest) GetQuery() *ValidatorQuery {
 type CheckValidatorResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *DeviceReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Batch         *ValidatorBatch        `protobuf:"bytes,2,opt,name=batch,proto3" json:"batch,omitempty"`
+	Batch         *BatchContent          `protobuf:"bytes,2,opt,name=batch,proto3" json:"batch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -562,7 +562,7 @@ func (x *CheckValidatorResponse) GetReply() *DeviceReply {
 	return nil
 }
 
-func (x *CheckValidatorResponse) GetBatch() *ValidatorBatch {
+func (x *CheckValidatorResponse) GetBatch() *BatchContent {
 	if x != nil {
 		return x.Batch
 	}
@@ -618,7 +618,7 @@ func (x *ClearValidatorRequest) GetQuery() *ValidatorQuery {
 type ClearValidatorResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reply         *DeviceReply           `protobuf:"bytes,1,opt,name=reply,proto3" json:"reply,omitempty"`
-	Batch         *ValidatorBatch        `protobuf:"bytes,2,opt,name=batch,proto3" json:"batch,omitempty"`
+	Batch         *BatchContent          `protobuf:"bytes,2,opt,name=batch,proto3" json:"batch,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -660,7 +660,7 @@ func (x *ClearValidatorResponse) GetReply() *DeviceReply {
 	return nil
 }
 
-func (x *ClearValidatorResponse) GetBatch() *ValidatorBatch {
+func (x *ClearValidatorResponse) GetBatch() *BatchContent {
 	if x != nil {
 		return x.Batch
 	}
@@ -693,15 +693,15 @@ const file_linker_device_v1_validator_manager_proto_rawDesc = "" +
 	"\x14StopValidateResponse\x123\n" +
 	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\"O\n" +
 	"\x15CheckValidatorRequest\x126\n" +
-	"\x05query\x18\x01 \x01(\v2 .linker.device.v1.ValidatorQueryR\x05query\"\x85\x01\n" +
+	"\x05query\x18\x01 \x01(\v2 .linker.device.v1.ValidatorQueryR\x05query\"\x83\x01\n" +
 	"\x16CheckValidatorResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x126\n" +
-	"\x05batch\x18\x02 \x01(\v2 .linker.device.v1.ValidatorBatchR\x05batch\"O\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x124\n" +
+	"\x05batch\x18\x02 \x01(\v2\x1e.linker.device.v1.BatchContentR\x05batch\"O\n" +
 	"\x15ClearValidatorRequest\x126\n" +
-	"\x05query\x18\x01 \x01(\v2 .linker.device.v1.ValidatorQueryR\x05query\"\x85\x01\n" +
+	"\x05query\x18\x01 \x01(\v2 .linker.device.v1.ValidatorQueryR\x05query\"\x83\x01\n" +
 	"\x16ClearValidatorResponse\x123\n" +
-	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x126\n" +
-	"\x05batch\x18\x02 \x01(\v2 .linker.device.v1.ValidatorBatchR\x05batch2\xbd\x05\n" +
+	"\x05reply\x18\x01 \x01(\v2\x1d.linker.device.v1.DeviceReplyR\x05reply\x124\n" +
+	"\x05batch\x18\x02 \x01(\v2\x1e.linker.device.v1.BatchContentR\x05batch2\xbd\x05\n" +
 	"\x17ValidatorManagerService\x12b\n" +
 	"\rInitValidator\x12&.linker.device.v1.InitValidatorRequest\x1a'.linker.device.v1.InitValidatorResponse\"\x00\x12Y\n" +
 	"\n" +
@@ -744,7 +744,7 @@ var file_linker_device_v1_validator_manager_proto_goTypes = []any{
 	(*ClearValidatorResponse)(nil), // 13: linker.device.v1.ClearValidatorResponse
 	(*ValidatorQuery)(nil),         // 14: linker.device.v1.ValidatorQuery
 	(*DeviceReply)(nil),            // 15: linker.device.v1.DeviceReply
-	(*ValidatorBatch)(nil),         // 16: linker.device.v1.ValidatorBatch
+	(*BatchContent)(nil),           // 16: linker.device.v1.BatchContent
 }
 var file_linker_device_v1_validator_manager_proto_depIdxs = []int32{
 	14, // 0: linker.device.v1.InitValidatorRequest.query:type_name -> linker.device.v1.ValidatorQuery
@@ -759,10 +759,10 @@ var file_linker_device_v1_validator_manager_proto_depIdxs = []int32{
 	15, // 9: linker.device.v1.StopValidateResponse.reply:type_name -> linker.device.v1.DeviceReply
 	14, // 10: linker.device.v1.CheckValidatorRequest.query:type_name -> linker.device.v1.ValidatorQuery
 	15, // 11: linker.device.v1.CheckValidatorResponse.reply:type_name -> linker.device.v1.DeviceReply
-	16, // 12: linker.device.v1.CheckValidatorResponse.batch:type_name -> linker.device.v1.ValidatorBatch
+	16, // 12: linker.device.v1.CheckValidatorResponse.batch:type_name -> linker.device.v1.BatchContent
 	14, // 13: linker.device.v1.ClearValidatorRequest.query:type_name -> linker.device.v1.ValidatorQuery
 	15, // 14: linker.device.v1.ClearValidatorResponse.reply:type_name -> linker.device.v1.DeviceReply
-	16, // 15: linker.device.v1.ClearValidatorResponse.batch:type_name -> linker.device.v1.ValidatorBatch
+	16, // 15: linker.device.v1.ClearValidatorResponse.batch:type_name -> linker.device.v1.BatchContent
 	0,  // 16: linker.device.v1.ValidatorManagerService.InitValidator:input_type -> linker.device.v1.InitValidatorRequest
 	2,  // 17: linker.device.v1.ValidatorManagerService.DoValidate:input_type -> linker.device.v1.DoValidateRequest
 	4,  // 18: linker.device.v1.ValidatorManagerService.AcceptNote:input_type -> linker.device.v1.AcceptNoteRequest

@@ -36,14 +36,13 @@ func (h *ValidatorCallback) NoteAccepted(ctx context.Context, req *srv.NoteAccep
 			errors.New("NoteAcceptedRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.ValidatorAccept{
-		Device: data.GetDevice(),
-		Note:   convertValidatorNoteToModel(data.GetNote()),
+	value := model.ValidatorAccept{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		AcceptNotify: convertAcceptNotifyToModel(req.GetData()),
 	}
-	h.log.Debug("gRPC.NoteAccepted", slog.Any("reply", reply))
+	h.log.Debug("gRPC.NoteAccepted", slog.Any("value", value))
 
-	err := h.api.NoteAccepted(ctx, &reply)
+	err := h.api.NoteAccepted(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.NoteAccepted failed", slog.Any("error", err))
 	}
@@ -60,14 +59,13 @@ func (h *ValidatorCallback) CashIsStored(ctx context.Context, req *srv.CashIsSto
 			errors.New("CashIsStoredRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.ValidatorAccept{
-		Device: data.GetDevice(),
-		Note:   convertValidatorNoteToModel(data.GetNote()),
+	value := model.ValidatorAccept{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		AcceptNotify: convertAcceptNotifyToModel(req.GetData()),
 	}
-	h.log.Debug("gRPC.CashIsStored", slog.Any("reply", reply))
+	h.log.Debug("gRPC.CashIsStored", slog.Any("value", value))
 
-	err := h.api.CashIsStored(ctx, &reply)
+	err := h.api.CashIsStored(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.CashIsStored failed", slog.Any("error", err))
 	}
@@ -84,14 +82,13 @@ func (h *ValidatorCallback) CashReturned(ctx context.Context, req *srv.CashRetur
 			errors.New("CashReturnedRequest is nil"))
 	}
 
-	data := req.GetData()
-	reply := model.ValidatorAccept{
-		Device: data.GetDevice(),
-		Note:   convertValidatorNoteToModel(data.GetNote()),
+	value := model.ValidatorAccept{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		AcceptNotify: convertAcceptNotifyToModel(req.GetData()),
 	}
-	h.log.Debug("gRPC.CashReturned", slog.Any("reply", reply))
+	h.log.Debug("gRPC.CashReturned", slog.Any("value", value))
 
-	err := h.api.CashReturned(ctx, &reply)
+	err := h.api.CashReturned(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.CashReturned failed", slog.Any("error", err))
 	}
@@ -108,10 +105,13 @@ func (h *ValidatorCallback) ValidatorStore(ctx context.Context, req *srv.Validat
 			errors.New("ValidatorStoreRequest is nil"))
 	}
 
-	reply := convertValidatorBatchToModel(req.GetData())
-	h.log.Debug("gRPC.ValidatorStore", slog.Any("reply", reply))
+	value := model.ValidatorBatch{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		BatchContent: convertBatchContentToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.ValidatorStore", slog.Any("value", value))
 
-	err := h.api.ValidatorStore(ctx, &reply)
+	err := h.api.ValidatorStore(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.ValidatorStore failed", slog.Any("error", err))
 	}
@@ -121,6 +121,30 @@ func (h *ValidatorCallback) ValidatorStore(ctx context.Context, req *srv.Validat
 	return resp, err
 }
 
+func convertAcceptNotifyToModel(data *srv.AcceptNotify) model.AcceptNotify {
+	if data == nil {
+		return model.AcceptNotify{}
+	}
+	return model.AcceptNotify{
+		Note: convertValidatorNoteToModel(data.GetNote()),
+	}
+}
+
+func convertBatchContentToModel(data *srv.BatchContent) model.BatchContent {
+	if data == nil {
+		return model.BatchContent{}
+	}
+	batch := model.BatchContent{
+		BatchId:    data.GetBatchId(),
+		BatchState: model.BatchState(data.GetBatchState()),
+		Details:    data.GetDetails(),
+	}
+	for _, note := range data.GetNotes() {
+		batch.Notes = append(batch.Notes, convertValidatorNoteToModel(note))
+	}
+	return batch
+}
+
 func convertValidatorNoteToModel(note *srv.ValidatorNote) model.ValidatorNote {
 	return model.ValidatorNote{
 		Currency: model.Currency(note.GetCurrency()),
@@ -128,17 +152,4 @@ func convertValidatorNoteToModel(note *srv.ValidatorNote) model.ValidatorNote {
 		Count:    model.Counter(note.GetCount()),
 		Amount:   model.Amount(note.GetAmount()),
 	}
-}
-
-func convertValidatorBatchToModel(data *srv.ValidatorBatch) model.ValidatorBatch {
-	batch := model.ValidatorBatch{
-		Device:  data.GetDevice(),
-		BatchId: data.GetBatchId(),
-		State:   model.BatchState(data.GetState()),
-		Details: data.GetDetails(),
-	}
-	for _, note := range data.GetNotes() {
-		batch.Notes = append(batch.Notes, convertValidatorNoteToModel(note))
-	}
-	return batch
 }

@@ -61,7 +61,8 @@ func (c *DeviceCallbackClient) StateChanged(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.StateChangedRequest{
-		Data: convertDeviceStateToProto(value),
+		Notify: convertDeviceNotifyToProto(&value.DeviceNotify),
+		Data:   convertStateNotifyToProto(&value.StateNotify),
 	}
 	_, err := c.device.StateChanged(ctx, input)
 	if err != nil {
@@ -77,7 +78,8 @@ func (c *DeviceCallbackClient) ActionPrompt(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.ActionPromptRequest{
-		Data: convertDevicePromptToProto(value),
+		Notify: convertDeviceNotifyToProto(&value.DeviceNotify),
+		Data:   convertPromptNotifyToProto(&value.PromptNotify),
 	}
 	_, err := c.device.ActionPrompt(ctx, input)
 	if err != nil {
@@ -93,7 +95,8 @@ func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.De
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
 	input := &device.ReaderReturnRequest{
-		Data: convertDeviceInformToProto(value),
+		Notify: convertDeviceNotifyToProto(&value.DeviceNotify),
+		Data:   convertInformNotifyToProto(&value.InformNotify),
 	}
 	_, err := c.device.ReaderReturn(ctx, input)
 	if err != nil {
@@ -118,38 +121,43 @@ func convertDeviceReplyToProto(value *model.DeviceReply) *device.DeviceReply {
 	return data
 }
 
-func convertDeviceStateToProto(value *model.DeviceState) *device.DeviceState {
+func convertDeviceNotifyToProto(value *model.DeviceNotify) *device.DeviceNotify {
 	if value == nil {
 		return nil
 	}
-	data := &device.DeviceState{
-		Device:   value.Device,
-		Action:   uint32(value.Action),
+	data := &device.DeviceNotify{
+		Device: value.Device,
+		Action: uint32(value.Action),
+	}
+	return data
+}
+
+func convertStateNotifyToProto(value *model.StateNotify) *device.StateNotify {
+	if value == nil {
+		return nil
+	}
+	data := &device.StateNotify{
 		NewState: uint32(value.NewState),
 		OldState: uint32(value.OldState),
 	}
 	return data
 }
 
-func convertDevicePromptToProto(value *model.DevicePrompt) *device.DevicePrompt {
+func convertPromptNotifyToProto(value *model.PromptNotify) *device.PromptNotify {
 	if value == nil {
 		return nil
 	}
-	data := &device.DevicePrompt{
-		Device: value.Device,
-		Action: uint32(value.Action),
+	data := &device.PromptNotify{
 		Prompt: uint32(value.Prompt),
 	}
 	return data
 }
 
-func convertDeviceInformToProto(value *model.DeviceInform) *device.DeviceInform {
+func convertInformNotifyToProto(value *model.InformNotify) *device.InformNotify {
 	if value == nil {
 		return nil
 	}
-	data := &device.DeviceInform{
-		Device: value.Device,
-		Action: uint32(value.Action),
+	data := &device.InformNotify{
 		Inform: value.Inform,
 	}
 	return data

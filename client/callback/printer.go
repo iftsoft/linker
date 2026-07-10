@@ -24,30 +24,30 @@ func NewPrinterCallbackClient(log *slog.Logger, conn *grpc.ClientConn) *PrinterC
 }
 
 // PrinterProgress sent notification about printing progress
-func (c *PrinterCallbackClient) PrinterProgress(ctx context.Context, reply *model.PrinterProgress) error {
+func (c *PrinterCallbackClient) PrinterProgress(ctx context.Context, value *model.PrinterProgress) error {
 	c.log.Debug("CallbackClient.PrinterProgress - grpc",
-		slog.String("device", reply.Device), slog.String("document", reply.DocName))
+		slog.String("device", value.Device), slog.String("document", value.DocName))
 
 	input := &device.PrinterProgressRequest{
-		Data: convertPrinterProgressToProto(reply),
+		Notify: convertDeviceNotifyToProto(&value.DeviceNotify),
+		Data:   convertProgressNotifyToProto(&value.ProgressNotify),
 	}
 	_, err := c.device.PrinterProgress(ctx, input)
 	if err != nil {
-		return fmt.Errorf("callback PrinterProgress for %s.%s failed: %w", reply.Device, reply.DocName, err)
+		return fmt.Errorf("callback PrinterProgress for %s.%s failed: %w", value.Device, value.DocName, err)
 	}
 
 	return nil
 }
 
-func convertPrinterProgressToProto(value *model.PrinterProgress) *device.PrinterProgress {
+func convertProgressNotifyToProto(value *model.ProgressNotify) *device.ProgressNotify {
 	if value == nil {
 		return nil
 	}
-	data := &device.PrinterProgress{
-		Device:   value.Device,
+	data := &device.ProgressNotify{
 		DocName:  value.DocName,
-		PageDone: uint32(value.PageDone),
-		PagesAll: uint32(value.PagesAll),
+		PageDone: value.PageDone,
+		PagesAll: value.PagesAll,
 	}
 	return data
 }

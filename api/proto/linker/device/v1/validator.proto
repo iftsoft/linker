@@ -20,17 +20,15 @@ message ValidatorNote {
 }
 
 // DeviceState the message structure for a accepted note
-message ValidatorAccept {
-  string device = 1;
-  ValidatorNote note = 2;
+message AcceptNotify {
+  ValidatorNote note = 1;
 }
 
 // DeviceState the message structure for a cassette state
-message ValidatorBatch {
-  string device = 1;
-  int64 batch_id = 2;
-  uint32 state = 3;
-  string details = 4;
-  repeated ValidatorNote notes = 5;
+message BatchContent {
+  int64 batch_id = 1;
+  uint32 batch_state = 2;
+  string details = 3;
+  repeated ValidatorNote notes = 4;
 }
 

@@ -4,6 +4,7 @@ option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go p
 
 package linker.device.v1; // Defines the package name for the service and messages
 
+import "linker/device/v1/device.proto";
 import "linker/device/v1/reader.proto";
 
 // Defines the gRPC service with an RPC method
@@ -16,7 +17,8 @@ service ReaderCallbackService {
 
 // Defines the message structure for a device reply request
 message CardPositionRequest {
-  CardPosition data = 1;
+  DeviceNotify notify = 1;
+  PositionNotify data = 2;
 }
 
 // Defines the message structure for the device reply response
@@ -24,7 +26,8 @@ message CardPositionResponse {}
 
 // Defines the message structure for an execute error request
 message CardDescriptionRequest {
-  CardDescription data = 1;
+  DeviceNotify notify = 1;
+  CardContent data = 2;
 }
 
 // Defines the message structure for an execute error response

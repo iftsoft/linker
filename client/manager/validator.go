@@ -116,8 +116,8 @@ func (c *ValidatorManagerClient) CheckValidator(ctx context.Context, query *mode
 	}
 
 	reply := &model.ValidatorStore{
-		DeviceReply:    convertDeviceReplyToModel(resp.GetReply()),
-		ValidatorBatch: convertValidatorBatchToModel(resp.GetBatch()),
+		DeviceReply:  convertDeviceReplyToModel(resp.GetReply()),
+		BatchContent: convertBatchContentToModel(resp.GetBatch()),
 	}
 	return reply, nil
 }
@@ -135,8 +135,8 @@ func (c *ValidatorManagerClient) ClearValidator(ctx context.Context, query *mode
 	}
 
 	reply := &model.ValidatorStore{
-		DeviceReply:    convertDeviceReplyToModel(resp.GetReply()),
-		ValidatorBatch: convertValidatorBatchToModel(resp.GetBatch()),
+		DeviceReply:  convertDeviceReplyToModel(resp.GetReply()),
+		BatchContent: convertBatchContentToModel(resp.GetBatch()),
 	}
 	return reply, nil
 }
@@ -153,15 +153,14 @@ func convertValidatorQueryToProto(value *model.ValidatorQuery) *device.Validator
 	return data
 }
 
-func convertValidatorBatchToModel(value *device.ValidatorBatch) model.ValidatorBatch {
+func convertBatchContentToModel(value *device.BatchContent) model.BatchContent {
 	if value == nil {
-		return model.ValidatorBatch{}
+		return model.BatchContent{}
 	}
-	data := model.ValidatorBatch{
-		Device:  value.GetDevice(),
-		BatchId: value.GetBatchId(),
-		State:   model.BatchState(value.GetState()),
-		Details: value.GetDetails(),
+	data := model.BatchContent{
+		BatchId:    value.GetBatchId(),
+		BatchState: model.BatchState(value.GetBatchState()),
+		Details:    value.GetDetails(),
 	}
 	for _, note := range value.GetNotes() {
 		cash := model.ValidatorNote{

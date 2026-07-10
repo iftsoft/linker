@@ -202,9 +202,7 @@ func (ms *ManagerService) ReadCard(ctx context.Context, query *model.DeviceQuery
 	}
 	reply := model.ReadCardReply{
 		DeviceReply: ms.getDeviceReply(query.Device),
-		CardDescription: model.CardDescription{
-			Device: query.Device,
-		},
+		CardContent: model.CardContent{},
 	}
 	ms.log.Info("ManagerService.ReadCard", "query", *query, "reply", reply)
 	return &reply, nil
@@ -267,11 +265,10 @@ func (ms *ManagerService) CheckValidator(ctx context.Context, query *model.Valid
 	}
 	reply := model.ValidatorStore{
 		DeviceReply: ms.getDeviceReply(query.Device),
-		ValidatorBatch: model.ValidatorBatch{
-			Device:  query.Device,
-			BatchId: 123,
-			State:   model.StateCorrect,
-			Details: "Cassette 32",
+		BatchContent: model.BatchContent{
+			BatchId:    123,
+			BatchState: model.StateCorrect,
+			Details:    "Cassette 32",
 			Notes: model.ValidatorBox{
 				model.ValidatorNote{
 					Currency: model.CurrencyUSD,
@@ -299,11 +296,10 @@ func (ms *ManagerService) ClearValidator(ctx context.Context, query *model.Valid
 	}
 	reply := model.ValidatorStore{
 		DeviceReply: ms.getDeviceReply(query.Device),
-		ValidatorBatch: model.ValidatorBatch{
-			Device:  query.Device,
-			BatchId: 123,
-			State:   model.StateCorrect,
-			Details: "Cassette 32",
+		BatchContent: model.BatchContent{
+			BatchId:    123,
+			BatchState: model.StateCorrect,
+			Details:    "Cassette 32",
 			Notes: model.ValidatorBox{
 				model.ValidatorNote{
 					Currency: model.CurrencyUSD,

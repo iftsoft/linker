@@ -2,7 +2,6 @@ package model
 
 import (
 	"context"
-	"fmt"
 )
 
 const (
@@ -48,11 +47,6 @@ type DeviceQuery struct {
 	Device string `json:"device"`
 }
 
-//func (dev DeviceQuery) String() string {
-//	str := fmt.Sprintf("Device:%s", dev.Device)
-//	return str
-//}
-
 type DeviceReply struct {
 	Device  string    `json:"device"`
 	Command string    `json:"command"`
@@ -62,54 +56,35 @@ type DeviceReply struct {
 	ErrText string    `json:"err_text"`
 }
 
-func (dev *DeviceReply) String() string {
-	str := fmt.Sprintf("Device:%s, Command:%s, Action:%s, State:%s, ErrCode:%s, ErrText:%s",
-		dev.Device, dev.Command, dev.Action.String(), dev.State.String(), dev.ErrCode.String(), dev.ErrText)
-	return str
+type DeviceNotify struct {
+	Device string    `json:"device"`
+	Action DevAction `json:"action"`
+}
+
+type StateNotify struct {
+	NewState DevState `json:"new_state"`
+	OldState DevState `json:"old_state"`
 }
 
 type DeviceState struct {
-	Device   string    `json:"device"`
-	Action   DevAction `json:"action"`
-	NewState DevState  `json:"new_state"`
-	OldState DevState  `json:"old_state"`
+	DeviceNotify
+	StateNotify
 }
 
-//func (dev *DeviceState) String() string {
-//	if dev == nil {
-//		return ""
-//	}
-//	str := fmt.Sprintf("Device = %s, Action = %s, NewState = %s, OldState = %s",
-//		dev.Device, dev.Action.String(), dev.NewState.String(), dev.OldState.String())
-//	return str
-//}
-
-type DevicePrompt struct {
-	Device string    `json:"device"`
-	Action DevAction `json:"action"`
+type PromptNotify struct {
 	Prompt DevPrompt `json:"prompt"`
 }
 
-//func (dev *DevicePrompt) String() string {
-//	if dev == nil {
-//		return ""
-//	}
-//	str := fmt.Sprintf("Device = %s, Action = %s, Prompt = %s",
-//		dev.Device, dev.Action.String(), dev.Prompt.String())
-//	return str
-//}
-
-type DeviceInform struct {
-	Device string    `json:"device"`
-	Action DevAction `json:"action"`
-	Inform string    `json:"inform"`
+type DevicePrompt struct {
+	DeviceNotify
+	PromptNotify
 }
 
-//func (dev *DeviceInform) String() string {
-//	if dev == nil {
-//		return ""
-//	}
-//	str := fmt.Sprintf("Device = %s, Action = %s, Inform = %s",
-//		dev.Device, dev.Action.String(), dev.Inform)
-//	return str
-//}
+type InformNotify struct {
+	Inform string `json:"inform"`
+}
+
+type DeviceInform struct {
+	DeviceNotify
+	InformNotify
+}

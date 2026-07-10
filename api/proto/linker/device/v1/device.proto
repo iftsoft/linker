@@ -19,25 +19,25 @@ message DeviceReply {
   string err_text = 6;
 }
 
-// DeviceState defines the message structure for a state change
-message DeviceState {
+// DeviceNotify defines the common part of callback message
+message DeviceNotify {
   string device = 1;
   uint32 action = 2;
-  uint32 new_state = 3;
-  uint32 old_state = 4;
 }
 
-// DevicePrompt defines the message structure for user prompt
-message DevicePrompt {
-  string device = 1;
-  uint32 action = 2;
-  uint32 prompt = 3;
+// StateNotify defines the message structure for a state change
+message StateNotify {
+  uint32 new_state = 1;
+  uint32 old_state = 2;
 }
 
-// DeviceInform defines the message structure for reader return
-message DeviceInform {
-  string device = 1;
-  uint32 action = 2;
-  string inform = 3;
+// PromptNotify defines the message structure for user prompt
+message PromptNotify {
+  uint32 prompt = 1;
+}
+
+// InformNotify defines the message structure for reader return
+message InformNotify {
+  string inform = 1;
 }
 

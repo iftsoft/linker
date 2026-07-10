@@ -83,7 +83,7 @@ message CheckValidatorRequest {
 // Defines the message structure for the status response
 message CheckValidatorResponse {
   DeviceReply reply = 1;
-  ValidatorBatch batch = 2;
+  BatchContent batch = 2;
 }
 
 // Defines the message structure for a status request
@@ -94,6 +94,6 @@ message ClearValidatorRequest {
 // Defines the message structure for the status response
 message ClearValidatorResponse {
   DeviceReply reply = 1;
-  ValidatorBatch batch = 2;
+  BatchContent batch = 2;
 }
 

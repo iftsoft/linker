@@ -4,6 +4,7 @@ option go_package = "./gen/go/linker/device/v1"; // Optional: Specifies the Go p
 
 package linker.device.v1; // Defines the package name for the service and messages
 
+import "linker/device/v1/device.proto";
 import "linker/device/v1/validator.proto";
 
 // Defines the gRPC service with an RPC method
@@ -20,7 +21,8 @@ service ValidatorCallbackService {
 
 // Defines the message structure for a new accepted note
 message NoteAcceptedRequest {
-  ValidatorAccept data = 1;
+  DeviceNotify notify = 1;
+  AcceptNotify data = 2;
 }
 
 // Defines the message structure for the new accepted note response
@@ -28,7 +30,8 @@ message NoteAcceptedResponse {}
 
 // Defines the message structure for a stored note request
 message CashIsStoredRequest {
-  ValidatorAccept data = 1;
+  DeviceNotify notify = 1;
+  AcceptNotify data = 2;
 }
 
 // Defines the message structure for the stored note response
@@ -36,7 +39,8 @@ message CashIsStoredResponse {}
 
 // Defines the message structure for a returned note request
 message CashReturnedRequest {
-  ValidatorAccept data = 1;
+  DeviceNotify notify = 1;
+  AcceptNotify data = 2;
 }
 
 // Defines the message structure for the returned note response
@@ -44,7 +48,8 @@ message CashReturnedResponse {}
 
 // Defines the message structure for a store content request
 message ValidatorStoreRequest {
-  ValidatorBatch data = 1;
+  DeviceNotify notify = 1;
+  BatchContent data = 2;
 }
 
 // Defines the message structure for the store content response

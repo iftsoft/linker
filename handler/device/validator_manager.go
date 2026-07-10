@@ -156,7 +156,7 @@ func (h *ValidatorManager) CheckValidator(ctx context.Context, req *srv.CheckVal
 
 	resp := &srv.CheckValidatorResponse{
 		Reply: convertDeviceReplyToProto(&store.DeviceReply),
-		Batch: convertValidatorBatchToProto(&store.ValidatorBatch),
+		Batch: convertBatchContentToProto(&store.BatchContent),
 	}
 
 	return resp, err
@@ -179,7 +179,7 @@ func (h *ValidatorManager) ClearValidator(ctx context.Context, req *srv.ClearVal
 
 	resp := &srv.ClearValidatorResponse{
 		Reply: convertDeviceReplyToProto(&store.DeviceReply),
-		Batch: convertValidatorBatchToProto(&store.ValidatorBatch),
+		Batch: convertBatchContentToProto(&store.BatchContent),
 	}
 
 	return resp, err
@@ -207,16 +207,15 @@ func convertValidatorNoteToProto(note model.ValidatorNote) *srv.ValidatorNote {
 	return reply
 }
 
-func convertValidatorBatchToProto(data *model.ValidatorBatch) *srv.ValidatorBatch {
+func convertBatchContentToProto(data *model.BatchContent) *srv.BatchContent {
 	if data == nil {
 		return nil
 	}
-	reply := &srv.ValidatorBatch{
-		Device:  data.Device,
-		BatchId: data.BatchId,
-		State:   uint32(data.State),
-		Details: data.Details,
-		Notes:   make([]*srv.ValidatorNote, len(data.Notes)),
+	reply := &srv.BatchContent{
+		BatchId:    data.BatchId,
+		BatchState: uint32(data.BatchState),
+		Details:    data.Details,
+		Notes:      make([]*srv.ValidatorNote, len(data.Notes)),
 	}
 	for _, note := range data.Notes {
 		item := convertValidatorNoteToProto(note)

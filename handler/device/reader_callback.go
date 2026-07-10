@@ -36,10 +36,13 @@ func (h *ReaderCallback) CardPosition(ctx context.Context, req *srv.CardPosition
 			errors.New("CardPositionRequest is nil"))
 	}
 
-	reply := convertCardPositionToModel(req.GetData())
-	h.log.Debug("gRPC.CardPosition", slog.Any("reply", reply))
+	value := model.CardPosition{
+		DeviceNotify:   convertDeviceNotifyToModel(req.GetNotify()),
+		PositionNotify: convertPositionNotifyToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.CardPosition", slog.Any("value", value))
 
-	err := h.api.CardPosition(ctx, &reply)
+	err := h.api.CardPosition(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.CardPosition failed", slog.Any("error", err))
 	}
@@ -56,10 +59,13 @@ func (h *ReaderCallback) CardDescription(ctx context.Context, req *srv.CardDescr
 			errors.New("CardDescriptionRequest is nil"))
 	}
 
-	reply := convertCardDescriptionToModel(req.GetData())
-	h.log.Debug("gRPC.CardDescription", slog.Any("reply", reply))
+	value := model.CardDescription{
+		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
+		CardContent:  convertCardContentToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.CardDescription", slog.Any("value", value))
 
-	err := h.api.CardDescription(ctx, &reply)
+	err := h.api.CardDescription(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.CardDescription failed", slog.Any("error", err))
 	}
@@ -69,23 +75,21 @@ func (h *ReaderCallback) CardDescription(ctx context.Context, req *srv.CardDescr
 	return resp, err
 }
 
-func convertCardPositionToModel(value *srv.CardPosition) model.CardPosition {
+func convertPositionNotifyToModel(value *srv.PositionNotify) model.PositionNotify {
 	if value == nil {
-		return model.CardPosition{}
+		return model.PositionNotify{}
 	}
-	data := model.CardPosition{
-		Device:   value.GetDevice(),
+	data := model.PositionNotify{
 		Position: value.GetPosition(),
 	}
 	return data
 }
 
-func convertCardDescriptionToModel(value *srv.CardDescription) model.CardDescription {
+func convertCardContentToModel(value *srv.CardContent) model.CardContent {
 	if value == nil {
-		return model.CardDescription{}
+		return model.CardContent{}
 	}
-	data := model.CardDescription{
-		Device:  value.GetDevice(),
+	data := model.CardContent{
 		CardPan: model.CardPAN(value.GetCardPan()),
 		ExpDate: value.GetExpDate(),
 		Holder:  value.GetHolder(),

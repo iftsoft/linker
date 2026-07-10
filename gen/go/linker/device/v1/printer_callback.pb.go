@@ -24,7 +24,8 @@ const (
 // Defines the message structure for a printer progress request
 type PrinterProgressRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *PrinterProgress       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
+	Data          *ProgressNotify        `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,7 +60,14 @@ func (*PrinterProgressRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_printer_callback_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *PrinterProgressRequest) GetData() *PrinterProgress {
+func (x *PrinterProgressRequest) GetNotify() *DeviceNotify {
+	if x != nil {
+		return x.Notify
+	}
+	return nil
+}
+
+func (x *PrinterProgressRequest) GetData() *ProgressNotify {
 	if x != nil {
 		return x.Data
 	}
@@ -107,9 +115,10 @@ var File_linker_device_v1_printer_callback_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_printer_callback_proto_rawDesc = "" +
 	"\n" +
-	"'linker/device/v1/printer_callback.proto\x12\x10linker.device.v1\x1a\x1elinker/device/v1/printer.proto\"O\n" +
-	"\x16PrinterProgressRequest\x125\n" +
-	"\x04data\x18\x01 \x01(\v2!.linker.device.v1.PrinterProgressR\x04data\"\x19\n" +
+	"'linker/device/v1/printer_callback.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/device.proto\x1a\x1elinker/device/v1/printer.proto\"\x86\x01\n" +
+	"\x16PrinterProgressRequest\x126\n" +
+	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x124\n" +
+	"\x04data\x18\x02 \x01(\v2 .linker.device.v1.ProgressNotifyR\x04data\"\x19\n" +
 	"\x17PrinterProgressResponse2\x82\x01\n" +
 	"\x16PrinterCallbackService\x12h\n" +
 	"\x0fPrinterProgress\x12(.linker.device.v1.PrinterProgressRequest\x1a).linker.device.v1.PrinterProgressResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
@@ -130,17 +139,19 @@ var file_linker_device_v1_printer_callback_proto_msgTypes = make([]protoimpl.Mes
 var file_linker_device_v1_printer_callback_proto_goTypes = []any{
 	(*PrinterProgressRequest)(nil),  // 0: linker.device.v1.PrinterProgressRequest
 	(*PrinterProgressResponse)(nil), // 1: linker.device.v1.PrinterProgressResponse
-	(*PrinterProgress)(nil),         // 2: linker.device.v1.PrinterProgress
+	(*DeviceNotify)(nil),            // 2: linker.device.v1.DeviceNotify
+	(*ProgressNotify)(nil),          // 3: linker.device.v1.ProgressNotify
 }
 var file_linker_device_v1_printer_callback_proto_depIdxs = []int32{
-	2, // 0: linker.device.v1.PrinterProgressRequest.data:type_name -> linker.device.v1.PrinterProgress
-	0, // 1: linker.device.v1.PrinterCallbackService.PrinterProgress:input_type -> linker.device.v1.PrinterProgressRequest
-	1, // 2: linker.device.v1.PrinterCallbackService.PrinterProgress:output_type -> linker.device.v1.PrinterProgressResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: linker.device.v1.PrinterProgressRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	3, // 1: linker.device.v1.PrinterProgressRequest.data:type_name -> linker.device.v1.ProgressNotify
+	0, // 2: linker.device.v1.PrinterCallbackService.PrinterProgress:input_type -> linker.device.v1.PrinterProgressRequest
+	1, // 3: linker.device.v1.PrinterCallbackService.PrinterProgress:output_type -> linker.device.v1.PrinterProgressResponse
+	3, // [3:4] is the sub-list for method output_type
+	2, // [2:3] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_linker_device_v1_printer_callback_proto_init() }
@@ -148,6 +159,7 @@ func file_linker_device_v1_printer_callback_proto_init() {
 	if File_linker_device_v1_printer_callback_proto != nil {
 		return
 	}
+	file_linker_device_v1_device_proto_init()
 	file_linker_device_v1_printer_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{

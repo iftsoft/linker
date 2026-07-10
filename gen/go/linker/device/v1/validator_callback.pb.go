@@ -24,7 +24,8 @@ const (
 // Defines the message structure for a new accepted note
 type NoteAcceptedRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ValidatorAccept       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
+	Data          *AcceptNotify          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,7 +60,14 @@ func (*NoteAcceptedRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_callback_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *NoteAcceptedRequest) GetData() *ValidatorAccept {
+func (x *NoteAcceptedRequest) GetNotify() *DeviceNotify {
+	if x != nil {
+		return x.Notify
+	}
+	return nil
+}
+
+func (x *NoteAcceptedRequest) GetData() *AcceptNotify {
 	if x != nil {
 		return x.Data
 	}
@@ -106,7 +114,8 @@ func (*NoteAcceptedResponse) Descriptor() ([]byte, []int) {
 // Defines the message structure for a stored note request
 type CashIsStoredRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ValidatorAccept       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
+	Data          *AcceptNotify          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -141,7 +150,14 @@ func (*CashIsStoredRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_callback_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CashIsStoredRequest) GetData() *ValidatorAccept {
+func (x *CashIsStoredRequest) GetNotify() *DeviceNotify {
+	if x != nil {
+		return x.Notify
+	}
+	return nil
+}
+
+func (x *CashIsStoredRequest) GetData() *AcceptNotify {
 	if x != nil {
 		return x.Data
 	}
@@ -188,7 +204,8 @@ func (*CashIsStoredResponse) Descriptor() ([]byte, []int) {
 // Defines the message structure for a returned note request
 type CashReturnedRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ValidatorAccept       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
+	Data          *AcceptNotify          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -223,7 +240,14 @@ func (*CashReturnedRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_callback_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *CashReturnedRequest) GetData() *ValidatorAccept {
+func (x *CashReturnedRequest) GetNotify() *DeviceNotify {
+	if x != nil {
+		return x.Notify
+	}
+	return nil
+}
+
+func (x *CashReturnedRequest) GetData() *AcceptNotify {
 	if x != nil {
 		return x.Data
 	}
@@ -270,7 +294,8 @@ func (*CashReturnedResponse) Descriptor() ([]byte, []int) {
 // Defines the message structure for a store content request
 type ValidatorStoreRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *ValidatorBatch        `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
+	Data          *BatchContent          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -305,7 +330,14 @@ func (*ValidatorStoreRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_callback_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ValidatorStoreRequest) GetData() *ValidatorBatch {
+func (x *ValidatorStoreRequest) GetNotify() *DeviceNotify {
+	if x != nil {
+		return x.Notify
+	}
+	return nil
+}
+
+func (x *ValidatorStoreRequest) GetData() *BatchContent {
 	if x != nil {
 		return x.Data
 	}
@@ -353,18 +385,22 @@ var File_linker_device_v1_validator_callback_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_validator_callback_proto_rawDesc = "" +
 	"\n" +
-	")linker/device/v1/validator_callback.proto\x12\x10linker.device.v1\x1a linker/device/v1/validator.proto\"L\n" +
-	"\x13NoteAcceptedRequest\x125\n" +
-	"\x04data\x18\x01 \x01(\v2!.linker.device.v1.ValidatorAcceptR\x04data\"\x16\n" +
-	"\x14NoteAcceptedResponse\"L\n" +
-	"\x13CashIsStoredRequest\x125\n" +
-	"\x04data\x18\x01 \x01(\v2!.linker.device.v1.ValidatorAcceptR\x04data\"\x16\n" +
-	"\x14CashIsStoredResponse\"L\n" +
-	"\x13CashReturnedRequest\x125\n" +
-	"\x04data\x18\x01 \x01(\v2!.linker.device.v1.ValidatorAcceptR\x04data\"\x16\n" +
-	"\x14CashReturnedResponse\"M\n" +
-	"\x15ValidatorStoreRequest\x124\n" +
-	"\x04data\x18\x01 \x01(\v2 .linker.device.v1.ValidatorBatchR\x04data\"\x18\n" +
+	")linker/device/v1/validator_callback.proto\x12\x10linker.device.v1\x1a\x1dlinker/device/v1/device.proto\x1a linker/device/v1/validator.proto\"\x81\x01\n" +
+	"\x13NoteAcceptedRequest\x126\n" +
+	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
+	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.AcceptNotifyR\x04data\"\x16\n" +
+	"\x14NoteAcceptedResponse\"\x81\x01\n" +
+	"\x13CashIsStoredRequest\x126\n" +
+	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
+	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.AcceptNotifyR\x04data\"\x16\n" +
+	"\x14CashIsStoredResponse\"\x81\x01\n" +
+	"\x13CashReturnedRequest\x126\n" +
+	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
+	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.AcceptNotifyR\x04data\"\x16\n" +
+	"\x14CashReturnedResponse\"\x83\x01\n" +
+	"\x15ValidatorStoreRequest\x126\n" +
+	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
+	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.BatchContentR\x04data\"\x18\n" +
 	"\x16ValidatorStoreResponse2\xa4\x03\n" +
 	"\x18ValidatorCallbackService\x12_\n" +
 	"\fNoteAccepted\x12%.linker.device.v1.NoteAcceptedRequest\x1a&.linker.device.v1.NoteAcceptedResponse\"\x00\x12_\n" +
@@ -394,27 +430,32 @@ var file_linker_device_v1_validator_callback_proto_goTypes = []any{
 	(*CashReturnedResponse)(nil),   // 5: linker.device.v1.CashReturnedResponse
 	(*ValidatorStoreRequest)(nil),  // 6: linker.device.v1.ValidatorStoreRequest
 	(*ValidatorStoreResponse)(nil), // 7: linker.device.v1.ValidatorStoreResponse
-	(*ValidatorAccept)(nil),        // 8: linker.device.v1.ValidatorAccept
-	(*ValidatorBatch)(nil),         // 9: linker.device.v1.ValidatorBatch
+	(*DeviceNotify)(nil),           // 8: linker.device.v1.DeviceNotify
+	(*AcceptNotify)(nil),           // 9: linker.device.v1.AcceptNotify
+	(*BatchContent)(nil),           // 10: linker.device.v1.BatchContent
 }
 var file_linker_device_v1_validator_callback_proto_depIdxs = []int32{
-	8, // 0: linker.device.v1.NoteAcceptedRequest.data:type_name -> linker.device.v1.ValidatorAccept
-	8, // 1: linker.device.v1.CashIsStoredRequest.data:type_name -> linker.device.v1.ValidatorAccept
-	8, // 2: linker.device.v1.CashReturnedRequest.data:type_name -> linker.device.v1.ValidatorAccept
-	9, // 3: linker.device.v1.ValidatorStoreRequest.data:type_name -> linker.device.v1.ValidatorBatch
-	0, // 4: linker.device.v1.ValidatorCallbackService.NoteAccepted:input_type -> linker.device.v1.NoteAcceptedRequest
-	2, // 5: linker.device.v1.ValidatorCallbackService.CashIsStored:input_type -> linker.device.v1.CashIsStoredRequest
-	4, // 6: linker.device.v1.ValidatorCallbackService.CashReturned:input_type -> linker.device.v1.CashReturnedRequest
-	6, // 7: linker.device.v1.ValidatorCallbackService.ValidatorStore:input_type -> linker.device.v1.ValidatorStoreRequest
-	1, // 8: linker.device.v1.ValidatorCallbackService.NoteAccepted:output_type -> linker.device.v1.NoteAcceptedResponse
-	3, // 9: linker.device.v1.ValidatorCallbackService.CashIsStored:output_type -> linker.device.v1.CashIsStoredResponse
-	5, // 10: linker.device.v1.ValidatorCallbackService.CashReturned:output_type -> linker.device.v1.CashReturnedResponse
-	7, // 11: linker.device.v1.ValidatorCallbackService.ValidatorStore:output_type -> linker.device.v1.ValidatorStoreResponse
-	8, // [8:12] is the sub-list for method output_type
-	4, // [4:8] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	8,  // 0: linker.device.v1.NoteAcceptedRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	9,  // 1: linker.device.v1.NoteAcceptedRequest.data:type_name -> linker.device.v1.AcceptNotify
+	8,  // 2: linker.device.v1.CashIsStoredRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	9,  // 3: linker.device.v1.CashIsStoredRequest.data:type_name -> linker.device.v1.AcceptNotify
+	8,  // 4: linker.device.v1.CashReturnedRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	9,  // 5: linker.device.v1.CashReturnedRequest.data:type_name -> linker.device.v1.AcceptNotify
+	8,  // 6: linker.device.v1.ValidatorStoreRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	10, // 7: linker.device.v1.ValidatorStoreRequest.data:type_name -> linker.device.v1.BatchContent
+	0,  // 8: linker.device.v1.ValidatorCallbackService.NoteAccepted:input_type -> linker.device.v1.NoteAcceptedRequest
+	2,  // 9: linker.device.v1.ValidatorCallbackService.CashIsStored:input_type -> linker.device.v1.CashIsStoredRequest
+	4,  // 10: linker.device.v1.ValidatorCallbackService.CashReturned:input_type -> linker.device.v1.CashReturnedRequest
+	6,  // 11: linker.device.v1.ValidatorCallbackService.ValidatorStore:input_type -> linker.device.v1.ValidatorStoreRequest
+	1,  // 12: linker.device.v1.ValidatorCallbackService.NoteAccepted:output_type -> linker.device.v1.NoteAcceptedResponse
+	3,  // 13: linker.device.v1.ValidatorCallbackService.CashIsStored:output_type -> linker.device.v1.CashIsStoredResponse
+	5,  // 14: linker.device.v1.ValidatorCallbackService.CashReturned:output_type -> linker.device.v1.CashReturnedResponse
+	7,  // 15: linker.device.v1.ValidatorCallbackService.ValidatorStore:output_type -> linker.device.v1.ValidatorStoreResponse
+	12, // [12:16] is the sub-list for method output_type
+	8,  // [8:12] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_linker_device_v1_validator_callback_proto_init() }
@@ -422,6 +463,7 @@ func file_linker_device_v1_validator_callback_proto_init() {
 	if File_linker_device_v1_validator_callback_proto != nil {
 		return
 	}
+	file_linker_device_v1_device_proto_init()
 	file_linker_device_v1_validator_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{

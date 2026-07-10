@@ -83,24 +83,18 @@ func (c *ReaderManagerClient) ReadCard(ctx context.Context, query *model.DeviceQ
 		return nil, fmt.Errorf("command ReadCard for %s failed: %w", query.Device, err)
 	}
 
-	reply := convertReadCardReply(resp.GetReply(), resp.GetCard())
+	reply := &model.ReadCardReply{
+		DeviceReply: convertDeviceReplyToModel(resp.GetReply()),
+		CardContent: convertCardContentToModel(resp.GetCard()),
+	}
 	return reply, nil
 }
 
-func convertReadCardReply(reply *device.DeviceReply, card *device.CardDescription) *model.ReadCardReply {
-	data := &model.ReadCardReply{
-		DeviceReply:     convertDeviceReplyToModel(reply),
-		CardDescription: convertCardDescription(card),
-	}
-	return data
-}
-
-func convertCardDescription(value *device.CardDescription) model.CardDescription {
+func convertCardContentToModel(value *device.CardContent) model.CardContent {
 	if value == nil {
-		return model.CardDescription{}
+		return model.CardContent{}
 	}
-	data := model.CardDescription{
-		Device:  value.Device,
+	data := model.CardContent{
 		CardPan: model.CardPAN(value.CardPan),
 		ExpDate: value.ExpDate,
 		Holder:  value.Holder,

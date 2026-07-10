@@ -152,28 +152,27 @@ func (x *ValidatorNote) GetAmount() int64 {
 }
 
 // DeviceState the message structure for a accepted note
-type ValidatorAccept struct {
+type AcceptNotify struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	Note          *ValidatorNote         `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
+	Note          *ValidatorNote         `protobuf:"bytes,1,opt,name=note,proto3" json:"note,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ValidatorAccept) Reset() {
-	*x = ValidatorAccept{}
+func (x *AcceptNotify) Reset() {
+	*x = AcceptNotify{}
 	mi := &file_linker_device_v1_validator_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ValidatorAccept) String() string {
+func (x *AcceptNotify) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ValidatorAccept) ProtoMessage() {}
+func (*AcceptNotify) ProtoMessage() {}
 
-func (x *ValidatorAccept) ProtoReflect() protoreflect.Message {
+func (x *AcceptNotify) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_validator_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -185,19 +184,12 @@ func (x *ValidatorAccept) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ValidatorAccept.ProtoReflect.Descriptor instead.
-func (*ValidatorAccept) Descriptor() ([]byte, []int) {
+// Deprecated: Use AcceptNotify.ProtoReflect.Descriptor instead.
+func (*AcceptNotify) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ValidatorAccept) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *ValidatorAccept) GetNote() *ValidatorNote {
+func (x *AcceptNotify) GetNote() *ValidatorNote {
 	if x != nil {
 		return x.Note
 	}
@@ -205,31 +197,30 @@ func (x *ValidatorAccept) GetNote() *ValidatorNote {
 }
 
 // DeviceState the message structure for a cassette state
-type ValidatorBatch struct {
+type BatchContent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	BatchId       int64                  `protobuf:"varint,2,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
-	State         uint32                 `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
-	Details       string                 `protobuf:"bytes,4,opt,name=details,proto3" json:"details,omitempty"`
-	Notes         []*ValidatorNote       `protobuf:"bytes,5,rep,name=notes,proto3" json:"notes,omitempty"`
+	BatchId       int64                  `protobuf:"varint,1,opt,name=batch_id,json=batchId,proto3" json:"batch_id,omitempty"`
+	BatchState    uint32                 `protobuf:"varint,2,opt,name=batch_state,json=batchState,proto3" json:"batch_state,omitempty"`
+	Details       string                 `protobuf:"bytes,3,opt,name=details,proto3" json:"details,omitempty"`
+	Notes         []*ValidatorNote       `protobuf:"bytes,4,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ValidatorBatch) Reset() {
-	*x = ValidatorBatch{}
+func (x *BatchContent) Reset() {
+	*x = BatchContent{}
 	mi := &file_linker_device_v1_validator_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ValidatorBatch) String() string {
+func (x *BatchContent) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ValidatorBatch) ProtoMessage() {}
+func (*BatchContent) ProtoMessage() {}
 
-func (x *ValidatorBatch) ProtoReflect() protoreflect.Message {
+func (x *BatchContent) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_validator_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -241,40 +232,33 @@ func (x *ValidatorBatch) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ValidatorBatch.ProtoReflect.Descriptor instead.
-func (*ValidatorBatch) Descriptor() ([]byte, []int) {
+// Deprecated: Use BatchContent.ProtoReflect.Descriptor instead.
+func (*BatchContent) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_validator_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ValidatorBatch) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *ValidatorBatch) GetBatchId() int64 {
+func (x *BatchContent) GetBatchId() int64 {
 	if x != nil {
 		return x.BatchId
 	}
 	return 0
 }
 
-func (x *ValidatorBatch) GetState() uint32 {
+func (x *BatchContent) GetBatchState() uint32 {
 	if x != nil {
-		return x.State
+		return x.BatchState
 	}
 	return 0
 }
 
-func (x *ValidatorBatch) GetDetails() string {
+func (x *BatchContent) GetDetails() string {
 	if x != nil {
 		return x.Details
 	}
 	return ""
 }
 
-func (x *ValidatorBatch) GetNotes() []*ValidatorNote {
+func (x *BatchContent) GetNotes() []*ValidatorNote {
 	if x != nil {
 		return x.Notes
 	}
@@ -294,16 +278,15 @@ const file_linker_device_v1_validator_proto_rawDesc = "" +
 	"\bcurrency\x18\x01 \x01(\rR\bcurrency\x12\x18\n" +
 	"\anominal\x18\x02 \x01(\x03R\anominal\x12\x14\n" +
 	"\x05count\x18\x03 \x01(\rR\x05count\x12\x16\n" +
-	"\x06amount\x18\x04 \x01(\x03R\x06amount\"^\n" +
-	"\x0fValidatorAccept\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x123\n" +
-	"\x04note\x18\x02 \x01(\v2\x1f.linker.device.v1.ValidatorNoteR\x04note\"\xaa\x01\n" +
-	"\x0eValidatorBatch\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x19\n" +
-	"\bbatch_id\x18\x02 \x01(\x03R\abatchId\x12\x14\n" +
-	"\x05state\x18\x03 \x01(\rR\x05state\x12\x18\n" +
-	"\adetails\x18\x04 \x01(\tR\adetails\x125\n" +
-	"\x05notes\x18\x05 \x03(\v2\x1f.linker.device.v1.ValidatorNoteR\x05notesB\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
+	"\x06amount\x18\x04 \x01(\x03R\x06amount\"C\n" +
+	"\fAcceptNotify\x123\n" +
+	"\x04note\x18\x01 \x01(\v2\x1f.linker.device.v1.ValidatorNoteR\x04note\"\x9b\x01\n" +
+	"\fBatchContent\x12\x19\n" +
+	"\bbatch_id\x18\x01 \x01(\x03R\abatchId\x12\x1f\n" +
+	"\vbatch_state\x18\x02 \x01(\rR\n" +
+	"batchState\x12\x18\n" +
+	"\adetails\x18\x03 \x01(\tR\adetails\x125\n" +
+	"\x05notes\x18\x04 \x03(\v2\x1f.linker.device.v1.ValidatorNoteR\x05notesB\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
 	file_linker_device_v1_validator_proto_rawDescOnce sync.Once
@@ -319,14 +302,14 @@ func file_linker_device_v1_validator_proto_rawDescGZIP() []byte {
 
 var file_linker_device_v1_validator_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_linker_device_v1_validator_proto_goTypes = []any{
-	(*ValidatorQuery)(nil),  // 0: linker.device.v1.ValidatorQuery
-	(*ValidatorNote)(nil),   // 1: linker.device.v1.ValidatorNote
-	(*ValidatorAccept)(nil), // 2: linker.device.v1.ValidatorAccept
-	(*ValidatorBatch)(nil),  // 3: linker.device.v1.ValidatorBatch
+	(*ValidatorQuery)(nil), // 0: linker.device.v1.ValidatorQuery
+	(*ValidatorNote)(nil),  // 1: linker.device.v1.ValidatorNote
+	(*AcceptNotify)(nil),   // 2: linker.device.v1.AcceptNotify
+	(*BatchContent)(nil),   // 3: linker.device.v1.BatchContent
 }
 var file_linker_device_v1_validator_proto_depIdxs = []int32{
-	1, // 0: linker.device.v1.ValidatorAccept.note:type_name -> linker.device.v1.ValidatorNote
-	1, // 1: linker.device.v1.ValidatorBatch.notes:type_name -> linker.device.v1.ValidatorNote
+	1, // 0: linker.device.v1.AcceptNotify.note:type_name -> linker.device.v1.ValidatorNote
+	1, // 1: linker.device.v1.BatchContent.notes:type_name -> linker.device.v1.ValidatorNote
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

@@ -37,16 +37,24 @@ type ReaderManager interface {
 	ReadCard(ctx context.Context, query *DeviceQuery) (*ReadCardReply, error)
 }
 
+type PositionNotify struct {
+	Position int32 `json:"position"`
+}
+
 type CardPosition struct {
-	Device   string `json:"device"`
-	Position int32  `json:"position"`
+	DeviceNotify
+	PositionNotify
+}
+
+type CardDescription struct {
+	DeviceNotify
+	CardContent
 }
 
 type CardPAN string
 type Track string
 
-type CardDescription struct {
-	Device  string  `json:"device"`
+type CardContent struct {
 	CardPan CardPAN `json:"card_pan"`
 	ExpDate string  `json:"exp_date"`
 	Holder  string  `json:"holder"`
@@ -57,7 +65,7 @@ type CardDescription struct {
 
 type ReadCardReply struct {
 	DeviceReply
-	CardDescription
+	CardContent
 }
 
 func (pan CardPAN) String() string {

@@ -22,28 +22,27 @@ const (
 )
 
 // Defines the message structure for a card position
-type CardPosition struct {
+type PositionNotify struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
-	Position      int32                  `protobuf:"varint,2,opt,name=position,proto3" json:"position,omitempty"`
+	Position      int32                  `protobuf:"varint,1,opt,name=position,proto3" json:"position,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CardPosition) Reset() {
-	*x = CardPosition{}
+func (x *PositionNotify) Reset() {
+	*x = PositionNotify{}
 	mi := &file_linker_device_v1_reader_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CardPosition) String() string {
+func (x *PositionNotify) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CardPosition) ProtoMessage() {}
+func (*PositionNotify) ProtoMessage() {}
 
-func (x *CardPosition) ProtoReflect() protoreflect.Message {
+func (x *PositionNotify) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_reader_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,19 +54,12 @@ func (x *CardPosition) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CardPosition.ProtoReflect.Descriptor instead.
-func (*CardPosition) Descriptor() ([]byte, []int) {
+// Deprecated: Use PositionNotify.ProtoReflect.Descriptor instead.
+func (*PositionNotify) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CardPosition) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *CardPosition) GetPosition() int32 {
+func (x *PositionNotify) GetPosition() int32 {
 	if x != nil {
 		return x.Position
 	}
@@ -75,9 +67,8 @@ func (x *CardPosition) GetPosition() int32 {
 }
 
 // Defines the message structure for a card description
-type CardDescription struct {
+type CardContent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Device        string                 `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
 	CardPan       string                 `protobuf:"bytes,2,opt,name=card_pan,json=cardPan,proto3" json:"card_pan,omitempty"`
 	ExpDate       string                 `protobuf:"bytes,3,opt,name=exp_date,json=expDate,proto3" json:"exp_date,omitempty"`
 	Holder        string                 `protobuf:"bytes,4,opt,name=holder,proto3" json:"holder,omitempty"`
@@ -88,20 +79,20 @@ type CardDescription struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CardDescription) Reset() {
-	*x = CardDescription{}
+func (x *CardContent) Reset() {
+	*x = CardContent{}
 	mi := &file_linker_device_v1_reader_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CardDescription) String() string {
+func (x *CardContent) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CardDescription) ProtoMessage() {}
+func (*CardContent) ProtoMessage() {}
 
-func (x *CardDescription) ProtoReflect() protoreflect.Message {
+func (x *CardContent) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_reader_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -113,54 +104,47 @@ func (x *CardDescription) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CardDescription.ProtoReflect.Descriptor instead.
-func (*CardDescription) Descriptor() ([]byte, []int) {
+// Deprecated: Use CardContent.ProtoReflect.Descriptor instead.
+func (*CardContent) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_reader_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CardDescription) GetDevice() string {
-	if x != nil {
-		return x.Device
-	}
-	return ""
-}
-
-func (x *CardDescription) GetCardPan() string {
+func (x *CardContent) GetCardPan() string {
 	if x != nil {
 		return x.CardPan
 	}
 	return ""
 }
 
-func (x *CardDescription) GetExpDate() string {
+func (x *CardContent) GetExpDate() string {
 	if x != nil {
 		return x.ExpDate
 	}
 	return ""
 }
 
-func (x *CardDescription) GetHolder() string {
+func (x *CardContent) GetHolder() string {
 	if x != nil {
 		return x.Holder
 	}
 	return ""
 }
 
-func (x *CardDescription) GetTrack1() string {
+func (x *CardContent) GetTrack1() string {
 	if x != nil {
 		return x.Track1
 	}
 	return ""
 }
 
-func (x *CardDescription) GetTrack2() string {
+func (x *CardContent) GetTrack2() string {
 	if x != nil {
 		return x.Track2
 	}
 	return ""
 }
 
-func (x *CardDescription) GetTrack3() string {
+func (x *CardContent) GetTrack3() string {
 	if x != nil {
 		return x.Track3
 	}
@@ -171,12 +155,10 @@ var File_linker_device_v1_reader_proto protoreflect.FileDescriptor
 
 const file_linker_device_v1_reader_proto_rawDesc = "" +
 	"\n" +
-	"\x1dlinker/device/v1/reader.proto\x12\x10linker.device.v1\"B\n" +
-	"\fCardPosition\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x1a\n" +
-	"\bposition\x18\x02 \x01(\x05R\bposition\"\xbf\x01\n" +
-	"\x0fCardDescription\x12\x16\n" +
-	"\x06device\x18\x01 \x01(\tR\x06device\x12\x19\n" +
+	"\x1dlinker/device/v1/reader.proto\x12\x10linker.device.v1\",\n" +
+	"\x0ePositionNotify\x12\x1a\n" +
+	"\bposition\x18\x01 \x01(\x05R\bposition\"\xa3\x01\n" +
+	"\vCardContent\x12\x19\n" +
 	"\bcard_pan\x18\x02 \x01(\tR\acardPan\x12\x19\n" +
 	"\bexp_date\x18\x03 \x01(\tR\aexpDate\x12\x16\n" +
 	"\x06holder\x18\x04 \x01(\tR\x06holder\x12\x16\n" +
@@ -198,8 +180,8 @@ func file_linker_device_v1_reader_proto_rawDescGZIP() []byte {
 
 var file_linker_device_v1_reader_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_linker_device_v1_reader_proto_goTypes = []any{
-	(*CardPosition)(nil),    // 0: linker.device.v1.CardPosition
-	(*CardDescription)(nil), // 1: linker.device.v1.CardDescription
+	(*PositionNotify)(nil), // 0: linker.device.v1.PositionNotify
+	(*CardContent)(nil),    // 1: linker.device.v1.CardContent
 }
 var file_linker_device_v1_reader_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type

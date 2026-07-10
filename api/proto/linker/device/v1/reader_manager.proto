@@ -57,6 +57,6 @@ message ReadCardRequest {
 // Defines the message structure for the read card response
 message ReadCardResponse {
   DeviceReply reply = 1;
-  CardDescription card = 2;
+  CardContent card = 2;
 }
 

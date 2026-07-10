@@ -36,10 +36,13 @@ func (h *PrinterCallback) PrinterProgress(ctx context.Context, req *srv.PrinterP
 			errors.New("PrinterProgressRequest is nil"))
 	}
 
-	reply := convertPrinterProgressToModel(req.GetData())
-	h.log.Debug("gRPC.PrinterProgress", slog.Any("reply", reply))
+	value := model.PrinterProgress{
+		DeviceNotify:   convertDeviceNotifyToModel(req.GetNotify()),
+		ProgressNotify: convertProgressNotifyToModel(req.GetData()),
+	}
+	h.log.Debug("gRPC.PrinterProgress", slog.Any("value", value))
 
-	err := h.api.PrinterProgress(ctx, &reply)
+	err := h.api.PrinterProgress(ctx, &value)
 	if err != nil {
 		h.log.Error("gRPC.PrinterProgress failed", slog.Any("error", err))
 	}
@@ -49,12 +52,11 @@ func (h *PrinterCallback) PrinterProgress(ctx context.Context, req *srv.PrinterP
 	return resp, err
 }
 
-func convertPrinterProgressToModel(value *srv.PrinterProgress) model.PrinterProgress {
+func convertProgressNotifyToModel(value *srv.ProgressNotify) model.ProgressNotify {
 	if value == nil {
-		return model.PrinterProgress{}
+		return model.ProgressNotify{}
 	}
-	data := model.PrinterProgress{
-		Device:   value.GetDevice(),
+	data := model.ProgressNotify{
 		DocName:  value.GetDocName(),
 		PageDone: value.GetPageDone(),
 		PagesAll: value.GetPagesAll(),

@@ -47,6 +47,17 @@ type ValidatorManager interface {
 	ClearValidator(ctx context.Context, query *ValidatorQuery) (*ValidatorStore, error)
 }
 
+type ValidatorQuery struct {
+	Device    string   `json:"device"`
+	Currency  Currency `json:"currency"`
+	Operation int64    `json:"operation"`
+}
+
+type ValidatorStore struct {
+	DeviceReply
+	BatchContent
+}
+
 type ValidatorNote struct {
 	Currency Currency `json:"currency"`
 	Nominal  Amount   `json:"nominal"`
@@ -63,34 +74,25 @@ func (vn ValidatorNote) String() string {
 
 type ValidatorBox []ValidatorNote
 
-type ValidatorBatch struct {
-	Device  string       `json:"device"`
-	BatchId int64        `json:"batch_id"`
-	State   BatchState   `json:"state"`
-	Details string       `json:"details"`
-	Notes   ValidatorBox `json:"notes"`
+type BatchContent struct {
+	BatchId    int64        `json:"batch_id"`
+	BatchState BatchState   `json:"batch_state"`
+	Details    string       `json:"details"`
+	Notes      ValidatorBox `json:"notes"`
 }
 
-func (vb ValidatorBatch) String() string {
-	str := fmt.Sprintf("Device:%s, BatchId:%d, State:%s, Details:%s, Notes:%v",
-		vb.Device, vb.BatchId, vb.State.String(), vb.Details, vb.Notes)
-	return str
-}
-
-type ValidatorStore struct {
-	DeviceReply
-	ValidatorBatch
+type AcceptNotify struct {
+	Note ValidatorNote `json:"note"`
 }
 
 type ValidatorAccept struct {
-	Device string        `json:"device"`
-	Note   ValidatorNote `json:"note"`
+	DeviceNotify
+	AcceptNotify
 }
 
-type ValidatorQuery struct {
-	Device    string   `json:"device"`
-	Currency  Currency `json:"currency"`
-	Operation int64    `json:"operation"`
+type ValidatorBatch struct {
+	DeviceNotify
+	BatchContent
 }
 
 //type ValidatorBooker interface {

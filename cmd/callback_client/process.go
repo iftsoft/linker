@@ -204,10 +204,14 @@ func ProcessExecuteError(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessStateChanged(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.DeviceState{
-		Device:   testDevice,
-		Action:   model.DevActionBarScanning,
-		OldState: model.DevStateWaiting,
-		NewState: model.DevStateWorking,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+			Action: model.DevActionBarScanning,
+		},
+		StateNotify: model.StateNotify{
+			OldState: model.DevStateWaiting,
+			NewState: model.DevStateWorking,
+		},
 	}
 	log.Info("Processing StateChanged", "value", value)
 	err := cli.StateChanged(ctx, &value)
@@ -220,9 +224,13 @@ func ProcessStateChanged(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessActionPrompt(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.DevicePrompt{
-		Device: testDevice,
-		Action: model.DevActionBarScanning,
-		Prompt: model.DevPromptScanBarcode,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+			Action: model.DevActionBarScanning,
+		},
+		PromptNotify: model.PromptNotify{
+			Prompt: model.DevPromptScanBarcode,
+		},
 	}
 	log.Info("Processing ActionPrompt", "value", value)
 	err := cli.ActionPrompt(ctx, &value)
@@ -235,9 +243,13 @@ func ProcessActionPrompt(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessReaderReturn(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.DeviceInform{
-		Device: testDevice,
-		Action: model.DevActionBarScanning,
-		Inform: "12345678",
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+			Action: model.DevActionBarScanning,
+		},
+		InformNotify: model.InformNotify{
+			Inform: "12345678",
+		},
 	}
 	log.Info("Processing ReaderReturn", "value", value)
 	err := cli.ReaderReturn(ctx, &value)
@@ -250,10 +262,14 @@ func ProcessReaderReturn(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessPrinterProgress(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.PrinterProgress{
-		Device:   testDevice,
-		DocName:  "PrinterProgress",
-		PageDone: 1,
-		PagesAll: 2,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		ProgressNotify: model.ProgressNotify{
+			DocName:  "PrinterProgress",
+			PageDone: 1,
+			PagesAll: 2,
+		},
 	}
 	log.Info("Processing PrinterProgress", "value", value)
 	err := cli.PrinterProgress(ctx, &value)
@@ -266,8 +282,12 @@ func ProcessPrinterProgress(ctx context.Context, log *slog.Logger, cli *callback
 
 func ProcessCardPosition(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.CardPosition{
-		Device:   testDevice,
-		Position: 1,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		PositionNotify: model.PositionNotify{
+			Position: 1,
+		},
 	}
 	log.Info("Processing CardPosition", "value", value)
 	err := cli.CardPosition(ctx, &value)
@@ -280,13 +300,17 @@ func ProcessCardPosition(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessCardDescription(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.CardDescription{
-		Device:  testDevice,
-		CardPan: "1234567890123456",
-		ExpDate: "12/28",
-		Holder:  "TEST_USER",
-		Track1:  "fasffafafsadfasddfsdafsdsdf",
-		Track2:  "012345678",
-		Track3:  "",
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		CardContent: model.CardContent{
+			CardPan: "1234567890123456",
+			ExpDate: "12/28",
+			Holder:  "TEST_USER",
+			Track1:  "fasffafafsadfasddfsdafsdsdf",
+			Track2:  "012345678",
+			Track3:  "",
+		},
 	}
 	log.Info("Processing CardDescription", "value", value)
 	err := cli.CardDescription(ctx, &value)
@@ -299,12 +323,16 @@ func ProcessCardDescription(ctx context.Context, log *slog.Logger, cli *callback
 
 func ProcessNoteAccepted(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.ValidatorAccept{
-		Device: testDevice,
-		Note: model.ValidatorNote{
-			Currency: model.CurrencyUSD,
-			Nominal:  5,
-			Count:    2,
-			Amount:   10,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		AcceptNotify: model.AcceptNotify{
+			Note: model.ValidatorNote{
+				Currency: model.CurrencyUSD,
+				Nominal:  5,
+				Count:    2,
+				Amount:   10,
+			},
 		},
 	}
 	log.Info("Processing NoteAccepted", "value", value)
@@ -318,12 +346,16 @@ func ProcessNoteAccepted(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessCashIsStored(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.ValidatorAccept{
-		Device: testDevice,
-		Note: model.ValidatorNote{
-			Currency: model.CurrencyUSD,
-			Nominal:  5,
-			Count:    2,
-			Amount:   10,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		AcceptNotify: model.AcceptNotify{
+			Note: model.ValidatorNote{
+				Currency: model.CurrencyUSD,
+				Nominal:  5,
+				Count:    2,
+				Amount:   10,
+			},
 		},
 	}
 	log.Info("Processing CashIsStored", "value", value)
@@ -337,12 +369,16 @@ func ProcessCashIsStored(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessCashReturned(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.ValidatorAccept{
-		Device: testDevice,
-		Note: model.ValidatorNote{
-			Currency: model.CurrencyUSD,
-			Nominal:  5,
-			Count:    2,
-			Amount:   10,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		AcceptNotify: model.AcceptNotify{
+			Note: model.ValidatorNote{
+				Currency: model.CurrencyUSD,
+				Nominal:  5,
+				Count:    2,
+				Amount:   10,
+			},
 		},
 	}
 	log.Info("Processing CashReturned", "value", value)
@@ -356,22 +392,26 @@ func ProcessCashReturned(ctx context.Context, log *slog.Logger, cli *callback.Ca
 
 func ProcessValidatorStore(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
 	value := model.ValidatorBatch{
-		Device:  testDevice,
-		BatchId: 12,
-		State:   model.StateActive,
-		Details: "Cassette 1",
-		Notes: []model.ValidatorNote{
-			{
-				Currency: model.CurrencyUSD,
-				Nominal:  5,
-				Count:    2,
-				Amount:   10,
-			},
-			{
-				Currency: model.CurrencyUSD,
-				Nominal:  100,
-				Count:    3,
-				Amount:   300,
+		DeviceNotify: model.DeviceNotify{
+			Device: testDevice,
+		},
+		BatchContent: model.BatchContent{
+			BatchId:    12,
+			BatchState: model.StateActive,
+			Details:    "Cassette 1",
+			Notes: []model.ValidatorNote{
+				{
+					Currency: model.CurrencyUSD,
+					Nominal:  5,
+					Count:    2,
+					Amount:   10,
+				},
+				{
+					Currency: model.CurrencyUSD,
+					Nominal:  100,
+					Count:    3,
+					Amount:   300,
+				},
 			},
 		},
 	}

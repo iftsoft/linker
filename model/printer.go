@@ -32,9 +32,13 @@ type PrinterSetup struct {
 	ShowImage uint32 `json:"show_image"`
 }
 
-type PrinterProgress struct {
-	Device   string `json:"device"`
+type ProgressNotify struct {
 	DocName  string `json:"doc_name"`
 	PageDone uint32 `json:"page_done"`
 	PagesAll uint32 `json:"pages_all"`
+}
+
+type PrinterProgress struct {
+	DeviceNotify
+	ProgressNotify
 }

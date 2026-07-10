@@ -38,7 +38,8 @@ message ExecuteErrorResponse {}
 
 // Defines the message structure for a status change request
 message StateChangedRequest {
-  DeviceState data = 1;
+  DeviceNotify notify = 1;
+  StateNotify data = 2;
 }
 
 // Defines the message structure for a status change response
@@ -46,7 +47,8 @@ message StateChangedResponse {}
 
 // Defines the message structure for an action prompt request
 message ActionPromptRequest {
-  DevicePrompt data = 1;
+  DeviceNotify notify = 1;
+  PromptNotify data = 2;
 }
 
 // Defines the message structure for an action prompt response
@@ -54,7 +56,8 @@ message ActionPromptResponse {}
 
 // Defines the message structure for a reading result request
 message ReaderReturnRequest {
-  DeviceInform data = 1;
+  DeviceNotify notify = 1;
+  InformNotify data = 2;
 }
 
 // Defines the message structure for a reading result response

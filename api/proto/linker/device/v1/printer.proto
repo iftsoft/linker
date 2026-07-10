@@ -19,8 +19,7 @@ message PrinterSetup {
 }
 
 // Defines the message structure for a printer progress
-message PrinterProgress {
-  string device = 1;
+message ProgressNotify {
   string doc_name = 2;
   uint32 page_done = 3;
   uint32 pages_all = 4;

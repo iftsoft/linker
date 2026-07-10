@@ -112,15 +112,14 @@ func (h *ReaderManager) ReadCard(ctx context.Context, req *srv.ReadCardRequest) 
 
 	resp := &srv.ReadCardResponse{
 		Reply: convertDeviceReplyToProto(&back.DeviceReply),
-		Card:  CardDescriptionToProto(&back.CardDescription),
+		Card:  convertCardContentToProto(&back.CardContent),
 	}
 
 	return resp, err
 }
 
-func CardDescriptionToProto(data *model.CardDescription) *srv.CardDescription {
-	reply := &srv.CardDescription{
-		Device:  data.Device,
+func convertCardContentToProto(data *model.CardContent) *srv.CardContent {
+	reply := &srv.CardContent{
 		CardPan: string(data.CardPan),
 		ExpDate: data.ExpDate,
 		Holder:  data.Holder,
