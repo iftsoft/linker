@@ -37,7 +37,7 @@ message PromptNotify {
 }
 
 // InformNotify defines the message structure for reader return
-message InformNotify {
-  string inform = 1;
+message ResultNotify {
+  string result = 1;
 }
 

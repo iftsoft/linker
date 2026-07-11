@@ -123,25 +123,25 @@ func (h *DeviceCallback) ActionPrompt(ctx context.Context, req *srv.ActionPrompt
 	return resp, err
 }
 
-// ReaderReturn implements Notification about device reading result
-func (h *DeviceCallback) ReaderReturn(ctx context.Context, req *srv.ReaderReturnRequest) (*srv.ReaderReturnResponse, error) {
+// ReaderResult implements Notification about device reading result
+func (h *DeviceCallback) ReaderResult(ctx context.Context, req *srv.ReaderResultRequest) (*srv.ReaderResultResponse, error) {
 	if req == nil {
 		return nil, MakeErrorWithDetails(codes.InvalidArgument, StrMissingRequest,
-			errors.New("ReaderReturnRequest is nil"))
+			errors.New("ReaderReturnResult is nil"))
 	}
 
-	value := model.DeviceInform{
+	value := model.DeviceResult{
 		DeviceNotify: convertDeviceNotifyToModel(req.GetNotify()),
-		InformNotify: convertInformNotifyToModel(req.GetData()),
+		ResultNotify: convertResultNotifyToModel(req.GetData()),
 	}
 	h.log.Debug("gRPC.ReaderReturn", slog.Any("value", value))
 
-	err := h.api.ReaderReturn(ctx, &value)
+	err := h.api.ReaderResult(ctx, &value)
 	if err != nil {
-		h.log.Error("gRPC.ReaderReturn failed", slog.Any("error", err))
+		h.log.Error("gRPC.ReaderResult failed", slog.Any("error", err))
 	}
 
-	resp := &srv.ReaderReturnResponse{}
+	resp := &srv.ReaderResultResponse{}
 
 	return resp, err
 }
@@ -193,12 +193,12 @@ func convertPromptNotifyToModel(value *srv.PromptNotify) model.PromptNotify {
 	return data
 }
 
-func convertInformNotifyToModel(value *srv.InformNotify) model.InformNotify {
+func convertResultNotifyToModel(value *srv.ResultNotify) model.ResultNotify {
 	if value == nil {
-		return model.InformNotify{}
+		return model.ResultNotify{}
 	}
-	data := model.InformNotify{
-		Inform: value.GetInform(),
+	data := model.ResultNotify{
+		Result: value.GetResult(),
 	}
 	return data
 }

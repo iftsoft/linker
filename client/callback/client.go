@@ -129,13 +129,13 @@ func (c *CallbackClient) ActionPrompt(ctx context.Context, value *model.DevicePr
 }
 
 // ReaderReturn sends notification about device reading result
-func (c *CallbackClient) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
+func (c *CallbackClient) ReaderResult(ctx context.Context, value *model.DeviceResult) error {
 	if c.device == nil {
 		return ErrNotInitialized
 	}
 	c.mux.Lock()
 	defer c.mux.Unlock()
-	return c.device.ReaderReturn(ctx, value)
+	return c.device.ReaderResult(ctx, value)
 }
 
 // PrinterProgress sent notification about printing progress

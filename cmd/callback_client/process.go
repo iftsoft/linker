@@ -242,17 +242,17 @@ func ProcessActionPrompt(ctx context.Context, log *slog.Logger, cli *callback.Ca
 }
 
 func ProcessReaderReturn(ctx context.Context, log *slog.Logger, cli *callback.CallbackClient) error {
-	value := model.DeviceInform{
+	value := model.DeviceResult{
 		DeviceNotify: model.DeviceNotify{
 			Device: testDevice,
 			Action: model.DevActionBarScanning,
 		},
-		InformNotify: model.InformNotify{
-			Inform: "12345678",
+		ResultNotify: model.ResultNotify{
+			Result: "12345678",
 		},
 	}
 	log.Info("Processing ReaderReturn", "value", value)
-	err := cli.ReaderReturn(ctx, &value)
+	err := cli.ReaderResult(ctx, &value)
 	if err != nil {
 		return fmt.Errorf("reader return error: %w", err)
 	}

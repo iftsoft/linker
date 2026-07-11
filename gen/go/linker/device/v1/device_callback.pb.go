@@ -366,28 +366,28 @@ func (*ActionPromptResponse) Descriptor() ([]byte, []int) {
 }
 
 // Defines the message structure for a reading result request
-type ReaderReturnRequest struct {
+type ReaderResultRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Notify        *DeviceNotify          `protobuf:"bytes,1,opt,name=notify,proto3" json:"notify,omitempty"`
-	Data          *InformNotify          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Data          *ResultNotify          `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReaderReturnRequest) Reset() {
-	*x = ReaderReturnRequest{}
+func (x *ReaderResultRequest) Reset() {
+	*x = ReaderResultRequest{}
 	mi := &file_linker_device_v1_device_callback_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReaderReturnRequest) String() string {
+func (x *ReaderResultRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReaderReturnRequest) ProtoMessage() {}
+func (*ReaderResultRequest) ProtoMessage() {}
 
-func (x *ReaderReturnRequest) ProtoReflect() protoreflect.Message {
+func (x *ReaderResultRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_device_callback_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -399,19 +399,19 @@ func (x *ReaderReturnRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReaderReturnRequest.ProtoReflect.Descriptor instead.
-func (*ReaderReturnRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReaderResultRequest.ProtoReflect.Descriptor instead.
+func (*ReaderResultRequest) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_device_callback_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ReaderReturnRequest) GetNotify() *DeviceNotify {
+func (x *ReaderResultRequest) GetNotify() *DeviceNotify {
 	if x != nil {
 		return x.Notify
 	}
 	return nil
 }
 
-func (x *ReaderReturnRequest) GetData() *InformNotify {
+func (x *ReaderResultRequest) GetData() *ResultNotify {
 	if x != nil {
 		return x.Data
 	}
@@ -419,26 +419,26 @@ func (x *ReaderReturnRequest) GetData() *InformNotify {
 }
 
 // Defines the message structure for a reading result response
-type ReaderReturnResponse struct {
+type ReaderResultResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReaderReturnResponse) Reset() {
-	*x = ReaderReturnResponse{}
+func (x *ReaderResultResponse) Reset() {
+	*x = ReaderResultResponse{}
 	mi := &file_linker_device_v1_device_callback_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReaderReturnResponse) String() string {
+func (x *ReaderResultResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReaderReturnResponse) ProtoMessage() {}
+func (*ReaderResultResponse) ProtoMessage() {}
 
-func (x *ReaderReturnResponse) ProtoReflect() protoreflect.Message {
+func (x *ReaderResultResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_device_callback_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -450,8 +450,8 @@ func (x *ReaderReturnResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReaderReturnResponse.ProtoReflect.Descriptor instead.
-func (*ReaderReturnResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReaderResultResponse.ProtoReflect.Descriptor instead.
+func (*ReaderResultResponse) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_device_callback_proto_rawDescGZIP(), []int{9}
 }
 
@@ -474,16 +474,16 @@ const file_linker_device_v1_device_callback_proto_rawDesc = "" +
 	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
 	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.PromptNotifyR\x04data\"\x16\n" +
 	"\x14ActionPromptResponse\"\x81\x01\n" +
-	"\x13ReaderReturnRequest\x126\n" +
+	"\x13ReaderResultRequest\x126\n" +
 	"\x06notify\x18\x01 \x01(\v2\x1e.linker.device.v1.DeviceNotifyR\x06notify\x122\n" +
-	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.InformNotifyR\x04data\"\x16\n" +
-	"\x14ReaderReturnResponse2\xf9\x03\n" +
+	"\x04data\x18\x02 \x01(\v2\x1e.linker.device.v1.ResultNotifyR\x04data\"\x16\n" +
+	"\x14ReaderResultResponse2\xf9\x03\n" +
 	"\x15DeviceCallbackService\x12\\\n" +
 	"\vDeviceReply\x12$.linker.device.v1.DeviceReplyRequest\x1a%.linker.device.v1.DeviceReplyResponse\"\x00\x12_\n" +
 	"\fExecuteError\x12%.linker.device.v1.ExecuteErrorRequest\x1a&.linker.device.v1.ExecuteErrorResponse\"\x00\x12_\n" +
 	"\fStateChanged\x12%.linker.device.v1.StateChangedRequest\x1a&.linker.device.v1.StateChangedResponse\"\x00\x12_\n" +
 	"\fActionPrompt\x12%.linker.device.v1.ActionPromptRequest\x1a&.linker.device.v1.ActionPromptResponse\"\x00\x12_\n" +
-	"\fReaderReturn\x12%.linker.device.v1.ReaderReturnRequest\x1a&.linker.device.v1.ReaderReturnResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
+	"\fReaderResult\x12%.linker.device.v1.ReaderResultRequest\x1a&.linker.device.v1.ReaderResultResponse\"\x00B\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
 	file_linker_device_v1_device_callback_proto_rawDescOnce sync.Once
@@ -507,13 +507,13 @@ var file_linker_device_v1_device_callback_proto_goTypes = []any{
 	(*StateChangedResponse)(nil), // 5: linker.device.v1.StateChangedResponse
 	(*ActionPromptRequest)(nil),  // 6: linker.device.v1.ActionPromptRequest
 	(*ActionPromptResponse)(nil), // 7: linker.device.v1.ActionPromptResponse
-	(*ReaderReturnRequest)(nil),  // 8: linker.device.v1.ReaderReturnRequest
-	(*ReaderReturnResponse)(nil), // 9: linker.device.v1.ReaderReturnResponse
+	(*ReaderResultRequest)(nil),  // 8: linker.device.v1.ReaderResultRequest
+	(*ReaderResultResponse)(nil), // 9: linker.device.v1.ReaderResultResponse
 	(*DeviceReply)(nil),          // 10: linker.device.v1.DeviceReply
 	(*DeviceNotify)(nil),         // 11: linker.device.v1.DeviceNotify
 	(*StateNotify)(nil),          // 12: linker.device.v1.StateNotify
 	(*PromptNotify)(nil),         // 13: linker.device.v1.PromptNotify
-	(*InformNotify)(nil),         // 14: linker.device.v1.InformNotify
+	(*ResultNotify)(nil),         // 14: linker.device.v1.ResultNotify
 }
 var file_linker_device_v1_device_callback_proto_depIdxs = []int32{
 	10, // 0: linker.device.v1.DeviceReplyRequest.data:type_name -> linker.device.v1.DeviceReply
@@ -522,18 +522,18 @@ var file_linker_device_v1_device_callback_proto_depIdxs = []int32{
 	12, // 3: linker.device.v1.StateChangedRequest.data:type_name -> linker.device.v1.StateNotify
 	11, // 4: linker.device.v1.ActionPromptRequest.notify:type_name -> linker.device.v1.DeviceNotify
 	13, // 5: linker.device.v1.ActionPromptRequest.data:type_name -> linker.device.v1.PromptNotify
-	11, // 6: linker.device.v1.ReaderReturnRequest.notify:type_name -> linker.device.v1.DeviceNotify
-	14, // 7: linker.device.v1.ReaderReturnRequest.data:type_name -> linker.device.v1.InformNotify
+	11, // 6: linker.device.v1.ReaderResultRequest.notify:type_name -> linker.device.v1.DeviceNotify
+	14, // 7: linker.device.v1.ReaderResultRequest.data:type_name -> linker.device.v1.ResultNotify
 	0,  // 8: linker.device.v1.DeviceCallbackService.DeviceReply:input_type -> linker.device.v1.DeviceReplyRequest
 	2,  // 9: linker.device.v1.DeviceCallbackService.ExecuteError:input_type -> linker.device.v1.ExecuteErrorRequest
 	4,  // 10: linker.device.v1.DeviceCallbackService.StateChanged:input_type -> linker.device.v1.StateChangedRequest
 	6,  // 11: linker.device.v1.DeviceCallbackService.ActionPrompt:input_type -> linker.device.v1.ActionPromptRequest
-	8,  // 12: linker.device.v1.DeviceCallbackService.ReaderReturn:input_type -> linker.device.v1.ReaderReturnRequest
+	8,  // 12: linker.device.v1.DeviceCallbackService.ReaderResult:input_type -> linker.device.v1.ReaderResultRequest
 	1,  // 13: linker.device.v1.DeviceCallbackService.DeviceReply:output_type -> linker.device.v1.DeviceReplyResponse
 	3,  // 14: linker.device.v1.DeviceCallbackService.ExecuteError:output_type -> linker.device.v1.ExecuteErrorResponse
 	5,  // 15: linker.device.v1.DeviceCallbackService.StateChanged:output_type -> linker.device.v1.StateChangedResponse
 	7,  // 16: linker.device.v1.DeviceCallbackService.ActionPrompt:output_type -> linker.device.v1.ActionPromptResponse
-	9,  // 17: linker.device.v1.DeviceCallbackService.ReaderReturn:output_type -> linker.device.v1.ReaderReturnResponse
+	9,  // 17: linker.device.v1.DeviceCallbackService.ReaderResult:output_type -> linker.device.v1.ReaderResultResponse
 	13, // [13:18] is the sub-list for method output_type
 	8,  // [8:13] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name

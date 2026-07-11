@@ -128,6 +128,16 @@ func (c *ManagerClient) Status(ctx context.Context, query *model.DeviceQuery) (*
 	return c.device.Status(ctx, query)
 }
 
+// Execute returns result of command execution
+func (c *ManagerClient) Execute(ctx context.Context, query *model.DeviceQuery) (*model.DeviceReply, error) {
+	if c.device == nil {
+		return nil, ErrNotInitialized
+	}
+	c.mux.Lock()
+	defer c.mux.Unlock()
+	return c.device.Execute(ctx, query)
+}
+
 // InitPrinter does primary initialization of printer before printing
 func (c *ManagerClient) InitPrinter(ctx context.Context, query *model.PrinterSetup) (*model.DeviceReply, error) {
 	if c.printer == nil {

@@ -39,8 +39,8 @@ type DeviceCallback interface {
 	StateChanged(ctx context.Context, value *DeviceState) error
 	// ActionPrompt sends notification about action prompt for user
 	ActionPrompt(ctx context.Context, value *DevicePrompt) error
-	// ReaderReturn sends notification about device reading result
-	ReaderReturn(ctx context.Context, value *DeviceInform) error
+	// ReaderResult sends notification about device reading result
+	ReaderResult(ctx context.Context, value *DeviceResult) error
 }
 
 type DeviceQuery struct {
@@ -80,11 +80,11 @@ type DevicePrompt struct {
 	PromptNotify
 }
 
-type InformNotify struct {
-	Inform string `json:"inform"`
+type ResultNotify struct {
+	Result string `json:"result"`
 }
 
-type DeviceInform struct {
+type DeviceResult struct {
 	DeviceNotify
-	InformNotify
+	ResultNotify
 }

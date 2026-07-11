@@ -23,7 +23,7 @@ const (
 	DeviceCallbackService_ExecuteError_FullMethodName = "/linker.device.v1.DeviceCallbackService/ExecuteError"
 	DeviceCallbackService_StateChanged_FullMethodName = "/linker.device.v1.DeviceCallbackService/StateChanged"
 	DeviceCallbackService_ActionPrompt_FullMethodName = "/linker.device.v1.DeviceCallbackService/ActionPrompt"
-	DeviceCallbackService_ReaderReturn_FullMethodName = "/linker.device.v1.DeviceCallbackService/ReaderReturn"
+	DeviceCallbackService_ReaderResult_FullMethodName = "/linker.device.v1.DeviceCallbackService/ReaderResult"
 )
 
 // DeviceCallbackServiceClient is the client API for DeviceCallbackService service.
@@ -41,7 +41,7 @@ type DeviceCallbackServiceClient interface {
 	// Notification about action prompt for user
 	ActionPrompt(ctx context.Context, in *ActionPromptRequest, opts ...grpc.CallOption) (*ActionPromptResponse, error)
 	// Notification about device reading result
-	ReaderReturn(ctx context.Context, in *ReaderReturnRequest, opts ...grpc.CallOption) (*ReaderReturnResponse, error)
+	ReaderResult(ctx context.Context, in *ReaderResultRequest, opts ...grpc.CallOption) (*ReaderResultResponse, error)
 }
 
 type deviceCallbackServiceClient struct {
@@ -92,10 +92,10 @@ func (c *deviceCallbackServiceClient) ActionPrompt(ctx context.Context, in *Acti
 	return out, nil
 }
 
-func (c *deviceCallbackServiceClient) ReaderReturn(ctx context.Context, in *ReaderReturnRequest, opts ...grpc.CallOption) (*ReaderReturnResponse, error) {
+func (c *deviceCallbackServiceClient) ReaderResult(ctx context.Context, in *ReaderResultRequest, opts ...grpc.CallOption) (*ReaderResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReaderReturnResponse)
-	err := c.cc.Invoke(ctx, DeviceCallbackService_ReaderReturn_FullMethodName, in, out, cOpts...)
+	out := new(ReaderResultResponse)
+	err := c.cc.Invoke(ctx, DeviceCallbackService_ReaderResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +117,7 @@ type DeviceCallbackServiceServer interface {
 	// Notification about action prompt for user
 	ActionPrompt(context.Context, *ActionPromptRequest) (*ActionPromptResponse, error)
 	// Notification about device reading result
-	ReaderReturn(context.Context, *ReaderReturnRequest) (*ReaderReturnResponse, error)
+	ReaderResult(context.Context, *ReaderResultRequest) (*ReaderResultResponse, error)
 	mustEmbedUnimplementedDeviceCallbackServiceServer()
 }
 
@@ -140,8 +140,8 @@ func (UnimplementedDeviceCallbackServiceServer) StateChanged(context.Context, *S
 func (UnimplementedDeviceCallbackServiceServer) ActionPrompt(context.Context, *ActionPromptRequest) (*ActionPromptResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ActionPrompt not implemented")
 }
-func (UnimplementedDeviceCallbackServiceServer) ReaderReturn(context.Context, *ReaderReturnRequest) (*ReaderReturnResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ReaderReturn not implemented")
+func (UnimplementedDeviceCallbackServiceServer) ReaderResult(context.Context, *ReaderResultRequest) (*ReaderResultResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReaderResult not implemented")
 }
 func (UnimplementedDeviceCallbackServiceServer) mustEmbedUnimplementedDeviceCallbackServiceServer() {}
 func (UnimplementedDeviceCallbackServiceServer) testEmbeddedByValue()                               {}
@@ -236,20 +236,20 @@ func _DeviceCallbackService_ActionPrompt_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DeviceCallbackService_ReaderReturn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReaderReturnRequest)
+func _DeviceCallbackService_ReaderResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReaderResultRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DeviceCallbackServiceServer).ReaderReturn(ctx, in)
+		return srv.(DeviceCallbackServiceServer).ReaderResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DeviceCallbackService_ReaderReturn_FullMethodName,
+		FullMethod: DeviceCallbackService_ReaderResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeviceCallbackServiceServer).ReaderReturn(ctx, req.(*ReaderReturnRequest))
+		return srv.(DeviceCallbackServiceServer).ReaderResult(ctx, req.(*ReaderResultRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -278,8 +278,8 @@ var DeviceCallbackService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DeviceCallbackService_ActionPrompt_Handler,
 		},
 		{
-			MethodName: "ReaderReturn",
-			Handler:    _DeviceCallbackService_ReaderReturn_Handler,
+			MethodName: "ReaderResult",
+			Handler:    _DeviceCallbackService_ReaderResult_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

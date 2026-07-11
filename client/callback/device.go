@@ -90,17 +90,17 @@ func (c *DeviceCallbackClient) ActionPrompt(ctx context.Context, value *model.De
 }
 
 // ReaderReturn sends notification about device reading result
-func (c *DeviceCallbackClient) ReaderReturn(ctx context.Context, value *model.DeviceInform) error {
-	c.log.Debug("CallbackClient.ReaderReturn - grpc",
+func (c *DeviceCallbackClient) ReaderResult(ctx context.Context, value *model.DeviceResult) error {
+	c.log.Debug("CallbackClient.ReaderResult - grpc",
 		slog.String("device", value.Device), slog.String("action", value.Action.String()))
 
-	input := &device.ReaderReturnRequest{
+	input := &device.ReaderResultRequest{
 		Notify: convertDeviceNotifyToProto(&value.DeviceNotify),
-		Data:   convertInformNotifyToProto(&value.InformNotify),
+		Data:   convertResultNotifyToProto(&value.ResultNotify),
 	}
-	_, err := c.device.ReaderReturn(ctx, input)
+	_, err := c.device.ReaderResult(ctx, input)
 	if err != nil {
-		return fmt.Errorf("callback ReaderReturn for %s.%s failed: %w", value.Device, value.Action.String(), err)
+		return fmt.Errorf("callback ReaderResult for %s.%s failed: %w", value.Device, value.Action.String(), err)
 	}
 
 	return nil
@@ -153,12 +153,12 @@ func convertPromptNotifyToProto(value *model.PromptNotify) *device.PromptNotify 
 	return data
 }
 
-func convertInformNotifyToProto(value *model.InformNotify) *device.InformNotify {
+func convertResultNotifyToProto(value *model.ResultNotify) *device.ResultNotify {
 	if value == nil {
 		return nil
 	}
-	data := &device.InformNotify{
-		Inform: value.Inform,
+	data := &device.ResultNotify{
+		Result: value.Result,
 	}
 	return data
 }

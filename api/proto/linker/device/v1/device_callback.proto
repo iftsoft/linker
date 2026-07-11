@@ -17,7 +17,7 @@ service DeviceCallbackService {
   // Notification about action prompt for user
   rpc ActionPrompt(ActionPromptRequest) returns (ActionPromptResponse) {}
   // Notification about device reading result
-  rpc ReaderReturn(ReaderReturnRequest) returns (ReaderReturnResponse) {}
+  rpc ReaderResult(ReaderResultRequest) returns (ReaderResultResponse) {}
 }
 
 // Defines the message structure for a device reply request
@@ -55,11 +55,11 @@ message ActionPromptRequest {
 message ActionPromptResponse {}
 
 // Defines the message structure for a reading result request
-message ReaderReturnRequest {
+message ReaderResultRequest {
   DeviceNotify notify = 1;
-  InformNotify data = 2;
+  ResultNotify data = 2;
 }
 
 // Defines the message structure for a reading result response
-message ReaderReturnResponse {}
+message ReaderResultResponse {}
 

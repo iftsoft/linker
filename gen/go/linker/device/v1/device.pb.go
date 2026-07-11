@@ -303,27 +303,27 @@ func (x *PromptNotify) GetPrompt() uint32 {
 }
 
 // InformNotify defines the message structure for reader return
-type InformNotify struct {
+type ResultNotify struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Inform        string                 `protobuf:"bytes,1,opt,name=inform,proto3" json:"inform,omitempty"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *InformNotify) Reset() {
-	*x = InformNotify{}
+func (x *ResultNotify) Reset() {
+	*x = ResultNotify{}
 	mi := &file_linker_device_v1_device_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *InformNotify) String() string {
+func (x *ResultNotify) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*InformNotify) ProtoMessage() {}
+func (*ResultNotify) ProtoMessage() {}
 
-func (x *InformNotify) ProtoReflect() protoreflect.Message {
+func (x *ResultNotify) ProtoReflect() protoreflect.Message {
 	mi := &file_linker_device_v1_device_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -335,14 +335,14 @@ func (x *InformNotify) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use InformNotify.ProtoReflect.Descriptor instead.
-func (*InformNotify) Descriptor() ([]byte, []int) {
+// Deprecated: Use ResultNotify.ProtoReflect.Descriptor instead.
+func (*ResultNotify) Descriptor() ([]byte, []int) {
 	return file_linker_device_v1_device_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *InformNotify) GetInform() string {
+func (x *ResultNotify) GetResult() string {
 	if x != nil {
-		return x.Inform
+		return x.Result
 	}
 	return ""
 }
@@ -369,8 +369,8 @@ const file_linker_device_v1_device_proto_rawDesc = "" +
 	"\told_state\x18\x02 \x01(\rR\boldState\"&\n" +
 	"\fPromptNotify\x12\x16\n" +
 	"\x06prompt\x18\x01 \x01(\rR\x06prompt\"&\n" +
-	"\fInformNotify\x12\x16\n" +
-	"\x06inform\x18\x01 \x01(\tR\x06informB\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
+	"\fResultNotify\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06resultB\x1bZ\x19./gen/go/linker/device/v1b\x06proto3"
 
 var (
 	file_linker_device_v1_device_proto_rawDescOnce sync.Once
@@ -391,7 +391,7 @@ var file_linker_device_v1_device_proto_goTypes = []any{
 	(*DeviceNotify)(nil), // 2: linker.device.v1.DeviceNotify
 	(*StateNotify)(nil),  // 3: linker.device.v1.StateNotify
 	(*PromptNotify)(nil), // 4: linker.device.v1.PromptNotify
-	(*InformNotify)(nil), // 5: linker.device.v1.InformNotify
+	(*ResultNotify)(nil), // 5: linker.device.v1.ResultNotify
 }
 var file_linker_device_v1_device_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
